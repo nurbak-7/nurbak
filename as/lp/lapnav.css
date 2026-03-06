@@ -1,0 +1,91 @@
+/* ============================================================
+   as/lp/lapnav.css
+============================================================ */
+/* ============================================================
+   NAVBAR
+============================================================ */
+
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  background:#1084d1;
+  padding:10px 20px;
+}
+
+/* ============================================================
+   LOGO
+============================================================ */
+
+.logo img{
+  height:40px;
+}
+
+/* ============================================================
+   MENU
+============================================================ */
+
+.menu{
+  list-style:none;
+  display:flex;
+  gap:25px;
+  margin:0;
+  padding:0;
+}
+
+.menu li a{
+  text-decoration:none;
+  color:white;
+  font-size:14px;
+  font-weight:500;
+}
+
+.menu li a:hover{
+  color:#ff3c3c;
+}
+
+/* ============================================================
+   DROPDOWN
+============================================================ */
+
+.dropdown{
+  position:relative;
+}
+
+.dropdown-menu{
+  display:none;
+  position:absolute;
+
+  background:#222;
+  list-style:none;
+
+  padding:10px 0;
+  margin:0;
+
+  top:100%;
+  left:0;
+}
+
+.dropdown-menu li{
+  padding:5px 20px;
+}
+
+.dropdown-menu li a{
+  color:white;
+}
+
+.dropdown:hover .dropdown-menu{
+  display:block;
+}
+
+/* ============================================================
+   WHATSAPP
+============================================================ */
+
+.whatsapp a{
+  background:#25D366;
+  padding:6px 12px;
+  border-radius:4px;
+  color:white;
+}
