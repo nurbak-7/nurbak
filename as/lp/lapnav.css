@@ -11,15 +11,32 @@
   align-items:center;
 
   background:#1084d1;
-  padding:10px 20px;
+  padding:5px 20px;
 }
 
 /* ============================================================
    LOGO
 ============================================================ */
 
-.logo img{
+.logo{
+  width:40px;
   height:40px;
+
+  border-radius:50%;
+  overflow:hidden;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.logo img{
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  display:block;
 }
 
 /* ============================================================
@@ -35,10 +52,37 @@
 }
 
 .menu li a{
+
+  position:relative;
+
   text-decoration:none;
   color:white;
   font-size:14px;
   font-weight:500;
+
+  padding:5px 0;
+
+}
+.menu li a::after{
+
+  content:"";
+
+  position:absolute;
+
+  left:0;
+  bottom:-2px;
+
+  width:0;
+  height:2px;
+
+  background:#db0bca;
+
+  transition:width 0.3s ease;
+
+}
+
+.menu li a:hover::after{
+  width:100%;
 }
 
 .menu li a:hover{
@@ -54,17 +98,26 @@
 }
 
 .dropdown-menu{
+
   display:none;
   position:absolute;
 
-  background:#222;
+  top:calc(100% + 8px);
+  left:0;
+
+  background:#4d70e6;
+
   list-style:none;
 
-  padding:10px 0;
+  padding:8px 0;
   margin:0;
 
-  top:100%;
-  left:0;
+  min-width:180px;
+
+ 
+
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+
 }
 
 .dropdown-menu li{
@@ -78,14 +131,44 @@
 .dropdown:hover .dropdown-menu{
   display:block;
 }
-
 /* ============================================================
-   WHATSAPP
+   REDES SOCIALES
 ============================================================ */
 
-.whatsapp a{
-  background:#25D366;
-  padding:6px 12px;
-  border-radius:4px;
-  color:white;
+.social{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+/* botón circular */
+
+.social a{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  width:34px;
+  height:34px;
+
+  border-radius:50%;
+
+  background:white;
+
+  transition:transform 0.2s ease,
+             background 0.2s ease;
+}
+
+/* icono */
+
+.social img{
+  width:18px;
+  height:18px;
+  display:block;
+}
+
+/* hover */
+
+.social a:hover{
+  transform:scale(1.1);
 }

@@ -1,0 +1,36 @@
+/* ============================================================
+   LAYOUT BASE
+============================================================ */
+
+html,
+body{
+  height:100%;
+  margin:0;
+}
+
+
+/* ============================================================
+   BODY ESTRUCTURA
+============================================================ */
+
+body{
+  display:flex;
+  flex-direction:column;
+  /* estructura scroll solo para body */
+   overflow:hidden;
+   /* estructura scroll solo para body */
+
+  min-height:100vh;
+}
+
+
+/* ============================================================
+   CONTENIDO PRINCIPAL
+============================================================ */
+
+#contenido{
+  flex:1;
+   /* estructura scroll solo para body */
+   overflow-y:auto;
+    /* estructura scroll solo para body */
+}
