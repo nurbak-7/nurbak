@@ -1,0 +1,5 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/factu/factu-base.css
+   Función: Recurso del sistema.
+============================================================ */
+.fisc-panel{width:100%;box-sizing:border-box;font-family:Arial,sans-serif}.fisc-barra{display:flex;gap:8px;align-items:center;margin-bottom:10px}.fisc-barra input{flex:1;min-width:0;padding:8px;border:0;border-bottom:2px solid #d000a8;outline:0}.fisc-tabla{width:100%;border-collapse:collapse;font-size:14px}.fisc-tabla th,.fisc-tabla td{border:1px solid #d000a8;padding:7px;text-align:left}.fisc-tabla th{font-weight:700}.fisc-mensaje{text-align:center;margin:10px 0}

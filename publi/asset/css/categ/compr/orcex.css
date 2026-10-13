@@ -1,0 +1,190 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/compr/orcex.css
+   Módulo: Compras / Orden Compra Ext
+============================================================ */
+
+.orcex { padding: 22px 28px; }
+
+.orcex-cabe {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.orcex-cabe input {
+    width: min(420px, 100%);
+    padding: 9px 10px;
+    box-sizing: border-box;
+}
+
+.orcex-cabe button,
+.orcex-mini button {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.orcex-tabla { overflow: auto; }
+.orcex-tabla table,
+.orcex-det table { width: 100%; border-collapse: collapse; }
+
+.orcex-tabla th,
+.orcex-tabla td,
+.orcex-det th,
+.orcex-det td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #d9e0e8;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.orcex-tabla th,
+.orcex-det th { white-space: nowrap; }
+
+.orcex-mini {
+    display: grid;
+    gap: 12px;
+    padding: 4px;
+    min-width: 540px;
+}
+
+.orcex-numero {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 2px 0 0;
+}
+.orcex-numero label {
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.orcex-numero input {
+    width: 190px;
+    min-width: 190px;
+    box-sizing: border-box;
+    padding: 8px;
+    font-weight: 700;
+    background: #f4f4f4;
+}
+
+.orcex-cam {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.3fr);
+    gap: 10px;
+}
+
+.orcex-campo { display: grid; gap: 5px; }
+.orcex-campo label,
+.orcex-emisor > label {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.orcex-campo input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 8px;
+}
+
+.orcex-campo small {
+    min-height: 15px;
+    font-size: 11px;
+}
+
+.orcex-prod-acciones {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* DETALLE DE LA ORDEN: estructura tipo COTIZACIÓN, con cabecera y filas dentro de un área con scroll vertical. */
+.orcex-det { width: 100%; min-width: 0; }
+.orcex-tabla-area {
+    width: 100%;
+    min-height: 120px;
+    max-height: 260px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+.orcex-detalle {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 14px;
+}
+.orcex-detalle th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    height: 35px;
+    padding: 5px 7px;
+    border: 1px solid #ddd;
+    background: #10001d;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    box-sizing: border-box;
+}
+.orcex-detalle th:nth-child(1) { width: 70px; }
+.orcex-detalle th:nth-child(2) { width: auto; }
+.orcex-detalle th:nth-child(3) { width: 90px; }
+.orcex-detalle th:nth-child(4) { width: 100px; }
+.orcex-detalle th:nth-child(5) { width: 40px; }
+.orcex-detalle tbody tr { height: 42px; }
+.orcex-detalle td {
+    height: 42px;
+    padding: 4px 6px;
+    border: 1px solid #ddd;
+    background: #fff;
+    text-align: center;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+.orcex-detalle td input {
+    width: 100%;
+    height: 28px;
+    min-height: 28px;
+    min-width: 0;
+    padding: 3px 5px;
+    box-sizing: border-box;
+}
+.orcex-detalle td:nth-child(2) input { text-align: left; }
+.orcex-detalle td button {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 22px;
+    font-size: 16px;
+}
+.orcex-total { text-align: right; padding-top: 8px; font-weight: 600; }
+
+.orcex-emisor { display: grid; gap: 5px; }
+.orcex-emisor-cam { display: flex; align-items: center; gap: 10px; }
+.orcex-emisor-cam input { width: 150px; min-width: 150px; box-sizing: border-box; padding: 8px; }
+.orcex-emisor-cam span { min-height: 18px; font-size: 13px; font-weight: 600; }
+.orcex-emisor small { min-height: 15px; font-size: 11px; }
+
+.orcex-acciones { display: flex; justify-content: flex-end; gap: 8px; }
+
+/* MINI de búsqueda de productos: mismo comportamiento visual que COTIZ. */
+.orcex-prod-mini { width: 100%; min-width: 0; box-sizing: border-box; font-family: Arial, sans-serif; padding: 4px; }
+.orcex-prod-busca { display: flex; align-items: center; width: 100%; gap: 10px; margin-bottom: 8px; }
+.orcex-prod-busca label { font-weight: bold; white-space: nowrap; }
+.orcex-prod-busca input { flex: 1; min-width: 0; box-sizing: border-box; padding: 8px 10px; border: 1px solid #bbb; border-radius: 4px; }
+.orcex-prod-info { min-height: 24px; margin-bottom: 5px; font-size: 13px; color: #666; }
+.orcex-prod-tabla-wrap { width: 100%; min-width: 0; max-width: 100%; max-height: 360px; overflow: auto; border: 1px solid #ddd; }
+.orcex-prod-tabla { width: max-content; min-width: 100%; max-width: none; border-collapse: collapse; table-layout: auto; font-size: 13px; }
+.orcex-prod-tabla th,
+.orcex-prod-tabla td { padding: 7px; border-bottom: 1px solid #ddd; text-align: left; vertical-align: top; white-space: nowrap; }
+.orcex-prod-tabla th { position: sticky; top: 0; background: #10001d; color: #fff; z-index: 1; }
+.orcex-prod-tabla tr { cursor: pointer; }
+.orcex-prod-tabla tr.is-seleccionada td { background: #eee; }
+.orcex-prod-ayuda { width: 100%; padding-top: 8px; font-size: 12px; color: #666; }
+
+

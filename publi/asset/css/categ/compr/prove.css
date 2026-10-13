@@ -1,0 +1,6 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/compr/prove.css
+   Módulo: Compras / Proveedores
+   Función: Presentación visual del listado y formulario.
+============================================================ */
+.prove-prov{width:100%;box-sizing:border-box;font-family:Arial,sans-serif}.prove-cabe{display:flex;gap:10px;margin-bottom:10px}.prove-cabe input{flex:1;padding:9px;border:0;border-bottom:2px solid #c0c}.prove-cabe button,.prove-form button{padding:8px 12px}.prove-form{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}.prove-form[hidden]{display:none}.prove-form input{padding:8px;flex:1 1 180px}.prove-tabla-cont{overflow:auto}.prove-tabla{width:100%;border-collapse:collapse;font-size:13px}.prove-tabla th,.prove-tabla td{border:1px solid #c0c;padding:7px;text-align:left}.prove-tabla th{white-space:nowrap}.prove-tabla button{padding:5px 8px}

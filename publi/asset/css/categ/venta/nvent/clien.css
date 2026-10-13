@@ -1,0 +1,6 @@
+/* Ventas / Nota de Venta / Comprador. Distribución como bloque CLIENTE de Cotización. */
+.nvent-cliente .nvent-fila-doble{display:grid;grid-template-columns:max-content minmax(0,1fr) max-content minmax(0,1.6fr)}
+.nvent-cliente .nvent-fila-doble label{flex:auto}
+.nvent-cliente .nvent-fila:not(.nvent-fila-doble){display:grid;grid-template-columns:max-content minmax(0,1fr)}
+.nvent-cliente .nvent-fila input{width:100%}
+

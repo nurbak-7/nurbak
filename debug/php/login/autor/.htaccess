@@ -1,0 +1,14 @@
+# ============================================================
+# Ruta: debug/php/login/autor/.htaccess
+# Función: Permitir el endpoint DEBUG de AUTOR
+# y proteger su archivo de registro.
+# ============================================================
+Options -Indexes
+
+<Files "debug-autor.log">
+    Require all denied
+</Files>
+
+<Files "debug-autor.php">
+    Require all granted
+</Files>

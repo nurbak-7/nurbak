@@ -1,0 +1,5 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/compr/recep.css
+   Módulo: Compras / Recepción
+============================================================ */
+.rece-rece{width:100%;box-sizing:border-box;font-family:Arial,sans-serif}.rece-cabe{display:flex;gap:10px;margin-bottom:10px}.rece-cabe input{flex:1;padding:9px;border:0;border-bottom:2px solid #c0c}.rece-cabe button,.rece-form button{padding:8px 12px}.rece-form[hidden]{display:none}.rece-form{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}.rece-campos{display:flex;flex-wrap:wrap;gap:8px;width:100%}.rece-campos select{padding:8px;min-width:190px}.rece-campos textarea{padding:8px;min-width:260px}.rece-detalle{display:flex;gap:8px;width:100%}.rece-detalle select{flex:1;padding:8px}.rece-detalle input{width:130px;padding:8px}.rece-tabla-cont{overflow:auto}.rece-tabla{width:100%;border-collapse:collapse;font-size:13px}.rece-tabla th,.rece-tabla td{border:1px solid #c0c;padding:7px;text-align:left}.rece-tabla th{white-space:nowrap}.rece-tabla button{padding:5px 8px}

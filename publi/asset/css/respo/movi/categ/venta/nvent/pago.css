@@ -1,0 +1,6 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/venta/nvent/pago.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/venta/nvent/pago.css
+============================================================ */
+@media(max-width:700px){.nvent-pago{align-items:stretch;flex-direction:column;gap:10px}.nvent-pago-campo{justify-content:space-between}.nvent-pago-campo input{flex:1;width:auto}}

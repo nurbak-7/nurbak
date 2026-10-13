@@ -1,0 +1,6 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/venta/cotiz/vende.css
+   Módulo: Ventas / Cotización / Vendedor
+============================================================ */
+.cotiz-vendedor .cotiz-fila input[data-cotiz-vende-cod]{width:100%;min-width:0}
+.cotiz-vendedor .cotiz-fila input[data-cotiz-placa]{width:100%;min-width:0;text-transform:uppercase}

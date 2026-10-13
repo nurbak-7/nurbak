@@ -1,0 +1,137 @@
+/* ============================================================
+   Ruta: publi/asset/css/admin/permi/vent/vent.css
+   Función: Estilos de la VENTANA principal de PERM.
+
+   NIVEL 1: Cabecera y buscador.
+   NIVEL 2: Tabla.
+   NIVEL 3: DETALLE / VER con hover.
+   NIVEL FINAL: El hover no modifica el flujo de la tabla.
+============================================================ */
+
+/* ============================================================
+   NIVEL 1 — CABECERA Y BUSCADOR
+============================================================ */
+.admi-perm { padding: 26px 34px; }
+.admi-perm h2 { margin: 0 0 20px; }
+.admi-perm-acciones { display:flex; align-items:center; gap:6px; margin-bottom:8px; }
+.admi-perm-acciones input { width:180px; height:25px; box-sizing:border-box; }
+.admi-perm-acciones button { height:25px; padding:2px 10px; cursor:pointer; }
+
+/* ============================================================
+   NIVEL 2 — TABLA
+============================================================ */
+.admi-perm-tabla-wrap { overflow:visible; }
+.admi-perm-tabla { width:100%; border-collapse:collapse; }
+.admi-perm-tabla th,
+.admi-perm-tabla td { padding:4px 6px; text-align:left; vertical-align:middle; white-space:nowrap; }
+.admi-perm-tabla th { font-weight:700; }
+.admi-perm-tabla th:nth-child(1), .admi-perm-tabla td:nth-child(1) { width:140px; }
+.admi-perm-tabla th:nth-child(2), .admi-perm-tabla td:nth-child(2) { width:150px; }
+.admi-perm-tabla th:nth-child(3), .admi-perm-tabla td:nth-child(3) { width:160px; }
+.admi-perm-tabla th:nth-child(4), .admi-perm-tabla td:nth-child(4) { width:90px; }
+.admi-perm-tabla th:nth-child(5), .admi-perm-tabla td:nth-child(5) { width:110px; }
+.admi-perm-tabla th:nth-child(6), .admi-perm-tabla td:nth-child(6) { width:165px; min-width:165px; }
+
+/* ============================================================
+   NIVEL 2.1 — COLUMNA ACCIÓN
+   Reservar espacio evita que EDITAR/ELIMINAR queden ocultos
+   cuando la mini-ventana está abierta al lado derecho.
+============================================================ */
+.admi-perm-tabla th:last-child,
+.admi-perm-tabla td:last-child {
+    width:150px;
+    min-width:150px;
+}
+
+
+/* ============================================================
+   NIVEL 3 — DETALLE / HOVER
+   VER es texto. El panel nace debajo de VER y se desplaza hacia
+   la izquierda para no quedar fuera de la ventana.
+============================================================ */
+.admi-perm-detalle { position:relative; display:inline-block; }
+.admi-perm-ver { display:inline-block; cursor:default; user-select:none; }
+.admi-perm-hover {
+    position:absolute;
+    z-index:5000;
+    top:calc(100% + 4px);
+    right:0;
+    left:auto;
+    width:290px;
+    max-height:430px;
+    overflow-y:auto;
+    display:none;
+    padding:10px 12px;
+    box-sizing:border-box;
+    background:#fff;
+    border:1px solid #b8c1cc;
+    border-top:3px solid #c00000;
+    border-radius:0 0 6px 6px;
+    box-shadow:0 8px 18px rgba(0,0,0,.20);
+}
+.admi-perm-detalle:hover .admi-perm-hover { display:block; }
+.admi-perm-grupo { margin:0; padding:3px 0; }
+.admi-perm-grupo + .admi-perm-grupo { margin-top:7px; border-top:1px solid #e2e6eb; padding-top:8px; }
+.admi-perm-grupo-titulo { margin-bottom:3px; font-weight:700; }
+.admi-perm-item { display:block; padding:1px 0; white-space:normal; }
+.admi-perm-item.is-asignado::before { content:'✓ '; }
+
+
+
+/* ============================================================
+   NIVEL 4 — ACCIONES POR USUARIO
+   PERM solo administra la configuración de permisos.
+   El estado ACTIVO/INACTIVO pertenece al módulo USUARIOS.
+============================================================ */
+.admi-perm-acciones-fila {
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:5px;
+    min-width:145px;
+    white-space:nowrap;
+    position:relative;
+    z-index:2;
+}
+.admi-perm-accion {
+    display:inline-block;
+    height:25px;
+    padding:2px 8px;
+    border:1px solid #9ca8b5;
+    border-radius:3px;
+    background:#f4f4f4 !important;
+    color:#163965 !important;
+    text-shadow:none !important;
+    font:inherit;
+    font-size:12px;
+    line-height:19px;
+    cursor:pointer;
+    box-sizing:border-box;
+    opacity:1;
+}
+
+.admi-perm-accion:visited,
+.admi-perm-accion:focus {
+    color:#163965 !important;
+}
+
+.admi-perm-accion:hover {
+    background:#eef3f8;
+}
+.admi-perm-accion-eliminar:hover {
+    border-color:#a90000;
+    color:#a90000;
+}
+
+/* ============================================================
+   NIVEL FINAL — RESPONSIVE
+============================================================ */
+
+
+/* ============================================================
+   NIVEL 5 — SELECCIÓN DE USUARIO
+   La fila seleccionada es la que recibe CREAR en la mini-ventana.
+============================================================ */
+.admi-perm-tabla tbody tr[data-perm-usua] { cursor:pointer; }
+.admi-perm-tabla tbody tr[data-perm-usua]:hover { background:#f5f8fb; }
+.admi-perm-tabla tbody tr.is-seleccionado { background:#e9f0f8; outline:1px solid #9db1c8; outline-offset:-1px; }

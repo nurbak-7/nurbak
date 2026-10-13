@@ -1,0 +1,6 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/dash/body.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/dash/body.css
+============================================================ */
+@media (max-width: 520px) { .dash-welcome, .dash-content { width: min(100% - 1rem, 1180px); } .dash-content { grid-template-columns: 1fr; } }

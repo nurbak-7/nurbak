@@ -1,0 +1,10 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/inven/stock.css
+   Función: Recurso del sistema.
+============================================================ */
+.inve-alma,.inve-stoc,.inve-movi{font-family:inherit;padding:12px;box-sizing:border-box}.inve-cabe{display:flex;gap:8px;margin-bottom:10px}.inve-cabe input{flex:1;min-width:0;padding:8px;border:0;border-bottom:2px solid #c020a0;outline:0}.inve-cabe button,.inve-form button{padding:7px 12px;border:1px solid #777;background:#f4f4f4;cursor:pointer}.inve-form{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}.inve-form[hidden]{display:none}.inve-form input,.inve-form select{padding:7px;min-width:150px;border:1px solid #bbb}.inve-tabla-cont{overflow:auto}.inve-tabla{width:100%;border-collapse:collapse;font-size:13px}.inve-tabla th,.inve-tabla td{border:1px solid #b020d0;padding:6px;text-align:left;white-space:nowrap}.inve-tabla th{font-weight:700}.inve-vacio{text-align:center;margin:8px 0}.inve-tabla button{padding:4px 8px;cursor:pointer}
+
+.inve-cabe select,.inve-form select{min-width:180px;padding:8px;box-sizing:border-box}
+.inve-form label{display:flex;align-items:center;gap:5px;padding:7px 4px}
+.inve-tabla-cont{max-width:100%;overflow:auto}
+

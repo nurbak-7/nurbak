@@ -1,0 +1,155 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/catal/produ/produ-modul.css
+   Módulo: Catálogo / Productos
+
+   FUNCIÓN:
+   Diseñar únicamente la vista principal de Productos.
+
+   RESPONSABILIDAD:
+   - Área general de Productos.
+   - Buscador.
+   - Cabecera y botón Nuevo.
+   - Tabla.
+   - Filas y mensaje vacío.
+   - Precios.
+   - Responsive de la vista principal.
+
+   NO CONTIENE:
+   - Estilos de MINI.
+   - Tamaño de la ventana MINI.
+   - Formularios de Productos dentro de MINI.
+============================================================ */
+
+.prod,
+.prod * { box-sizing: border-box; }
+
+.prod {
+    width: 100%;
+    color: #202020;
+    background: transparent;
+}
+
+.prod-busc {
+    width: 100%;
+    padding: .2rem .25rem;
+    background: #63ded4;
+}
+
+.prod-etiq {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.prod-entr {
+    width: 100%;
+    min-height: 30px;
+    padding: 8px 12px;
+    color: #1f2937;
+    background: #63ded4;
+    border: none;
+    border-bottom: 3px solid #f30fa7;
+    outline: none;
+    font-size: 14px;
+    transition: border-color .3s, box-shadow .3s;
+}
+
+.prod-entr::placeholder { color: #56616d; opacity: 1; }
+
+.prod-entr:focus {
+    border-bottom-color: #ffdd00 !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,.2);
+}
+
+.prod-cab {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .5rem;
+    align-items: end;
+}
+
+.prod-nuevo {
+    padding: .45rem .8rem;
+    border: 1px solid #163965;
+    background: #163965;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.prod-tabl-cont {
+    width: 100%;
+    max-height: 60vh;
+    margin-top: .75rem;
+    overflow: auto;
+    border: 1px solid #9b2cc7;
+    border-radius: 4px;
+    background: transparent !important;
+}
+
+.prod-tabl {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+    background: transparent !important;
+}
+
+.prod-tabl th,
+.prod-tabl td {
+    padding: 6px 8px;
+    color: #202020;
+    border: 2px solid #9b2cc7;
+    font-size: 13px;
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.prod-tabl th:nth-child(2),
+.prod-tabl td:nth-child(2) { width: 100%; }
+
+.prod-tabl th {
+    font-weight: 700;
+    background: #ffffff !important;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.prod-tabl tbody tr,
+.prod-tabl tbody td { background: rgb(237, 237, 240) !important; }
+
+.prod-tabl tbody tr:hover,
+.prod-tabl tbody tr:hover td {
+    background: #33047256 !important;
+    cursor: pointer;
+}
+
+.prod-tabl tbody tr[hidden] { display: none; }
+
+.prod-vaci {
+    width: 100%;
+    margin: 0;
+    padding: 6px 8px;
+    color: #d38a00;
+    background: transparent;
+    border: 2px solid #9b2cc7;
+    border-top: 0;
+    font-size: 13px;
+    text-align: center;
+}
+
+.prod-vaci[hidden] { display: none; }
+
+.prod-tabl th:nth-child(8),
+.prod-tabl td:nth-child(8),
+.prod-tabl th:nth-child(9),
+.prod-tabl td:nth-child(9) { text-align: right; }
+
+

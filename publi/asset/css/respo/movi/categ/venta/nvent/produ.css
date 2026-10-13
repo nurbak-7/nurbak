@@ -1,0 +1,6 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/venta/nvent/produ.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/venta/nvent/produ.css
+============================================================ */
+@media(max-width:700px){.nvent-prod-mini-buscador{display:block}.nvent-prod-mini-buscador label{display:block;margin-bottom:5px}.nvent-prod-mini-info{flex-wrap:wrap;gap:8px 14px;white-space:normal}.nvent-prod-mini-info span:first-child{width:100%;margin-right:0}.nvent-prod-mini-tabla{width:max-content;min-width:0}.nvent-prod-mini-tabla-wrap{overflow-x:auto}}

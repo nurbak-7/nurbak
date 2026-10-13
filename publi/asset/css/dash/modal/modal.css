@@ -1,0 +1,264 @@
+/* ============================================================
+   Ruta: publi/asset/css/dash/modal/modal.css
+   Función: Diseñar los estados de las modals internas.
+
+   Este archivo solo contiene presentación. Las acciones de mover,
+   maximizar, minimizar, restaurar y cerrar pertenecen a modal.js.
+
+   Ejemplo del orden visual:
+
+   Navbar
+      ↓
+   Área de trabajo
+      ↓
+   Modals normales, maximizadas o minimizadas
+
+   🔹 Nivel 1: Limitar el área de trabajo
+   🔹 Nivel 2: Diseñar la modal normal
+   🔹 Nivel 3: Preparar el área de redimensionamiento
+   🔹 Nivel 3: Diseñar la modal maximizada
+   🔹 Nivel 4: Diseñar la modal minimizada
+   🔹 Nivel 5: Diseñar la cabecera y los controles
+   🔹 Nivel Final: Diseñar el contenido
+============================================================ */
+
+/* ============================================================
+   ÁREA 1: ESPACIO DE TRABAJO
+
+   🔹 Nivel 1: Empezar debajo del navbar.
+   🔹 Nivel 2: Terminar dentro del navegador.
+   🔹 Nivel Final: Permitir eventos solamente en las modals.
+
+   --alto-nav-real es calculado por modal.js. Si JavaScript todavía
+   no lo calculó, se utiliza 44px como valor de respaldo.
+============================================================ */
+.dash-modal-area {
+    position: fixed;
+    top: var(--alto-nav-real, 44px);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Todos los tamaños incluyen borde y padding dentro de su medida. */
+.dash-modal,
+.dash-modal * {
+    box-sizing: border-box;
+}
+
+/* ============================================================
+   ÁREA 2: MODAL NORMAL
+
+   🔹 Nivel 1: Utilizar un ancho adaptable al área disponible.
+   🔹 Nivel 2: Limitar el ancho máximo al viewport.
+   🔹 Nivel 3: Permitir redimensionamiento manual desde los bordes.
+   🔹 Nivel Final: Permitir mover y seleccionar la modal.
+
+   modal.js calcula el centro exacto y después aplica la cascada.
+============================================================ */
+.dash-modal {
+    position: absolute;
+    top: 16px;
+    left: 5%;
+    z-index: 1001;
+    width: min(90%, calc(100% - 32px));
+    max-width: calc(100% - 32px);
+    min-width: 320px;
+    min-height: 300px;
+    max-height: calc(100% - 32px);
+    margin: 0;
+    overflow: hidden;
+    color: #1f2937;
+    background: #ffffff;
+    border: 1px solid #b8c7d9;
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+    pointer-events: auto;
+}
+
+/* La modal seleccionada queda visualmente activa. */
+.dash-modal.is-activa {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .28);
+}
+
+/* ============================================================
+   ÁREA 3: MODAL MAXIMIZADA
+
+   🔹 Nivel 1: Ocupar toda el área de trabajo.
+   🔹 Nivel 2: Continuar debajo del navbar.
+   🔹 Nivel Final: No salir de los límites del navegador.
+============================================================ */
+.dash-modal.is-maximizada {
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: none;
+    height: 100% !important;
+    max-height: none;
+    min-height: 0;
+    border-radius: 0;
+}
+
+/* ============================================================
+   ÁREA 4: MODAL MINIMIZADA
+
+   🔹 Nivel 1: Reducir la misma modal a su cabecera.
+   🔹 Nivel 2: Mantener visibles minimizar, maximizar y cerrar.
+   🔹 Nivel Final: Alinear las minimizadas en la parte inferior.
+
+   No se crea otro botón separado. La modal original permanece
+   visible y se puede cerrar directamente con ×.
+============================================================ */
+.dash-modal.is-minimizada {
+    top: auto !important;
+    bottom: 10px !important;
+    width: min(260px, calc(100% - 20px)) !important;
+    max-width: none;
+    min-width: 0;
+    height: 38px !important;
+    min-height: 38px;
+    max-height: 38px;
+    border-radius: 4px;
+}
+
+.dash-modal.is-minimizada .dash-modal-head {
+    height: 37px;
+    min-height: 37px;
+    padding: .25rem .35rem;
+    cursor: default;
+}
+
+.dash-modal.is-minimizada .dash-modal-titulo {
+    font-size: .85rem;
+}
+
+.dash-modal.is-minimizada .dash-modal-acciones {
+    gap: .15rem;
+}
+
+.dash-modal.is-minimizada .dash-modal-acciones button {
+    width: 24px;
+    height: 24px;
+    font-size: .85rem;
+}
+
+.dash-modal.is-minimizada .dash-modal-contenido {
+    display: none;
+}
+
+/* ============================================================
+   ÁREA 5: CABECERA DE LA MODAL
+
+   🔹 Nivel 1: Mostrar el título y los controles.
+   🔹 Nivel 2: Utilizar la cabecera como zona de arrastre.
+   🔹 Nivel Final: Evitar seleccionar texto mientras se mueve.
+============================================================ */
+.dash-modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 42px;
+    padding: .5rem .75rem;
+    color: #ffffff;
+    background: #163965;
+    cursor: move;
+    user-select: none;
+    touch-action: none;
+}
+
+.dash-modal.is-maximizada .dash-modal-head,
+.dash-modal.is-minimizada .dash-modal-head {
+    cursor: default;
+}
+
+.dash-modal-titulo {
+    margin: 0;
+    overflow: hidden;
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ============================================================
+   ÁREA 6: CONTROLES
+
+   Los controles no inician el arrastre porque modal.js comprueba
+   que el puntero no haya comenzado sobre un botón.
+============================================================ */
+.dash-modal-acciones {
+    display: flex;
+    gap: .25rem;
+    flex-shrink: 0;
+}
+
+.dash-modal-acciones button {
+    width: 30px;
+    height: 28px;
+    padding: 0;
+    color: #ffffff;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .45);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.dash-modal-acciones button:hover {
+    background: rgba(255, 255, 255, .18);
+}
+
+/* ============================================================
+   ÁREA 7: CONTENIDO DEL MÓDULO
+
+   🔹 Nivel 1: Separar el contenido de la cabecera.
+   🔹 Nivel Final: Permitir desplazamiento cuando sea necesario.
+============================================================ */
+.dash-modal-contenido {
+    width: 100%;
+    min-width: 0;
+    min-height: 240px;
+    max-height: calc(100vh - var(--alto-nav-real, 44px) - 76px);
+    padding: 1rem;
+    overflow: auto;
+    color: #1f2937;
+    background: #ffffff;
+}
+
+.dash-modal.is-maximizada .dash-modal-contenido {
+    height: calc(100% - 42px);
+    max-height: none;
+}
+
+/* ============================================================
+   ÁREA FINAL: PANTALLAS PEQUEÑAS
+============================================================ */
+
+/* ============================================================
+   PRODUCTOS — FONDO INTERMEDIO
+============================================================ */
+
+.dash-modal:has(.prod),
+.dash-modal:has(.prod) .dash-modal-contenido {
+    background: rgba(23, 70, 226, 0.205);
+}
+/* ============================================================
+   ÁREA FINAL: REDIMENSIONAMIENTO
+
+   El cursor y el redimensionamiento se controlan desde movim.js.
+   No se utiliza resize: both porque solo ofrece la esquina
+   inferior derecha y además puede crear un tirador nativo.
+============================================================ */
+.dash-modal {
+    resize: none;
+}
+
+.dash-modal.is-maximizada,
+.dash-modal.is-minimizada {
+    resize: none;
+}

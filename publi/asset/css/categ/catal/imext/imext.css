@@ -1,0 +1,8 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/catal/imext/imext.css
+   Módulo: Catálogo / ASINC / IMEXT
+   Función: Coordinador general de estilos.
+============================================================ */
+
+@import url('./impor.css');
+@import url('./expor.css');

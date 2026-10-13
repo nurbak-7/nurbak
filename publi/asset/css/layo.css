@@ -1,0 +1,14 @@
+/* ============================================================
+   Ruta: publi/asset/css/layo.css
+   Función: Estilos permanentes del dashboard.
+
+   Los estilos específicos de módulos se cargan bajo demanda
+   mediante publi/asset/js/core/estil.js.
+   Login y recuperación conservan sus enlaces CSS propios.
+============================================================ */
+
+@import url('./dash/head.css');
+@import url('./dash/body.css');
+@import url('./dash/foot.css');
+@import url('./dash/mini/mini.css');
+@import url('./dash/modal/modal.css');

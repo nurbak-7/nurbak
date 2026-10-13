@@ -1,0 +1,22 @@
+DEBUG IMEXT
+
+La estructura sigue modul/categ/catal/asinc/imext.
+Cada subproceso mantiene su DEBUG independiente.
+
+IMPO:
+  debug-impor.php -> coordinador del subproceso
+  debug-archi.php -> lectura/validacion del XLSX
+  debug-lotes.php -> procesamiento por lote
+  debug-repos.php -> persistencia
+  debug-servi.php -> servicio
+  debug-valid.php -> validacion de fila
+
+EXPO:
+  debug-expor.php -> coordinador del subproceso
+  debug-archi.php -> generacion/lectura de archivo
+  debug-filtr.php -> filtros
+  debug-lotes.php -> lotes
+  debug-repos.php -> persistencia
+  debug-servi.php -> servicio
+
+Los archivos DEBUG no incluyen archivos funcionales de modul/.

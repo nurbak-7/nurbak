@@ -1,0 +1,6 @@
+[2026-10-13 01:07:01] ADMIN_ACTI {"archivo":"debug-admin.js"}
+[2026-10-13 01:07:01] ADMIN_CARG {"ruta":"debug/js/admin/debug-admin-event.js"}
+[2026-10-13 01:07:01] ADMIN_CARG {"ruta":"debug/js/admin/permi/debug-permi.js"}
+[2026-10-13 01:07:01] ADMIN_CARG {"ruta":"debug/js/admin/secue/debug-secue.js"}
+[2026-10-13 01:07:01] ADMIN_CARG {"ruta":"debug/js/admin/usuar/debug-usuar.js"}
+[2026-10-13 01:07:01] ADMIN_CARG {"ruta":"debug/js/admin/tiend/debug-tiend.js"}

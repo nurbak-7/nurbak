@@ -1,0 +1,13 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/pagos/pagos.css
+   Función: Recurso del sistema.
+============================================================ */
+/* ============================================================
+   PAGOS - BASE GENERAL
+============================================================ */
+.pago-panel{display:flex;flex-direction:column;gap:12px;padding:14px;}
+.pago-barra{display:flex;gap:8px;}
+.pago-barra input{width:100%;box-sizing:border-box;padding:8px 10px;}
+.pago-tabla{width:100%;border-collapse:collapse;}
+.pago-tabla th,.pago-tabla td{padding:7px 8px;text-align:left;border-bottom:1px solid #ddd;}
+.pago-mensaje{margin:8px 0;text-align:center;}

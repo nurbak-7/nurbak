@@ -1,0 +1,9 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/venta/cotiz/clien.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/venta/cotiz/clien.css
+============================================================ */
+@media(max-width:760px){
+    .cotiz-cliente .cotiz-fila-doble{grid-template-columns:max-content minmax(0,1fr)}
+    .cotiz-cliente .cotiz-fila-doble label:nth-of-type(2){grid-column:1}
+}

@@ -1,0 +1,8 @@
+/* Ventas / Nota de Venta / Vendedor y vehículo.
+   Parte visual del bloque equivalente a Operaciones. */
+.nvent-operacion{display:flex;flex-direction:column;gap:7px;}
+.nvent-operacion .nvent-fila{display:flex;align-items:center;gap:6px;min-width:0;}
+.nvent-operacion .nvent-fila label{flex:0 0 75px;line-height:normal;}
+.nvent-operacion .nvent-fila input,.nvent-operacion .nvent-fila select{width:100%;min-width:0;}
+.nvent-operacion [data-nven-vende-cod]{font-size:13px;}
+.nvent-operacion [data-nven-placa]{text-transform:uppercase;}

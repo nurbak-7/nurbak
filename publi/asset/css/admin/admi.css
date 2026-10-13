@@ -1,0 +1,11 @@
+/* ============================================================
+   Ruta: publi/asset/css/admin/admi.css
+   Función: Coordinador general de estilos de ADMINISTRACIÓN.
+
+   NIVEL 1: PERM → permisos.
+   NIVEL 2: USUA → usuarios.
+   NIVEL FINAL: ADMI no contiene estilos de detalle.
+============================================================ */
+
+@import url('perm/perm.css');
+@import url('usua/usua.css');

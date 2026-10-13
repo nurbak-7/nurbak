@@ -1,0 +1,20 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/venta/opera.css
+   Módulo: Ventas / Operaciones
+
+   RESPONSABILIDAD:
+   Punto de entrada CSS de Operaciones.
+============================================================ */
+
+
+.opera-panel{
+    position:relative;
+    width:100%;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+.opera-form{
+    width:100%;
+    box-sizing:border-box;
+}

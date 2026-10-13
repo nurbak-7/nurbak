@@ -1,0 +1,110 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/catal/imext/expor.css
+   Módulo: Catálogo / ASINC / IMEXT / Exportación
+
+   Función:
+   Presentar la exportación integral XLSX.
+
+   RESPONSABILIDAD:
+   Solo estilos.
+   La generación del Excel pertenece al PHP.
+   La coordinación pertenece a expor.js.
+============================================================ */
+
+.expo,
+.expo * {
+    box-sizing: border-box;
+}
+
+.expo {
+    width: 100%;
+    color: #202020;
+}
+
+.expo-cab {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr) auto;
+    gap: .75rem;
+    align-items: end;
+    padding: .5rem;
+}
+
+.expo-tipo {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    min-height: 34px;
+    justify-content: center;
+}
+
+.expo-tipo span,
+.expo-cab label {
+    display: block;
+    margin-bottom: .25rem;
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.expo-tipo strong {
+    font-size: .85rem;
+}
+
+.expo-cab input {
+    width: 100%;
+    min-height: 34px;
+    padding: .4rem;
+}
+
+.expo-cab button {
+    min-height: 34px;
+    padding: .45rem .8rem;
+    cursor: pointer;
+}
+
+.expo-cab button:disabled {
+    cursor: wait;
+    opacity: .65;
+}
+
+.expo-info {
+    margin: 0 .5rem .5rem;
+    font-size: .78rem;
+    opacity: .75;
+}
+
+.expo-prog {
+    margin: .5rem;
+}
+
+.expo-barra {
+    height: 12px;
+    margin-top: .5rem;
+    overflow: hidden;
+    border: 1px solid #999;
+    border-radius: 4px;
+}
+
+.expo-barra span {
+    display: block;
+    width: 0;
+    height: 100%;
+    transition: width .25s ease;
+    background: #3d7;
+}
+
+.expo-msg {
+    margin: .5rem;
+    min-height: 20px;
+}
+
+.expo-descarga {
+    display: inline-block;
+    padding: .45rem .75rem;
+    border: 1px solid #163965;
+    border-radius: 4px;
+    color: #fff;
+    background: #163965;
+    text-decoration: none;
+}
+
+

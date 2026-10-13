@@ -1,0 +1,21 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/catal/vehic.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/catal/vehic.css
+============================================================ */
+@media (max-width: 600px){
+    .dash-mini.catal-vehi-mini {
+    width:820px;
+    min-width:700px;
+    max-width:1050px;
+    height:620px;
+    min-height:500px;
+    max-height:760px;
+}
+
+.dash-mini.catal-vehi-mini .catal-mini-form{
+        width:100%;
+        min-width:0;
+        max-width:none;
+    }
+}

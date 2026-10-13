@@ -1,0 +1,109 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/catal/imext/impor.css
+   Módulo: Catálogo / ASINC / IMEXT / Importación
+
+   Función:
+   Presentar la carga XLSX integral por hojas de MARCA.
+
+   RESPONSABILIDAD:
+   Solo estilos.
+============================================================ */
+
+.impo,
+.impo * {
+    box-sizing: border-box;
+}
+
+.impo {
+    width: 100%;
+    color: #202020;
+}
+
+.impo-cab {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem;
+    padding: .5rem;
+}
+
+.impo-cab label,
+.impo-archivo span {
+    display: block;
+    margin-bottom: .25rem;
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.impo-cab select,
+.impo-archivo input {
+    width: 100%;
+    min-height: 34px;
+    padding: .4rem;
+}
+
+.impo-form {
+    display: flex;
+    align-items: end;
+    gap: .75rem;
+    padding: .5rem;
+}
+
+.impo-form button {
+    padding: .5rem .8rem;
+    cursor: pointer;
+}
+
+.impo-form button:disabled {
+    cursor: wait;
+    opacity: .65;
+}
+
+.impo-prog {
+    margin: .5rem;
+}
+
+.impo-barra {
+    height: 12px;
+    margin-top: .5rem;
+    overflow: hidden;
+    border: 1px solid #999;
+    border-radius: 4px;
+}
+
+.impo-barra span {
+    display: block;
+    width: 0;
+    height: 100%;
+    transition: width .25s ease;
+    background: #3d7;
+}
+
+.impo-msg {
+    margin: .5rem;
+    min-height: 20px;
+}
+
+.impo-erro {
+    margin: .5rem;
+}
+
+.impo-erro-lista {
+    max-width: 100%;
+    overflow: auto;
+    margin-top: .5rem;
+}
+
+.impo-erro-lista table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.impo-erro-lista th,
+.impo-erro-lista td {
+    padding: .4rem .5rem;
+    border: 1px solid #999;
+    text-align: left;
+    white-space: nowrap;
+}
+
+

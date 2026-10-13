@@ -1,0 +1,7 @@
+[2026-10-13 01:07:01] MODAL_ACTI {"archivo":"debug-modal.js"}
+[2026-10-13 01:07:01] MODAL_CARG {"ruta":"debug/js/dash/modal/debug-accio.js"}
+[2026-10-13 01:07:01] MODAL_CARG {"ruta":"debug/js/dash/modal/debug-carga.js"}
+[2026-10-13 01:07:01] MODAL_CARG {"ruta":"debug/js/dash/modal/debug-event.js"}
+[2026-10-13 01:07:01] MODAL_CARG {"ruta":"debug/js/dash/modal/debug-movim.js"}
+[2026-10-13 01:07:01] MODAL_CARG {"ruta":"debug/js/dash/modal/debug-recup.js"}
+[2026-10-13 01:07:01] MODAL_CARG {"ruta":"debug/js/dash/modal/debug-rutas.js"}

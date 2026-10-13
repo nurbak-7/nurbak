@@ -1,0 +1,58 @@
+PARTE 5 — PRUEBAS INVENTARIO
+
+BASE:
+TIEND → ALMAC → STOCK
+ALMAC → MOVIM / RESER / ORDCO
+
+PRUEBAS FUNCIONALES:
+01 Crear tienda.
+    Esperado: tienda creada INACTIVA.
+
+02 Crear almacén principal.
+    Esperado: primer almacén de la tienda queda PRINCIPAL y ACTIVO.
+
+03 Crear almacén secundario.
+    Esperado: queda SECUNDARIO y ACTIVO.
+
+04 Activar / desactivar.
+    Esperado: tienda solo se activa con usuario, responsable y principal ACTIVO.
+    Esperado: no se permite inactivar el principal de una tienda activa.
+
+05 Crear producto.
+    Esperado: producto permanece en CATAL y no se duplica en INVEN.
+
+06 Importar producto con QTY.
+    Esperado: IMEXT usa la TIENDA seleccionada y su ALMAC PRINCIPAL ACTIVO.
+
+07 Verificar STOCK.
+    Esperado: QTY queda en STOCK del ALMAC correspondiente.
+    Esperado: canti nunca es negativa.
+
+08 Movimiento.
+    Esperado: entrada/salida/ajuste actualizan STOCK del ALMAC correcto.
+    Esperado: salss registra venta sin stock cuando canti = 0.
+
+09 Reserva.
+    Esperado: RESER reduce disponibilidad sin convertir canti en negativo.
+    Esperado: RESER puede pasar reservada → consumida/liberada.
+
+10 Orden de transferencia.
+    Esperado: ORDCO usa ALMAC origen y ALMAC destino.
+    Esperado: origen y destino son diferentes.
+
+11 Transferencia dentro de una tienda.
+    Esperado: ALMAC A → ALMAC B de la misma TIENDA.
+
+12 Transferencia entre tiendas.
+    Esperado: ALMAC de TIENDA A → ALMAC de TIENDA B.
+
+VALIDACIONES ESTÁTICAS EJECUTADAS SOBRE ESTA ENTREGA:
+- 879 archivos PHP: sintaxis correcta.
+- 113 archivos JS: sintaxis correcta.
+- Los JS funcionales de ALMA/STOCK/MOVIM/ORDCO fueron revisados contra sus controladores actuales.
+- Los DEBUG JS mantienen endpoints independientes.
+- Las vistas usan el contexto TIENDA → ALMAC.
+- No se mezcló DEBUG dentro de archivos funcionales.
+
+NOTA:
+Las 12 pruebas funcionales requieren ejecutar el sistema con XAMPP, MySQL/MariaDB y las bases cargadas. No se marcaron como ejecutadas en este entorno porque aquí no existe una instancia MySQL del proyecto.

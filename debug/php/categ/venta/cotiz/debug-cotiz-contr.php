@@ -1,0 +1,37 @@
+<?php
+/* ============================================================
+   Ruta: debug/php/categ/venta/cotiz/debug-cotiz-contr.php
+   Módulo: DEBUG / Ventas / Cotización / contr
+
+   RESPONSABILIDAD:
+   Canal DEBUG independiente del proceso funcional.
+============================================================ */
+declare(strict_types=1);
+header('Content-Type: application/json; charset=utf-8');
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') { http_response_code(405); exit; }
+$paso=trim((string)($_POST['paso']??''));
+if($paso===''){http_response_code(400);exit;}
+$ctx=$_POST['contexto']??[];
+if(!is_array($ctx))$ctx=[];
+unset($ctx['clave'],$ctx['password'],$ctx['token'],$ctx['secret']);
+$dat=$ctx==[]?'':(string)json_encode($ctx,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PARTIAL_OUTPUT_ON_ERROR);
+$log=__DIR__.'/debug-cotiz-contr.log';
+/* ============================================================
+   NIVEL 6
+   DESTROY AUTOMÁTICO DEL LOG
+
+   Si este LOG lleva 180 segundos o más sin recibir eventos,
+   se limpia antes de registrar el nuevo evento.
+   Cada LOG controla su propia inactividad.
+============================================================ */
+clearstatcache(true, $log);
+if (is_file($log)) {
+    $ult = filemtime($log);
+    if ($ult !== false && (time() - $ult) >= 180) {
+        file_put_contents($log, '', LOCK_EX);
+    }
+}
+
+file_put_contents($log,sprintf('[%s] %s%s%s',date('Y-m-d H:i:s'),$paso,$dat!==''?' ':'',$dat).PHP_EOL,FILE_APPEND|LOCK_EX);
+http_response_code(204);
+exit;

@@ -1,0 +1,9 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/venta/nvent.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/venta/nvent.css
+============================================================ */
+@import url('./nvent/clien.css');
+@import url('./nvent/produ.css');
+@import url('./nvent/total.css');
+@import url('./nvent/pago.css');

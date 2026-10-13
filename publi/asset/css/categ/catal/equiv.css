@@ -1,0 +1,92 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/catal/equiv.css
+   Función: Recurso del sistema.
+============================================================ */
+.catal-equiv {
+    width: 100%;
+    background: #fff;
+    color: #202020;
+    box-sizing: border-box;
+}
+
+.equiv-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    gap: .5rem;
+    padding: .5rem;
+    align-items: end;
+}
+
+.equiv-campo label,
+.equiv-busc label {
+    display: block;
+    margin-bottom: .25rem;
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.equiv-campo select,
+.equiv-busc input {
+    width: 100%;
+    min-height: 32px;
+    padding: .4rem;
+    box-sizing: border-box;
+}
+
+.equiv-form button,
+.equiv-tabla button {
+    padding: .4rem .65rem;
+    cursor: pointer;
+}
+
+.equiv-busc {
+    padding: .35rem;
+}
+
+.equiv-tabla {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.equiv-tabla table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+}
+
+.equiv-tabla th,
+.equiv-tabla td {
+    padding: .4rem .5rem;
+    border: 1px solid #999;
+    white-space: nowrap;
+    text-align: left;
+    font-size: .8rem;
+}
+
+.equiv-tabla th {
+    background: #f3f3f3;
+    font-weight: 700;
+}
+
+[data-equiv-vaci] {
+    padding: .5rem;
+    font-size: .8rem;
+}
+
+
+
+/* ============================================================
+   MINI DEL MÓDULO — EQUIVALENCIAS
+   El tamaño pertenece al módulo; MINI solo administra la ventana.
+============================================================ */
+.dash-mini.catal-equiv-mini {
+    width:980px;
+    min-width:820px;
+    max-width:1150px;
+    height:620px;
+    min-height:420px;
+    max-height:760px;
+}
+
+
+

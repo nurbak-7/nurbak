@@ -1,0 +1,17 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/venta/opera/opera.css
+   Módulo: Ventas / Operaciones / Operación
+   RESPONSABILIDAD: Vendedor, placa y almacén.
+============================================================ */
+
+.opera-operacion{
+    box-sizing:border-box;
+}
+
+.opera-operacion .opera-fila input{
+    min-width:0;
+}
+
+.opera-operacion .opera-fila select{
+    min-width:0;
+}

@@ -1,0 +1,12 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/core/toast.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/core/toast.css
+============================================================ */
+@media (max-width: 700px) {
+    .nurbak-toast-layer {
+        top: 8px;
+        right: 8px;
+        width: min(300px, calc(100% - 16px));
+    }
+}

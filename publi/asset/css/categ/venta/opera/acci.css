@@ -1,0 +1,196 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/venta/opera/acci.css
+   Módulo: Ventas / Operaciones / Acciones
+   RESPONSABILIDAD: Observación, acciones y listado de operaciones.
+============================================================ */
+
+.opera-observacion{
+    width:100%;
+    box-sizing:border-box;
+    padding:8px 0;
+}
+
+.opera-observacion input{
+    width:100%;
+    box-sizing:border-box;
+    padding:8px;
+    border:1px solid #ddd;
+}
+
+.opera-acciones{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    width:100%;
+    box-sizing:border-box;
+    padding:10px 12px;
+}
+
+.opera-acciones button{
+    padding:8px 18px;
+    border:0;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.opera-acciones button:first-child{
+    background:#f04438;
+    color:#fff;
+}
+
+.opera-acciones button:last-child{
+    background:#1689e8;
+    color:#fff;
+}
+
+.opera-listado{
+    width:100%;
+    box-sizing:border-box;
+    margin-top:15px;
+}
+
+.opera-barra{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.opera-barra input{
+    flex:1;
+    min-width:0;
+    padding:8px;
+    border:0;
+    border-bottom:2px solid #d000a8;
+    outline:0;
+}
+
+.opera-barra button{
+    padding:8px 12px;
+    cursor:pointer;
+}
+
+.opera-listado > .opera-tabla{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+}
+
+.opera-listado > .opera-tabla th,
+.opera-listado > .opera-tabla td{
+    padding:7px;
+    border:1px solid #d000a8;
+    text-align:left;
+}
+
+.opera-listado > .opera-tabla th{
+    font-weight:bold;
+}
+
+.opera-mensaje{
+    margin:10px 0;
+    text-align:center;
+}
+
+
+/* ============================================================
+   TOAST Y CONFIRMACIÓN DE OPERACIONES
+============================================================ */
+[data-opera-toas]{
+    position:fixed;
+    inset:0;
+    z-index:1000000;
+    pointer-events:none;
+}
+
+[data-opera-toas-conf]{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,0,0,.20);
+    pointer-events:auto;
+}
+
+[data-opera-toas-conf-box]{
+    width:min(420px,calc(100vw - 40px));
+    box-sizing:border-box;
+    padding:18px 20px;
+    background:#fff;
+    border:1px solid #b8c7d9;
+    border-radius:6px;
+    box-shadow:0 10px 28px rgba(0,0,0,.24);
+}
+
+[data-opera-toas-conf-box] p{
+    margin:0 0 18px;
+    font-size:15px;
+    line-height:1.45;
+    color:#222;
+    font-weight:600;
+    text-align:center;
+}
+
+[data-opera-toas-conf-btn]{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+}
+
+[data-opera-toas-conf-btn] button{
+    min-width:100px;
+    padding:8px 16px;
+    border:0;
+    border-radius:4px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+[data-opera-toas-conf-btn] button:first-child{
+    background:#1689e8;
+    color:#fff;
+}
+
+[data-opera-toas-conf-btn] button:last-child{
+    background:#f04438;
+    color:#fff;
+}
+
+[data-opera-toas-conf-btn] button:disabled{
+    opacity:.55;
+    cursor:wait;
+}
+
+[data-opera-toas-resu]{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(.96);
+    width:min(360px,calc(100vw - 40px));
+    box-sizing:border-box;
+    padding:13px 16px;
+    background:#fff;
+    border:1px solid rgba(0,0,0,.14);
+    border-radius:6px;
+    box-shadow:0 8px 24px rgba(0,0,0,.22);
+    text-align:center;
+    font-size:14px;
+    font-weight:600;
+    opacity:0;
+    transition:opacity .18s ease,transform .18s ease;
+}
+
+[data-opera-toas-resu][data-opera-toas-on="si"]{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1);
+}
+
+[data-opera-toas-resu="exi"]{
+    border-left:4px solid #2e7d32;
+}
+
+[data-opera-toas-resu="err"]{
+    border-left:4px solid #d32f2f;
+}

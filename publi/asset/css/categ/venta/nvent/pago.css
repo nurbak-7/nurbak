@@ -1,0 +1,7 @@
+/* Ventas / Nota de Venta / Pago. Mismo diseño del componente Pago de Operaciones. */
+.nvent-pago{display:flex;justify-content:flex-end;align-items:center;gap:25px;width:100%;box-sizing:border-box;margin-top:8px;padding:8px 14px;background:#5210a0;border:1px solid #d000a8}
+.nvent-pago-campo{position:relative;display:flex;align-items:center;gap:8px}
+.nvent-pago-campo label{font-size:12px;font-weight:bold;color:#ff0000;white-space:nowrap}
+.nvent-pago-campo select,.nvent-pago-campo input{height:28px;min-width:0;box-sizing:border-box;padding:4px 8px;border:1px solid #d000a8;border-radius:3px;background:#fff}
+.nvent-pago-campo input{width:180px}
+

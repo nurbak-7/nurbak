@@ -1,0 +1,167 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/venta/opera/prod.css
+   Módulo: Ventas / Operaciones / Productos
+
+   RESPONSABILIDAD:
+   Estilos del botón Agregar producto y del MINI buscador.
+============================================================ */
+
+.opera-productos{
+    width:100%;
+    box-sizing:border-box;
+    padding:12px 0 0;
+}
+
+.opera-productos > button{
+    padding:8px 15px;
+    margin-bottom:12px;
+    border:0;
+    border-radius:4px;
+    background:#35a84a;
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.opera-productos > button:hover{
+    opacity:.9;
+}
+
+/* ============================================================
+   MINI — BUSCADOR DE PRODUCTOS
+============================================================ */
+
+.mini-opera-productos{
+    width:max-content;
+    max-width:calc(100% - 48px);
+}
+
+.opera-prod-mini{
+    width:100%;
+    min-width:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+.opera-prod-mini-buscador{
+    display:flex;
+    align-items:center;
+    width:100%;
+    gap:10px;
+    margin-bottom:8px;
+}
+
+.opera-prod-mini-buscador label{
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.opera-prod-mini-buscador input{
+    flex:1;
+    min-width:0;
+    box-sizing:border-box;
+    padding:8px 10px;
+    border:1px solid #bbb;
+    border-radius:4px;
+}
+
+/* ============================================================
+   RESUMEN DEL PRODUCTO SELECCIONADO
+============================================================ */
+
+.opera-prod-mini-info{
+    display:flex;
+    align-items:center;
+    width:100%;
+    gap:18px;
+    min-height:24px;
+    margin-bottom:5px;
+    font-size:13px;
+    white-space:nowrap;
+}
+
+.opera-prod-mini-resultados{
+    margin-right:auto;
+    color:#666;
+}
+
+.opera-prod-mini-stock,
+.opera-prod-mini-reservado,
+.opera-prod-mini-disponible{
+    font-weight:bold;
+}
+
+.opera-prod-mini-estado{
+    min-height:18px;
+    margin-bottom:5px;
+    font-size:13px;
+    color:#666;
+}
+
+.opera-prod-mini-tabla-wrap{
+    width:100%;
+    min-width:0;
+    max-width:100%;
+    max-height:360px;
+    overflow:auto;
+    border:1px solid #ddd;
+}
+
+.opera-prod-mini-tabla{
+    width:max-content;
+    min-width:0;
+    max-width:none;
+    border-collapse:collapse;
+    table-layout:auto;
+    font-size:13px;
+}
+
+.opera-prod-mini-tabla th,
+.opera-prod-mini-tabla td{
+    padding:7px;
+    border-bottom:1px solid #ddd;
+    text-align:left;
+    vertical-align:top;
+    white-space:nowrap;
+}
+
+.opera-prod-mini-tabla th{
+    position:sticky;
+    top:0;
+    background:#10001d;
+    color:#fff;
+    z-index:1;
+}
+
+.opera-prod-mini-tabla th:nth-child(9){
+    text-align:center;
+}
+
+.opera-prod-mini-tabla th:nth-child(10){
+    text-align:right;
+}
+
+.opera-prod-mini-tabla td:nth-child(9){
+    text-align:center;
+}
+
+.opera-prod-mini-tabla td:nth-child(10){
+    text-align:right;
+}
+
+.opera-prod-mini-tabla tr{
+    cursor:pointer;
+}
+
+.opera-prod-mini-tabla tr.is-seleccionada td{
+    background:#eee;
+}
+
+.opera-prod-mini-ayuda{
+    width:100%;
+    padding-top:8px;
+    font-size:12px;
+    color:#666;
+}
+
+

@@ -1,0 +1,7 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/catal/produ.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/catal/produ.css
+============================================================ */
+@import url('./produ/produ-modul.css');
+@import url('./produ/produ-mini.css');

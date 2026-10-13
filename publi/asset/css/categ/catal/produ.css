@@ -1,0 +1,18 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/catal/produ.css
+   Módulo: Catálogo / Productos
+
+   FUNCIÓN:
+   Coordinador CSS de Productos.
+
+   RESPONSABILIDAD:
+   Este archivo no diseña la vista ni la MINI directamente.
+   Solo enlaza las dos áreas de estilo del módulo:
+
+   produ/
+   ├── produ-modul.css   → vista principal de Productos
+   └── produ-mini.css    → Productos dentro de MINI
+============================================================ */
+
+@import url("./produ/produ-modul.css");
+@import url("./produ/produ-mini.css");

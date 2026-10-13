@@ -1,0 +1,14 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/catal/imext/impor.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/catal/imext/impor.css
+============================================================ */
+@media (max-width: 700px) {
+
+    .impo-cab,
+    .impo-form {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

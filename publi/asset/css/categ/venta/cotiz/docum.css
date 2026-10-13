@@ -1,0 +1,62 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/venta/cotiz/docum.css
+   Módulo: Ventas / Cotización / Documento
+============================================================ */
+.cotiz-encabezado{
+    display:grid;
+    grid-template-columns:270px minmax(0,1fr) 220px;
+    gap:12px;
+    width:100%;
+    box-sizing:border-box;
+    padding:14px;
+    background:#52009a;
+    border:2px solid #d000a8;
+    border-radius:8px;
+}
+
+.cotiz-bloque{
+    box-sizing:border-box;
+    padding:10px;
+    background:#eee;
+    border:1px solid #d000a8;
+    border-radius:7px;
+    min-width:0;
+}
+
+.cotiz-fila{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    min-height:32px;
+    margin-bottom:7px;
+    box-sizing:border-box;
+}
+
+.cotiz-fila:last-child{margin-bottom:0}
+
+.cotiz-fila label{
+    flex:0 0 68px;
+    font-size:12px;
+    font-weight:bold;
+    line-height:32px;
+    color:#e00000;
+    white-space:nowrap;
+}
+
+.cotiz-fila input{
+    height:29px;
+    min-width:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:4px 7px;
+    border:1px solid #d000a8;
+    border-radius:3px;
+    background:#fff;
+    outline:none;
+}
+
+.cotiz-documento .cotiz-fila input[type=date]{width:140px}
+.cotiz-documento .cotiz-fila input[data-cotiz-serie]{width:55px;text-align:center;font-weight:bold}
+.cotiz-documento .cotiz-fila input[data-cotiz-numero]{width:80px;text-align:center;font-weight:bold}
+
+

@@ -1,0 +1,21 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/venta/devol.css
+   Función: Recurso del sistema.
+============================================================ */
+/* ============================================================
+   Ventas / interfaz base
+   Los archivos de cada submódulo importan este mismo lenguaje
+   visual mediante reglas locales.
+============================================================ */
+.vent-panel{width:100%;box-sizing:border-box;font-family:Arial,sans-serif}
+.vent-barra{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.vent-barra input{flex:1;min-width:0;padding:8px;border:0;border-bottom:2px solid #d000a8;outline:0}
+.vent-barra button,.vent-form button{padding:8px 12px;cursor:pointer}
+.vent-form{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;padding:10px;border:1px solid #ddd}
+.vent-form input,.vent-form select{padding:8px;min-width:150px;box-sizing:border-box}
+.vent-form-detalle{align-items:center}
+.vent-detalle{width:100%;margin-top:5px}
+.vent-tabla{width:100%;border-collapse:collapse;font-size:14px}
+.vent-tabla th,.vent-tabla td{border:1px solid #d000a8;padding:7px;text-align:left}
+.vent-tabla th{font-weight:700}
+.vent-mensaje{text-align:center;margin:10px 0}

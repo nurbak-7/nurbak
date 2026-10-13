@@ -1,0 +1,8 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/venta/cotiz.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/venta/cotiz.css
+============================================================ */
+@import url('./cotiz/clien.css');
+@import url('./cotiz/produ.css');
+@import url('./cotiz/total.css');

@@ -1,0 +1,19 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/tabl/categ/venta/cotiz.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/venta/cotiz.css
+============================================================ */
+@import url('./cotiz/docum.css');
+
+@media(max-width:1200px){
+    .dash-mini.cotiz-mini{
+        width:100%;
+        min-width:0;
+        max-width:100%;
+        height:auto;
+        min-height:0;
+        max-height:calc(100% - 30px);
+    }
+    .dash-mini.cotiz-mini .cotiz-panel{min-width:0}
+    .dash-mini.cotiz-mini .cotiz-encabezado{grid-template-columns:1fr}
+}

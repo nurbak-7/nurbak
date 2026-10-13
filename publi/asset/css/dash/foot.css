@@ -1,0 +1,11 @@
+/* ============================================================
+   Ruta: publi/asset/css/dash/foot.css
+   Función: Estilos del footer o pie del dashboard.
+
+   🔹 Nivel 1: Estilizar el pie
+   🔹 Nivel Final: Adaptar el pie a móviles
+============================================================ */
+
+.dash-foot { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem; border-top: 1px solid #dbe3ec; color: #64748b; background: #fff; font-size: .85rem; }
+
+

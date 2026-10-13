@@ -1,0 +1,20 @@
+/* ============================================================
+   Ruta: publi/asset/css/dash/body.css
+   Función: Estilos de la distribución y contenido central.
+
+   🔹 Nivel 1: Distribución del dashboard
+   🔹 Nivel 2: Contenido de bienvenida
+   🔹 Nivel Final: Tarjetas de categorías
+============================================================ */
+
+.dash-body { min-height: 100vh; margin: 0; background: #f4f7fb; }
+.dash-welcome, .dash-content { width: min(100% - 2rem, 1180px); margin: 0 auto; }
+.dash-welcome { padding: 2rem 0 1rem; }
+.dash-welcome h1 { color: #163965; }
+.dash-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; padding-bottom: 2rem; }
+.dash-module { padding: 1.25rem; border: 1px solid #dbe3ec; border-radius: 12px; background: #fff; }
+.dash-module h2 { margin-top: 0; color: #163965; }
+.dash-module li { margin: .45rem 0; color: #64748b; }
+
+
+

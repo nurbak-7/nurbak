@@ -1,0 +1,7 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/admin/perm/perm.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/admin/perm/perm.css
+============================================================ */
+@import url('./vent/venta.css');
+@import url('./mini/mini.css');

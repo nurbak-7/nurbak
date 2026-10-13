@@ -1,0 +1,138 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/venta/cotiz.css
+   Módulo: Ventas / Cotización
+
+   RESPONSABILIDAD:
+   Punto de entrada CSS de Cotización.
+============================================================ */
+@import url('./cotiz/docum.css');
+@import url('./cotiz/clien.css');
+@import url('./cotiz/vende.css');
+@import url('./cotiz/produ.css');
+@import url('./cotiz/tabla.css');
+@import url('./cotiz/total.css');
+@import url('./cotiz/accio.css');
+
+.cotiz-panel{
+    position:relative;
+    width:100%;
+    min-width:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+/* ============================================================
+   NIVEL 1 — TAMAÑO DE LA MINI DEL MÓDULO
+
+   Cotización define su mínimo y máximo. MINI solo administra la
+   ventana, sus límites de pantalla y el redimensionamiento.
+============================================================ */
+.dash-mini.cotiz-mini{
+    width:1350px;
+    min-width:1250px;
+    max-width:1450px;
+    height:680px;
+    min-height:560px;
+    max-height:820px;
+}
+
+.cotiz-form{
+    width:100%;
+    box-sizing:border-box;
+}
+
+
+/* ============================================================
+   NIVEL 1 — LISTA PRINCIPAL
+   Consulta, búsqueda y acceso a Nueva/Editar Cotización.
+============================================================ */
+.cotiz-lista{
+    width:100%;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+.cotiz-lista-barra{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:12px;
+}
+
+.cotiz-lista-barra input{
+    flex:1;
+    min-width:0;
+    padding:9px 10px;
+    border:0;
+    border-bottom:2px solid #d000a8;
+    outline:0;
+    font-size:14px;
+}
+
+.cotiz-lista-barra button{
+    flex-shrink:0;
+    padding:9px 14px;
+    border:1px solid #bbb;
+    background:#f4f4f4;
+    cursor:pointer;
+}
+
+.cotiz-lista-tabla{
+    width:100%;
+    overflow:auto;
+}
+
+.cotiz-lista-tabla table{
+    width:100%;
+    min-width:720px;
+    border-collapse:collapse;
+    font-size:14px;
+}
+
+.cotiz-lista-tabla th,
+.cotiz-lista-tabla td{
+    border:1px solid #d000a8;
+    padding:8px 9px;
+    text-align:left;
+    white-space:nowrap;
+}
+
+.cotiz-lista-tabla th{
+    font-weight:700;
+}
+
+.cotiz-lista-tabla td:nth-child(2){
+    white-space:normal;
+    min-width:180px;
+}
+
+.cotiz-lista-tabla td:nth-child(6){
+    text-align:right;
+}
+
+.cotiz-lista-tabla button{
+    padding:5px 9px;
+    border:1px solid #bbb;
+    background:#f4f4f4;
+    cursor:pointer;
+}
+
+.cotiz-lista-acc{
+    display:flex;
+    gap:5px;
+}
+
+.cotiz-lista-mensaje{
+    margin:10px 0;
+    text-align:center;
+}
+
+.cotiz-lista-estado{
+    font-weight:600;
+}
+
+
+/* ============================================================
+   NIVEL FINAL — ADAPTAR COTIZACIÓN A PANTALLAS ESTRECHAS
+============================================================ */
+

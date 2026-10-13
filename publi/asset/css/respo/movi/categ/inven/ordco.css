@@ -1,0 +1,6 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/inven/ordco.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/inven/ordco.css
+============================================================ */
+@media (max-width:760px){.ivgrp{grid-template-columns:1fr}.ivgrp label{grid-column:1}}

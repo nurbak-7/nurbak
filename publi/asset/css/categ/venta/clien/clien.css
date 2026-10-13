@@ -1,0 +1,19 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/venta/clien/clien.css
+   Módulo: Ventas / Operaciones / Cliente
+   RESPONSABILIDAD: Presentación de los datos del cliente.
+============================================================ */
+
+.opera-cliente .opera-fila:first-child{
+    display:grid;
+    grid-template-columns:auto minmax(130px,190px) auto minmax(150px,1fr);
+}
+
+.opera-cliente .opera-fila:nth-child(2){
+    display:grid;
+    grid-template-columns:auto 1fr;
+}
+
+.opera-cliente .opera-fila input{
+    width:100%;
+}

@@ -1,0 +1,13 @@
+# ============================================================
+# Ruta: debug/.htaccess
+# Función: Proteger los registros DEBUG y permitir sus endpoints PHP.
+# ============================================================
+Options -Indexes
+
+<FilesMatch "\.log$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.php$">
+    Require all granted
+</FilesMatch>

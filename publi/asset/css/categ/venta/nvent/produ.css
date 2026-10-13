@@ -1,0 +1,20 @@
+/* Ventas / Nota de Venta / Productos. Botón y MINI con el estilo del módulo Operaciones. */
+.nvent-productos{display:flex;align-items:center;gap:12px;flex-wrap:wrap;width:100%;box-sizing:border-box;padding:12px 0 0}
+.nvent-productos>button{padding:8px 15px;margin-bottom:12px;border:0;border-radius:4px;background:#35a84a;color:#fff;font-weight:bold;cursor:pointer}
+.nvent-productos>button:hover{opacity:.9}
+[data-nven-stock-resumen]{font-size:12px;color:#444}
+.nvent-prod-mini{width:100%;min-width:0;box-sizing:border-box;font-family:Arial,sans-serif}
+.nvent-prod-mini-buscador{display:flex;align-items:center;width:100%;gap:10px;margin-bottom:8px}
+.nvent-prod-mini-buscador label{font-weight:bold;white-space:nowrap}
+.nvent-prod-mini-buscador input{flex:1;min-width:0;box-sizing:border-box;padding:8px 10px;border:1px solid #bbb;border-radius:4px}
+.nvent-prod-mini-info{display:flex;align-items:center;width:100%;gap:18px;min-height:24px;margin-bottom:5px;font-size:13px;white-space:nowrap}
+.nvent-prod-mini-info span:first-child{margin-right:auto;color:#666}
+.nvent-prod-mini-info span:not(:first-child){font-weight:bold}
+.nvent-prod-mini-tabla-wrap{width:100%;min-width:0;max-width:100%;max-height:360px;overflow:auto;border:1px solid #ddd}
+.nvent-prod-mini-tabla{width:max-content;min-width:0;max-width:none;border-collapse:collapse;table-layout:auto;font-size:13px}
+.nvent-prod-mini-tabla th,.nvent-prod-mini-tabla td{padding:7px;border-bottom:1px solid #ddd;text-align:left;vertical-align:top;white-space:nowrap}
+.nvent-prod-mini-tabla th{position:sticky;top:0;background:#10001d;color:#fff;z-index:1}
+.nvent-prod-mini-tabla tr{cursor:pointer}
+.nvent-prod-mini-tabla tr.is-seleccionada td{background:#eee}
+.nvent-prod-mini-ayuda{width:100%;padding-top:8px;font-size:12px;color:#666}
+

@@ -1,0 +1,40 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/venta/opera/tota.css
+   Módulo: Ventas / Operaciones / Totales
+   RESPONSABILIDAD: Subtotal, IGV y total.
+============================================================ */
+
+.opera-totales{
+    display:flex;
+    justify-content:flex-end;
+    gap:3px;
+    width:100%;
+    box-sizing:border-box;
+    margin-top:14px;
+    padding:7px;
+    background:#10001d;
+}
+
+.opera-total-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 10px;
+    border:1px solid #fff;
+    background:#10001d;
+}
+
+.opera-total-item span{
+    font-size:13px;
+    font-weight:bold;
+    color:#ff0000;
+}
+
+.opera-total-item strong{
+    min-width:65px;
+    padding:4px 7px;
+    background:#00d9ff;
+    color:#00131a;
+    text-align:center;
+    border-radius:2px;
+}

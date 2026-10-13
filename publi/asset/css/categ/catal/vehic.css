@@ -1,0 +1,66 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/catal/vehic.css
+============================================================ */
+.catal-vehi, .catal-equiv { width:100%; background:#fff; color:#202020; }
+.catal-vehi table, .catal-equiv table { width:100%; border-collapse:collapse; min-width:700px; }
+.catal-vehi .vehi-tabla, .catal-equiv .equiv-tabla { overflow-x:auto; margin-top:.75rem; }
+.catal-vehi th, .catal-vehi td, .catal-equiv th, .catal-equiv td { padding:.4rem .5rem; border:1px solid #999; white-space:nowrap; text-align:left; font-size:.8rem; }
+.catal-vehi th, .catal-equiv th { font-weight:700; background:#f3f3f3; }
+.vehi-busc, .equiv-busc { padding:.35rem; }
+.vehi-busc input, .equiv-busc input { width:100%; padding:.4rem; box-sizing:border-box; }
+.vehi-busc label, .equiv-busc label { display:block; margin-bottom:.25rem; font-size:.8rem; font-weight:700; }
+
+.vehi-cab{padding:.35rem}.vehi-nuevo{margin-bottom:.35rem}
+
+/* ============================================================
+   NIVEL 1 — MINI DEL MÓDULO
+
+   VEHÍCULOS define su propio ancho; MINI solo administra la
+   ventana y sus límites.
+============================================================ */
+.dash-mini.catal-vehi-mini {
+    width:820px;
+    min-width:700px;
+    max-width:1050px;
+    height:620px;
+    min-height:500px;
+    max-height:760px;
+}
+
+.dash-mini.catal-vehi-mini .catal-mini-form{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    width:760px;
+    min-width:760px;
+    max-width:none;
+}
+
+.dash-mini.catal-vehi-mini .catal-mini-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+    width:100%;
+}
+
+.dash-mini.catal-vehi-mini .catal-mini-grid label{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    font-size:.8rem;
+    font-weight:700;
+}
+
+.dash-mini.catal-vehi-mini .catal-mini-grid input{
+    width:100%;
+    padding:7px;
+    border:1px solid #aaa;
+    border-radius:3px;
+    box-sizing:border-box;
+}
+
+.dash-mini.catal-vehi-mini .catal-mini-msg{min-height:18px;font-size:.8rem}
+.dash-mini.catal-vehi-mini .catal-mini-acciones{display:flex;justify-content:flex-end;gap:8px}
+.dash-mini.catal-vehi-mini .catal-mini-acciones button{padding:7px 12px;border:1px solid #999;background:#f3f3f3;border-radius:3px;cursor:pointer}
+
+

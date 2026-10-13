@@ -1,0 +1,193 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/repor/infor.css
+   Función: Recurso del sistema.
+============================================================ */
+/* ============================================================
+   INFORMES
+============================================================ */
+
+.repo-info-vista {
+    display: block;
+}
+
+
+/* ============================================================
+   PROCESO
+============================================================ */
+
+.repo-info-proceso {
+    margin: 15px 0;
+}
+
+
+/* ============================================================
+   CABECERA
+============================================================ */
+
+.repo-info-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    font-family: monospace;
+    font-weight: bold;
+}
+
+
+/* ============================================================
+   BARRA
+============================================================ */
+
+.repo-info-barra {
+    width: 100%;
+    height: 6px;
+
+    background: #ddd;
+
+    overflow: hidden;
+}
+
+
+.repo-info-barra-progreso {
+    width: 0%;
+    height: 100%;
+
+    transition: width .35s ease;
+}
+
+
+/* ============================================================
+   TERMINAL
+   SOLO UNA LÍNEA
+============================================================ */
+
+.repo-info-terminal {
+    margin-top: 10px;
+
+    padding: 12px;
+
+    min-height: 42px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+
+    background: #101010;
+    color: #8fda8f;
+
+    font-family: monospace;
+    font-size: 13px;
+
+    border-radius: 4px;
+
+    box-sizing: border-box;
+}
+
+
+#repoInfoLinea {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* ============================================================
+   ESTADO INFERIOR
+============================================================ */
+
+.repo-info-resumen {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 8px;
+
+    font-family: monospace;
+    font-size: 13px;
+}
+
+
+/* ============================================================
+   ERRORES
+============================================================ */
+
+.repo-info-errores {
+    margin-top: 15px;
+}
+
+
+.repo-info-errores-titulo {
+    margin-bottom: 8px;
+
+    font-family: monospace;
+    font-weight: bold;
+}
+
+
+.repo-info-error {
+    padding: 8px 10px;
+    margin-bottom: 5px;
+
+    border: 1px solid #d66;
+    border-radius: 5px;
+
+    font-family: monospace;
+    font-size: 13px;
+}
+
+
+.repo-info-error strong {
+    display: block;
+}
+
+
+/* ============================================================
+   RESULTADOS
+============================================================ */
+
+.repo-info-resultado {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(180px, 1fr));
+
+    gap: 12px;
+
+    margin-top: 16px;
+}
+
+
+.repo-info-fuente {
+    border: 1px solid #ddd;
+
+    padding: 12px;
+
+    border-radius: 6px;
+}
+
+
+.repo-info-fuente h3 {
+    margin-top: 0;
+}
+
+
+.repo-info-fuente ul {
+    margin: 0;
+
+    padding-left: 18px;
+}
+
+
+/* ============================================================
+   ERROR GENERAL
+============================================================ */
+
+.repo-info-error-general {
+    padding: 10px;
+
+    border: 1px solid #d66;
+
+    border-radius: 5px;
+}

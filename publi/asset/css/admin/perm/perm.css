@@ -1,0 +1,23 @@
+/* ============================================================
+   Ruta: publi/asset/css/admin/permi/perm.css
+   Función: Coordinador de estilos del módulo PERM.
+
+   NIVEL 1: VENT → ventana principal de permisos.
+   NIVEL 2: MINI → mini-ventana de asignación.
+   NIVEL FINAL: PERM solo coordina.
+============================================================ */
+
+@import url('vent/venta.css');
+@import url('mini/mini.css');
+
+
+/* ============================================================
+   NIVEL VER — Estados del detalle de permisos
+============================================================ */
+.admi-perm-total,
+.admi-perm-sin-asignaciones {
+    padding: 4px 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.admi-perm-sin-asignaciones { opacity: .75; }

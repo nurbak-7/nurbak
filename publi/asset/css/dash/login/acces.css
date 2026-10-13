@@ -1,0 +1,158 @@
+/* ============================================================
+   Ruta: publi/asset/css/dash/login/acces.css
+   Función: Estilos base de acceso y componentes de autenticación.
+   El diseño especial del acceso se limita a .acce-login-inicio.
+============================================================ */
+
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; font-family: Arial, sans-serif; color: #1e293b; background: #f3f6fa; }
+.acce-login { display: grid; place-items: center; padding: 1rem; }
+.acce-card { width: min(100%, 420px); padding: 2rem; background: #fff; border: 1px solid #dbe3ec; border-radius: 14px; box-shadow: 0 12px 32px rgba(15, 23, 42, .08); }
+.acce-card h1 { margin-top: 0; color: #163965; }
+.acce-subtitle { color: #64748b; }
+.acce-form { display: grid; gap: .75rem; }
+.acce-form label { display: grid; gap: .35rem; font-weight: 700; }
+.acce-form input { width: 100%; padding: .8rem; border: 1px solid #cbd5e1; border-radius: 8px; font: inherit; }
+.acce-form button { margin-top: .5rem; padding: .8rem; border: 0; border-radius: 8px; color: #fff; background: #1f4f8f; font: inherit; font-weight: 700; cursor: pointer; }
+.acce-error { padding: .75rem; color: #b42318; background: #fff1f0; border-radius: 8px; }
+.acce-panel { padding: 1rem; }
+.acce-header, .acce-content { width: min(100%, 1180px); margin: auto; }
+.acce-header { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1rem 0 2rem; }
+.acce-header h1 { margin-bottom: 0; }
+.acce-user { display: flex; gap: 1rem; align-items: center; }
+.acce-user a { color: #1f4f8f; font-weight: 700; }
+.acce-welcome, .acce-module { padding: 1.25rem; background: #fff; border: 1px solid #dbe3ec; border-radius: 12px; }
+.acce-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem; }
+.acce-module { display: grid; gap: .5rem; color: inherit; text-decoration: none; }
+.acce-module span { color: #64748b; }
+
+/* ============================================================
+   ACCESO — DISEÑO BASE DE ESCRITORIO
+   Los estilos móviles y tablet viven en respo/.
+============================================================ */
+body.acce-login-inicio {
+    min-height: 100vh;
+    padding: 24px;
+    background: radial-gradient(ellipse at 50% 38%, #ffffff 0%, #f7faff 56%, #eaf2fc 100%);
+}
+
+.acce-login-inicio .acce-card {
+    width: min(100%, 512px);
+    padding: 42px 38px 38px;
+    text-align: center;
+    background: rgba(255, 255, 255, .94);
+    border: 1px solid #d0dced;
+    border-radius: 14px;
+    box-shadow: 0 16px 38px rgba(48, 73, 111, .09);
+}
+
+.acce-login-inicio .acce-card h1 {
+    margin: 0;
+    color: #233246;
+    font-size: clamp(1.4rem, 3vw, 2.25rem);
+    font-weight: 400;
+    letter-spacing: .035em;
+    line-height: 1.25;
+    white-space: nowrap;
+}
+
+.acce-login-inicio .acce-subtitle {
+    margin: 12px 0 34px;
+    color: #8a9ab5;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.acce-login-inicio .acce-form {
+    justify-items: center;
+    gap: 30px;
+}
+
+.acce-login-inicio .acce-form label {
+    display: none;
+}
+
+.acce-login-inicio .acce-form input {
+    width: 62%;
+    max-width: 270px;
+    min-width: 190px;
+    margin: 0;
+    padding: 7px 4px 9px;
+    border: 0;
+    border-bottom: 1px solid #b6c4d9;
+    border-radius: 0;
+    background: transparent;
+    color: #354862;
+    font: inherit;
+    font-size: 1rem;
+    line-height: 1.4;
+    text-align: center;
+    outline: none;
+    box-shadow: none;
+    transition: border-color .16s ease;
+}
+
+.acce-login-inicio .acce-form input::placeholder {
+    color: #8a9ab5;
+    opacity: 1;
+}
+
+.acce-login-inicio .acce-form input:focus {
+    border-bottom-color: #315fa8;
+}
+
+.acce-login-inicio .acce-form button {
+    width: max-content;
+    justify-self: center;
+    margin: 1px 0 0;
+    padding: 2px 2px 7px;
+    border: 0;
+    border-bottom: 1px solid #315a9b;
+    border-radius: 0;
+    background: transparent;
+    color: #263f65;
+    font: inherit;
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: color .16s ease, border-color .16s ease;
+}
+
+.acce-login-inicio .acce-form button:hover,
+.acce-login-inicio .acce-form button:focus-visible {
+    color: #315fa8;
+    border-bottom-color: #315fa8;
+}
+
+.acce-login-inicio .acce-form button:focus-visible {
+    outline: 1px solid #9eb6da;
+    outline-offset: 4px;
+}
+
+.acce-login-inicio .acce-error {
+    margin: 0 0 22px;
+    padding: 9px 12px;
+    color: #9c3b3b;
+    background: #fff7f7;
+    border-radius: 5px;
+    font-size: .9rem;
+}
+
+.acce-login-inicio > p:last-child {
+    margin: 32px 0 0;
+    text-align: center;
+    font-size: .96rem;
+}
+
+.acce-login-inicio > p:last-child a {
+    color: #6b8fc4;
+    text-decoration: none;
+}
+
+.acce-login-inicio > p:last-child a:hover,
+.acce-login-inicio > p:last-child a:focus-visible {
+    color: #315fa8;
+    text-decoration: underline;
+}

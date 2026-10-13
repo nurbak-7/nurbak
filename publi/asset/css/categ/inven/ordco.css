@@ -1,0 +1,11 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/inven/ordco.css
+   Módulo: Inventario / Orden interna
+============================================================ */
+.ordco{width:100%;box-sizing:border-box}.ivbar,.ivfrm{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}.ivbar input{flex:1 1 220px;min-width:0}.ivfrm select,.ivfrm input,.ivfrm textarea{box-sizing:border-box;max-width:100%;padding:7px}.ivfrm textarea{flex:1 1 100%;min-height:60px}.ivdet{display:flex;gap:8px;flex:1 1 100%;flex-wrap:wrap}.ivdet select{flex:1 1 240px}.ivdet input{width:130px}.ivtc{width:100%;overflow:auto}.ivtab{width:100%;border-collapse:collapse}.ivtab th,.ivtab td{padding:7px;border-bottom:1px solid #ddd;text-align:left;white-space:nowrap}.ivtab button{padding:4px 8px}
+
+.ivgrp{display:grid;grid-template-columns:1fr 1fr;gap:8px;min-width:260px;flex:1 1 320px}
+.ivgrp label{font-size:12px;font-weight:600;grid-column:1/-1;margin-top:2px}
+.ivgrp select{width:100%}
+.ivbar,.ivfrm{box-sizing:border-box}
+

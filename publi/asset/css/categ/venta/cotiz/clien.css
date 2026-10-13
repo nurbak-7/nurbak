@@ -1,0 +1,9 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/venta/cotiz/clien.css
+   Módulo: Ventas / Cotización / Cliente
+============================================================ */
+.cotiz-cliente .cotiz-fila-doble{display:grid;grid-template-columns:max-content minmax(0,1fr) max-content minmax(0,1.6fr)}
+.cotiz-cliente .cotiz-fila:not(.cotiz-fila-doble){display:grid;grid-template-columns:max-content minmax(0,1fr)}
+.cotiz-cliente .cotiz-fila input{width:100%}
+
+

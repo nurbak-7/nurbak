@@ -1,0 +1,373 @@
+
+/* ============================================================
+   Ruta: publi/asset/css/dash/head.css
+
+   Función:
+   Estilos de la cabecera y navbar principal del dashboard.
+
+   Estructura:
+   🔹 Cabecera
+   🔹 Marca del sistema
+   🔹 Menú principal
+   🔹 Submenús desplegables
+   🔹 Usuario y cierre de sesión
+
+   Menú:
+   Productos
+   Inventario
+   Compras
+   Ventas
+   Facturación
+   Pagos
+   Reportes
+============================================================ */
+
+
+/* ============================================================
+   ÁREA 1: CABECERA
+
+   🔹 Nivel 1: Definir la altura general del navbar.
+   🔹 Nivel 2: Alinear la marca, el menú y el usuario.
+   🔹 Ejemplo: esta regla controla la franja azul completa.
+============================================================ */
+
+.dash-head {
+
+    display: flex;
+    align-items: center;
+
+    gap: 1rem;
+
+    padding: 0 1rem;
+
+    min-height: 44px;
+
+    background: #163965;
+
+    color: #fff;
+
+    box-sizing: border-box;
+}
+
+
+/* ============================================================
+   MARCA
+============================================================ */
+
+.dash-logo {
+
+    flex-shrink: 0;
+
+    white-space: nowrap;
+
+    font-size: 1.05rem;
+}
+
+
+/* ============================================================
+   NAVBAR
+============================================================ */
+
+.dash-nav {
+
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+}
+
+
+/* ============================================================
+   MENÚ PRINCIPAL
+============================================================ */
+
+.dash-menu {
+
+    display: flex;
+    align-items: center;
+
+    gap: .15rem;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+/* ============================================================
+   ELEMENTO PRINCIPAL
+============================================================ */
+
+.dash-item {
+
+    position: relative;
+
+    /* 🔹 Nivel 1: Una sola medida controla separación y flechita. */
+    --sepa-sub: 6px;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ============================================================
+   ÁREA 3: CATEGORÍA PRINCIPAL
+
+   🔹 Nivel 1: Dar espacio al nombre de la categoría.
+   🔹 Nivel 2: Mostrar el fondo blanco cuando el cursor pasa encima.
+   🔹 Ejemplo: al pasar por Inventario, este bloque se vuelve blanco.
+============================================================ */
+
+.dash-link {
+
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+
+    padding: .2rem .75rem;
+
+    color: #dbeafe;
+
+    text-decoration: none;
+
+    font: inherit;
+    font-weight: 600;
+
+    white-space: nowrap;
+    cursor: default;
+    user-select: none;
+
+    border-radius: 2px;
+
+    transition:
+        background .2s ease,
+        color .2s ease;
+}
+
+
+/* ============================================================
+   INDICADOR DEL SUBMENÚ
+============================================================ */
+
+.dash-link::after {
+
+    content: none;
+
+}
+
+
+/* ============================================================
+   HOVER DEL MENÚ PRINCIPAL
+============================================================ */
+
+.dash-item:hover > .dash-link {
+
+    color: #163965;
+
+    background: #fff;
+
+}
+
+
+/* ============================================================
+   ÁREA 4: SUBMENÚ
+
+   🔹 Nivel 1: Colocar el submenú debajo de la categoría.
+   🔹 Nivel 2: Limitar su ancho al contenido.
+   🔹 Nivel 3: Ocultarlo hasta pasar el cursor por la categoría.
+   🔹 Ejemplo: Inventario muestra Almacenes, Stock y Movimientos.
+============================================================ */
+
+.dash-submenu {
+
+    position: absolute;
+
+    top: 100%;
+    left: 0;
+
+    z-index: 1000;
+
+    width: max-content;
+    min-width: 190px;
+    max-width: calc(100vw - 1rem);
+
+    margin: 0;
+    padding: .35rem 0;
+
+    list-style: none;
+
+    background: #850000;
+    background-clip: padding-box;
+
+    border-top: var(--sepa-sub) solid transparent;
+    border-radius: 0 0 6px 6px;
+
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .18);
+
+    visibility: hidden;
+
+    opacity: 0;
+
+    transform: translateY(-5px);
+
+    pointer-events: none;
+
+    transition:
+        opacity .15s ease,
+        transform .15s ease,
+        visibility .15s ease;
+}
+
+
+/* ============================================================
+   ÁREA 5: FLECHITA DEL SUBMENÚ
+
+   🔹 Nivel 1: Colocar la flecha dentro del borde transparente.
+   🔹 Nivel 2: Mantenerla unida al submenú automáticamente.
+   🔹 Nivel Final: Evitar cálculos separados o puentes adicionales.
+
+   Ejemplo:
+
+   Categoría blanca
+   [borde transparente con flechita]
+   Submenú
+
+   Si cambia la altura de la categoría, top: 100% vuelve a calcular
+   la posición completa y la flechita continúa unida al submenú.
+============================================================ */
+.dash-submenu::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(-100%);
+    border-left: var(--sepa-sub) solid transparent;
+    border-right: var(--sepa-sub) solid transparent;
+    border-bottom: var(--sepa-sub) solid #2b0ece;
+}
+
+/* ============================================================
+   MOSTRAR SUBMENÚ
+============================================================ */
+
+.dash-item:hover > .dash-submenu {
+
+    visibility: visible;
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+    pointer-events: auto;
+
+}
+
+
+/* ============================================================
+   ELEMENTOS DEL SUBMENÚ
+============================================================ */
+
+.dash-submenu li {
+
+    margin: 0;
+    padding: 0;
+
+}
+
+
+/* ============================================================
+   ENLACES DEL SUBMENÚ
+============================================================ */
+
+.dash-submenu .dash-sub-link {
+
+    display: block;
+
+    padding: .55rem .75rem;
+
+    color: #ffffff;
+
+    background: #dbaaaa;
+    cursor: default;
+    user-select: none;
+
+    text-decoration: none;
+
+    font-size: .9rem;
+
+    white-space: nowrap;
+
+    transition:
+        background .15s ease,
+        color .15s ease;
+}
+
+
+/* ============================================================
+   HOVER DEL SUBMENÚ
+============================================================ */
+
+.dash-submenu .dash-sub-link:hover {
+
+    color: #ffffff;
+
+    background: #d10ea7;
+
+}
+
+
+/* ============================================================
+   USUARIO
+============================================================ */
+
+.dash-user {
+
+    display: flex;
+    align-items: center;
+
+    gap: .75rem;
+
+    flex-shrink: 0;
+
+    white-space: nowrap;
+
+}
+
+
+/* ============================================================
+   NOMBRE DEL USUARIO
+============================================================ */
+
+.dash-user span {
+
+    font-weight: 600;
+
+}
+
+
+/* ============================================================
+   CERRAR SESIÓN
+============================================================ */
+
+.dash-user a {
+
+    color: #fff;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+
+/* ============================================================
+   HOVER CERRAR SESIÓN
+============================================================ */
+
+.dash-user a:hover {
+
+    text-decoration: underline;
+
+}

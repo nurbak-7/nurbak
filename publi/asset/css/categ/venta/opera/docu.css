@@ -1,0 +1,170 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/venta/opera/docu.css
+
+   Módulo: Ventas / Operaciones / Documento
+
+   RESPONSABILIDAD:
+   Estructura de la cabecera y bloque documento.
+============================================================ */
+
+
+/* ============================================================
+   CABECERA GENERAL
+============================================================ */
+
+.opera-encabezado{
+
+    display:grid;
+
+    grid-template-columns:270px minmax(0,1fr) 220px;
+
+    gap:12px;
+
+    width:100%;
+    box-sizing:border-box;
+
+    padding:14px;
+
+    background:#52009a;
+
+    border:2px solid #d000a8;
+
+    border-radius:8px;
+}
+
+
+/* ============================================================
+   BLOQUES DE LA CABECERA
+============================================================ */
+
+.opera-bloque{
+
+    box-sizing:border-box;
+
+    padding:10px;
+
+    background:#eee;
+
+    border:1px solid #d000a8;
+
+    border-radius:7px;
+}
+
+
+/* ============================================================
+   FILAS
+============================================================ */
+
+.opera-fila{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    min-height:32px;
+
+    margin-bottom:7px;
+
+    box-sizing:border-box;
+}
+
+
+.opera-fila:last-child{
+
+    margin-bottom:0;
+}
+
+
+/* ============================================================
+   ETIQUETAS
+============================================================ */
+
+.opera-fila label{
+
+    flex:0 0 68px;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    line-height:32px;
+
+    color:#e00000;
+
+    white-space:nowrap;
+}
+
+
+/* ============================================================
+   CONTROLES
+============================================================ */
+
+.opera-fila input,
+.opera-fila select{
+
+    height:29px;
+
+    min-width:0;
+
+    box-sizing:border-box;
+
+    margin:0;
+
+    padding:4px 7px;
+
+    border:1px solid #d000a8;
+
+    border-radius:3px;
+
+    background:#fff;
+
+    outline:none;
+}
+
+
+/* ============================================================
+   FECHA
+============================================================ */
+
+.opera-documento .opera-fila input[type="date"]{
+
+    width:140px;
+}
+
+
+/* ============================================================
+   TIPO
+============================================================ */
+
+.opera-documento .opera-fila select{
+
+    width:110px;
+}
+
+
+/* ============================================================
+   SERIE
+============================================================ */
+
+.opera-documento .opera-fila input[data-opera-serie]{
+
+    width:55px;
+
+    text-align:center;
+}
+
+
+/* ============================================================
+   NÚMERO
+============================================================ */
+
+.opera-documento .opera-fila input[data-opera-numer]{
+
+    width:80px;
+
+    text-align:center;
+
+    font-weight:bold;
+}

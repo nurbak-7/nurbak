@@ -1,0 +1,10 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/inven/movim.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/inven/movim.css
+============================================================ */
+@media (max-width:760px){
+    .inve-cabe{flex-wrap:wrap}
+    .inve-cabe select,.inve-cabe input,.inve-cabe button{flex:1 1 100%;width:100%}
+    .inve-form>*{flex:1 1 100%;min-width:0}
+}

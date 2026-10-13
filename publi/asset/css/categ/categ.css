@@ -1,0 +1,62 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/categ.css
+   Función: Recurso del sistema.
+============================================================ */
+/* ============================================================
+   CATE - CARGADOR GENERAL DE CSS
+   Carga ordenada de los estilos de cada categoria y modulo.
+============================================================ */
+
+/* =========================
+   CATALOGO
+========================= */
+@import url('./catal/produ.css');
+@import url('./catal/vehic.css');
+@import url('./catal/equiv.css');
+@import url('./catal/imext/imext.css');
+
+/* =========================
+   INVENTARIO
+========================= */
+@import url('./inven/almac.css');
+@import url('./inven/stock.css');
+@import url('./inven/movim.css');
+
+/* =========================
+   COMPRAS
+========================= */
+@import url('./compr/prove.css');
+@import url('./compr/recep.css');
+
+/* =========================
+   VENTAS
+========================= */
+@import url('./venta/clien.css');
+@import url('./venta/cotiz.css');
+@import url('./venta/opera.css');
+@import url('./venta/nvent.css');
+@import url('./venta/devol.css');
+
+/* =========================
+   FACTURACION
+========================= */
+@import url('./factu/factu-base.css');
+@import url('./factu/fact.css');
+@import url('./factu/bolet.css');
+@import url('./factu/ncred.css');
+@import url('./factu/ndebi.css');
+@import url('./factu/gremi.css');
+@import url('./factu/sunat.css');
+
+/* =========================
+   PAGOS
+========================= */
+@import url('./pagos/pagos.css');
+@import url('./pagos/caja.css');
+@import url('./pagos/credi.css');
+
+/* =========================
+   REPORTES
+========================= */
+@import url('./repor/infor.css');
+@import url('./repor/audit.css');

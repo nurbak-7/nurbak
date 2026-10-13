@@ -1,0 +1,88 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/dash/login/acces.css
+   Función: Adaptaciones responsive de acceso y componentes asociados.
+   Los ajustes especiales del inicio se limitan a .acce-login-inicio.
+============================================================ */
+
+@media (max-width: 760px) {
+    .acce-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .acce-user {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .acce-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    body.acce-login-inicio {
+        padding: 16px 12px;
+    }
+
+    .acce-login-inicio .acce-card {
+        width: min(100%, 365px);
+        padding: 32px 24px 28px;
+        border-radius: 13px;
+    }
+
+    .acce-login-inicio .acce-card h1 {
+        font-size: clamp(1.28rem, 5.6vw, 1.65rem);
+        letter-spacing: .02em;
+    }
+
+    .acce-login-inicio .acce-subtitle {
+        margin: 10px 0 27px;
+        font-size: .9rem;
+    }
+
+    .acce-login-inicio .acce-form {
+        gap: 23px;
+    }
+
+    .acce-login-inicio .acce-form input {
+        width: 74%;
+        min-width: 0;
+        max-width: 270px;
+        padding: 7px 3px 8px;
+        font-size: .96rem;
+    }
+
+    .acce-login-inicio .acce-form button {
+        margin-top: 2px;
+        font-size: 1rem;
+    }
+
+    .acce-login-inicio > p:last-child {
+        margin-top: 27px;
+        font-size: .88rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .acce-card {
+        padding: 1.25rem;
+    }
+
+    .acce-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 360px) {
+    .acce-login-inicio .acce-card {
+        padding: 28px 18px 25px;
+    }
+
+    .acce-login-inicio .acce-card h1 {
+        font-size: 1.22rem;
+        letter-spacing: .01em;
+    }
+
+    .acce-login-inicio .acce-form input {
+        width: 78%;
+    }
+}

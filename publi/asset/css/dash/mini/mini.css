@@ -1,0 +1,143 @@
+/* ============================================================
+   Ruta: publi/asset/css/dash/mini/mini.css
+   Función: Diseñar la mini-ventana reutilizable de DASH.
+
+   Este CSS pertenece exclusivamente a MINI.
+
+   🔹 Nivel 1: Preparar el área de MINI
+   🔹 Nivel 2: Diseñar la mini-ventana
+   🔹 Nivel 3: Diseñar cabecera y controles
+   🔹 Nivel 4: Diseñar contenido
+   🔹 Nivel Final: Adaptar MINI a pantallas pequeñas
+============================================================ */
+
+/* ========================================================
+   NIVEL 1 — ÁREA MINI
+   ======================================================== */
+.dash-mini-area {
+    position: fixed;
+    top: var(--alto-nav-real, 44px);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2000;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.dash-mini,
+.dash-mini * {
+    box-sizing: border-box;
+}
+
+/* ========================================================
+   NIVEL 2 — MINI-VENTANA
+   ======================================================== */
+.dash-mini {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 560px;
+    min-width: 560px;
+    min-height: 160px;
+    max-width: calc(100% - 48px);
+    max-height: calc(100% - 48px);
+    overflow: hidden;
+    resize: none;
+    color: #1f2937;
+    background: #ffffff;
+    border: 1px solid #b8c7d9;
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+    pointer-events: auto;
+}
+
+.dash-mini.is-activa {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .28);
+}
+
+/* ========================================================
+   NIVEL 3 — CABECERA Y CONTROL
+   ======================================================== */
+.dash-mini-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 42px;
+    padding: .5rem .75rem;
+    color: #ffffff;
+    background: #163965;
+    cursor: move;
+    user-select: none;
+    touch-action: none;
+}
+
+.dash-mini-titulo {
+    margin: 0;
+    overflow: hidden;
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dash-mini-acciones {
+    display: flex;
+    gap: .25rem;
+    flex-shrink: 0;
+}
+
+.dash-mini-acciones button {
+    width: 30px;
+    height: 28px;
+    padding: 0;
+    color: #ffffff;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .45);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.dash-mini-acciones button:hover {
+    background: rgba(255, 255, 255, .18);
+}
+
+/* ========================================================
+   NIVEL 4 — CONTENIDO
+   ======================================================== */
+.dash-mini-contenido {
+    width:100%;
+    min-width:0;
+    min-height:0;
+    max-width:100%;
+    max-height:none;
+    overflow:auto;
+    padding:14px;
+}
+
+/*
+   TABLAS DE MINI:
+   - si caben, ocupan todo el ancho disponible de la MINI;
+   - si su contenido necesita más, conservan ese ancho natural
+     y el contenedor se desplaza horizontalmente.
+*/
+.dash-mini-contenido table {
+    width:max-content;
+    min-width:100%;
+    max-width:none;
+    box-sizing:border-box;
+}
+
+.dash-mini-contenido [class*="-tabla-wrap"],
+.dash-mini-contenido [class*="-tabla-cont"] {
+    width:100%;
+    min-width:0;
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+/* ========================================================
+   NIVEL FINAL — PANTALLAS PEQUEÑAS
+   ======================================================== */
+

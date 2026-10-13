@@ -1,0 +1,103 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/catal/produ/produ-mini.css
+   Módulo: Catálogo / Productos / MINI
+
+   FUNCIÓN:
+   Diseñar únicamente el formulario de Productos dentro de MINI.
+
+   RESPONSABILIDAD:
+   - Ancho mínimo, de trabajo y máximo.
+   - Alto mínimo, de trabajo y máximo.
+   - Estructura interna del formulario.
+   - Campos y acciones.
+   - Responsive propio de Productos dentro de MINI.
+
+   mini.css y mini.js pertenecen a MINI GENERAL.
+============================================================ */
+
+/* ============================================================
+   NIVEL 1 — TAMAÑO DE LA MINI DE PRODUCTOS
+============================================================ */
+.dash-mini.catal-prod-mini {
+    width: 420px;
+    min-width: 360px;
+    max-width: 480px;
+    height: 430px;
+    min-height: 390px;
+    max-height: 520px;
+}
+
+/* ============================================================
+   NIVEL 2 — FORMULARIO
+============================================================ */
+.dash-mini.catal-prod-mini .catal-mini-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* ============================================================
+   NIVEL 3 — CAMPOS
+
+   Cada fila coloca el texto del campo a la izquierda
+   y el input alineado a la derecha en la misma línea.
+============================================================ */
+.dash-mini.catal-prod-mini .catal-mini-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    width: 100%;
+    min-width: 0;
+}
+
+.dash-mini.catal-prod-mini .catal-mini-grid label {
+    display: grid;
+    grid-template-columns: 95px minmax(0, 1fr);
+    align-items: center;
+    gap: 7px;
+    width: 100%;
+    min-width: 0;
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.dash-mini.catal-prod-mini .catal-mini-grid input {
+    width: 100%;
+    min-width: 0;
+    height: 30px;
+    padding: 5px 7px;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+/* ============================================================
+   NIVEL 4 — MENSAJE Y ACCIONES
+============================================================ */
+.dash-mini.catal-prod-mini .catal-mini-msg {
+    min-height: 18px;
+    font-size: .8rem;
+}
+
+.dash-mini.catal-prod-mini .catal-mini-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.dash-mini.catal-prod-mini .catal-mini-acciones button {
+    padding: 6px 10px;
+    border: 1px solid #999;
+    background: #f3f3f3;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* ============================================================
+   NIVEL 5 — RESPONSIVE DEL MÓDULO
+============================================================ */
+

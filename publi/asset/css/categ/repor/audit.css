@@ -1,0 +1,350 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/repor/audit.css
+   Módulo: Reportes / Auditoría
+============================================================ */
+
+
+/* ============================================================
+   NIVEL 1 — VISTA
+============================================================ */
+
+.repo-audi-vista {
+    display: block;
+}
+
+
+/* ============================================================
+   NIVEL 2 — PROCESO
+============================================================ */
+
+.repo-audi-proceso {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 15px 0;
+}
+
+.repo-audi-proceso-col {
+    min-width: 0;
+}
+
+
+/* ============================================================
+   NIVEL 3 — CABECERA
+============================================================ */
+
+.repo-audi-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+
+/* ============================================================
+   NIVEL 4 — BARRA DE PROGRESO
+============================================================ */
+
+.repo-audi-barra {
+    width: 100%;
+    height: 6px;
+    background: #ddd;
+    overflow: hidden;
+}
+
+.repo-audi-barra-progreso {
+    width: 0%;
+    height: 100%;
+    transition: width .35s ease;
+}
+
+
+/* ============================================================
+   NIVEL 5 — TERMINAL
+============================================================ */
+
+.repo-audi-terminal {
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    margin-top: 10px;
+    padding: 12px;
+    overflow: hidden;
+    box-sizing: border-box;
+    background: #101010;
+    color: #8fda8f;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+#repoAudiLinea {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+/* ============================================================
+   NIVEL 6 — ESTADO Y ERRORES
+============================================================ */
+
+.repo-audi-resumen {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+
+/* ============================================================
+   NIVEL 7 — INFORMACIÓN REVISADA
+============================================================ */
+
+.repo-audi-revisado {
+    min-width: 0;
+    padding-left: 20px;
+    border-left: 1px solid #ddd;
+}
+
+.repo-audi-revisado-titulo {
+    margin-bottom: 5px;
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+
+/* ============================================================
+   NIVEL 8 — ÁRBOL DE REVISIÓN
+============================================================ */
+
+.repo-audi-arbol {
+    display: block;
+    width: 100%;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.2;
+}
+
+
+/* ============================================================
+   NIVEL 9 — LÍNEA REPO → AUDITORÍA → AUDI
+============================================================ */
+
+.repo-audi-arbol-niveles {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: max-content;
+    white-space: nowrap;
+}
+
+/* ============================================================
+   NIVEL 10 — REPO
+============================================================ */
+
+.repo-audi-arbol-fuente {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start !important;
+    gap: 4px;
+    width: auto !important;
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+/* ============================================================
+   NIVEL 11 — AUDITORÍA Y AUDI
+============================================================ */
+
+.repo-audi-arbol-nivel {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start !important;
+    gap: 4px;
+    width: auto !important;
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+/* ============================================================
+   NIVEL 12 — RAMAS
+============================================================ */
+
+.repo-audi-rama {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: bold;
+    white-space: pre;
+}
+
+
+/* ============================================================
+   NIVEL 13 — CAMPOS REVISADOS
+============================================================ */
+
+.repo-audi-arbol-campos {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin: 3px 0 0 0;
+    padding: 0;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.repo-audi-arbol-campos > div {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   NIVEL 14 — ESTADO OK / ERROR
+============================================================ */
+
+.repo-audi-ok {
+    min-width: auto;
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+    font-size: 13px;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* ============================================================
+   NIVEL 15 — DETALLE DE ERRORES
+============================================================ */
+
+.repo-audi-errores {
+    margin-top: 15px;
+}
+
+.repo-audi-errores-titulo {
+    margin-bottom: 8px;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.repo-audi-error {
+    padding: 8px 10px;
+    margin-bottom: 5px;
+    border: 1px solid #d66;
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+.repo-audi-error strong {
+    display: block;
+}
+
+
+/* ============================================================
+   NIVEL 16 — HISTORIAL
+============================================================ */
+
+.repo-audi-historial {
+    margin-top: 16px;
+}
+
+.repo-audi-historial-titulo {
+    margin-bottom: 8px;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+
+/* ============================================================
+   NIVEL 17 — BUSCADOR
+============================================================ */
+
+.repo-audi-busqueda {
+    margin: 12px 0;
+}
+
+.repo-audi-busqueda input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+
+/* ============================================================
+   NIVEL 18 — TABLA
+============================================================ */
+
+.repo-audi-tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.repo-audi-tabla-contenedor table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.repo-audi-tabla-contenedor th,
+.repo-audi-tabla-contenedor td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+    vertical-align: top;
+}
+
+
+/* ============================================================
+   NIVEL 19 — SIN REGISTROS
+============================================================ */
+
+.repo-audi-tabla-contenedor td[colspan="6"] {
+    text-align: center;
+    font-family: monospace;
+}
+
+
+/* ============================================================
+   NIVEL 20 — ERROR GENERAL
+============================================================ */
+
+.repo-audi-error-general {
+    padding: 10px;
+    border: 1px solid #d66;
+    border-radius: 5px;
+}
+
+
+/* ============================================================
+   NIVEL 21 — RESPONSIVE
+============================================================ */
+

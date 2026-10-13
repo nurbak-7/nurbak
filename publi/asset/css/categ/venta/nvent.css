@@ -1,0 +1,37 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/venta/nvent.css
+   Módulo: Ventas / Nota de Venta
+   RESPONSABILIDAD: punto de entrada de los estilos propios de
+   nvent. La estructura visual sigue Cotización/Operaciones; la
+   lógica permanece en los archivos funcionales de nvent.
+============================================================ */
+@import url('./nvent/docum.css');
+@import url('./nvent/clien.css');
+@import url('./nvent/vende.css');
+@import url('./nvent/almac.css');
+@import url('./nvent/produ.css');
+@import url('./nvent/tabla.css');
+@import url('./nvent/total.css');
+@import url('./nvent/pago.css');
+@import url('./nvent/accio.css');
+
+/* Lista principal: conservar clases/atributos del listado existente. */
+.vent-panel{width:100%;min-width:0;box-sizing:border-box;font-family:Arial,sans-serif}
+.vent-barra{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.vent-barra input{flex:1;min-width:0;padding:9px 10px;border:0;border-bottom:2px solid #d000a8;outline:0;font-size:14px}
+.vent-barra button{flex-shrink:0;padding:9px 14px;border:1px solid #bbb;background:#f4f4f4;cursor:pointer}
+.vent-tabla{width:100%;border-collapse:collapse;font-size:14px}
+.vent-tabla th,.vent-tabla td{border:1px solid #d000a8;padding:8px 9px;text-align:left;white-space:nowrap}
+.vent-tabla th{background:#10001d;color:#fff;font-weight:700}
+.vent-tabla td:nth-child(2){white-space:normal;min-width:145px}
+.vent-tabla td:last-child{text-align:right}
+.vent-mensaje{margin:10px 0;text-align:center}
+
+/* MINI: tamaño definido por el módulo consumidor; MINI global no cambia. */
+.dash-mini.nvent-mini{width:1350px;min-width:1250px;max-width:1450px;height:680px;min-height:560px;max-height:820px}
+.dash-mini.nvent-mini-productos{width:max-content;max-width:calc(100% - 48px)}
+
+.nvent-panel,.nvent-form{position:relative;width:100%;min-width:0;box-sizing:border-box;font-family:Arial,sans-serif}
+.nvent-form{padding:0}
+
+

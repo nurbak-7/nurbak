@@ -1,0 +1,241 @@
+/* ============================================================
+   Ruta: publi/asset/css/admin/tiend/tiend.css
+   Función: Diseñar únicamente la interfaz propia de TIEND.
+============================================================ */
+
+.admi-tiend { padding: 26px 34px; }
+
+.admi-tiend-cabecera {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.admi-tiend-cabecera h2 {
+    margin: 0 0 5px;
+}
+
+.admi-tiend-cabecera p {
+    margin: 0;
+    color: #687386;
+}
+
+.admi-tiend-acciones {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admi-tiend-acciones input {
+    width: 340px;
+    padding: 9px 10px;
+    box-sizing: border-box;
+}
+
+.admi-tiend-acciones button,
+.admi-tiend-acciones-fila button,
+.admi-tiend-form-acciones button,
+.admi-tiend-usuarios-acciones button {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.admi-tiend-tabla-wrap {
+    overflow: auto;
+    margin-top: 12px;
+}
+
+.admi-tiend-tabla {
+    width: 100%;
+    min-width: 980px;
+    border-collapse: collapse;
+}
+
+.admi-tiend-tabla th,
+.admi-tiend-tabla td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #d9e0e8;
+    vertical-align: middle;
+}
+
+.admi-tiend-tabla th {
+    white-space: nowrap;
+}
+
+.admi-tiend-acciones-fila {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.admi-tiend-acciones-fila button {
+    padding: 5px 8px;
+    cursor: pointer;
+}
+
+.admi-tiend-estado,
+.admi-tiend-resp {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    border-radius: 999px;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.admi-tiend-estado.is-activo,
+.admi-tiend-resp.is-si {
+    background: #dff5e7;
+    color: #17683a;
+}
+
+.admi-tiend-estado.is-inactivo,
+.admi-tiend-resp.is-no {
+    background: #edf0f4;
+    color: #566274;
+}
+
+.admi-tiend-alerta {
+    display: inline-block;
+    margin-left: 4px;
+    font-weight: 700;
+}
+
+.admi-tiend-form {
+    display: grid;
+    gap: 12px;
+    padding: 4px;
+}
+
+.admi-tiend-form-campo {
+    display: grid;
+    gap: 5px;
+}
+
+.admi-tiend-form-campo label {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.admi-tiend-form-campo input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.admi-tiend-form-info,
+.admi-tiend-usuarios-info {
+    padding: 9px 10px;
+    border: 1px solid #dce5ef;
+    border-radius: 5px;
+    background: #f6f9fc;
+    color: #526174;
+    font-size: 12px;
+}
+
+.admi-tiend-form-acciones,
+.admi-tiend-usuarios-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.admi-tiend-usuarios {
+    display: grid;
+    gap: 12px;
+    padding: 4px;
+}
+
+.admi-tiend-usuarios-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-weight: 600;
+}
+
+.admi-tiend-usuarios-tabla-wrap {
+    overflow: auto;
+}
+
+.admi-tiend-usuarios-tabla {
+    width: 100%;
+    min-width: 680px;
+    border-collapse: collapse;
+}
+
+.admi-tiend-usuarios-tabla th,
+.admi-tiend-usuarios-tabla td {
+    padding: 8px;
+    border-bottom: 1px solid #d9e0e8;
+    text-align: left;
+}
+
+.admi-tiend-asignar {
+    display: grid;
+    gap: 12px;
+    padding: 4px;
+}
+
+.admi-tiend-seleccion {
+    max-height: 280px;
+    overflow: auto;
+    border: 1px solid #d9e0e8;
+    border-radius: 5px;
+}
+
+.admi-tiend-usuario-opcion {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.admi-tiend-usuario-opcion:last-child {
+    border-bottom: 0;
+}
+
+.admi-tiend-usuario-opcion span {
+    display: grid;
+    gap: 2px;
+}
+
+.admi-tiend-usuario-opcion small {
+    color: #687386;
+}
+
+.admi-tiend-asignar-resp {
+    padding: 2px 0;
+}
+
+
+
+/* ============================================================
+   NIVEL 9 — ALMACENES DE TIENDA
+============================================================ */
+.admi-tiend-alma { display:grid; gap:12px; padding:4px; }
+.admi-tiend-alma-cab { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.admi-tiend-alma-cab > div { display:flex; align-items:center; gap:10px; }
+.admi-tiend-alma-cab button { padding:8px 12px; cursor:pointer; }
+.admi-tiend-alma-info { padding:9px 10px; border:1px solid #dce5ef; border-radius:5px; background:#f6f9fc; color:#526174; font-size:12px; }
+.admi-tiend-alma-tabla { overflow:auto; }
+.admi-tiend-alma-tabla table { width:100%; min-width:720px; border-collapse:collapse; }
+.admi-tiend-alma-tabla th, .admi-tiend-alma-tabla td { padding:8px; border-bottom:1px solid #d9e0e8; text-align:left; vertical-align:middle; }
+.admi-tiend-alma-form { display:grid; gap:10px; padding:10px; border:1px solid #dce5ef; border-radius:5px; background:#fafcff; }
+.admi-tiend-alma-form > div { display:grid; gap:5px; }
+.admi-tiend-alma-form label { font-size:12px; font-weight:600; }
+.admi-tiend-alma-form input[type="text"] { width:100%; box-sizing:border-box; padding:8px; }
+.admi-tiend-alma-check { display:flex !important; align-items:center; gap:7px; }
+.admi-tiend-alma-estado, .admi-tiend-alma-tipo { display:inline-flex; align-items:center; white-space:nowrap; border-radius:999px; padding:4px 8px; font-size:12px; font-weight:600; }
+.admi-tiend-alma-estado.is-activo { background:#dff5e7; color:#17683a; }
+.admi-tiend-alma-estado.is-inactivo { background:#edf0f4; color:#566274; }
+.admi-tiend-alma-tipo.is-principal { background:#e6efff; color:#244f8f; }
+.admi-tiend-alma-tipo.is-secundario { background:#edf0f4; color:#566274; }

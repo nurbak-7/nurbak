@@ -1,0 +1,151 @@
+/* ============================================================
+   Ruta: publi/asset/css/admin/permi/mini/mini.css
+   Función: Estilos exclusivos de la MINI-VENTANA de PERM.
+
+   NIVEL 1: Identidad y búsqueda.
+   NIVEL 2: Categorías con hover/despliegue.
+   NIVEL 3: Opciones y contadores.
+   NIVEL 4: Acciones.
+   NIVEL FINAL: Mini-ventana compacta y flexible.
+============================================================ */
+
+/* ============================================================
+   NIVEL 1 — CONTENEDOR / USUARIO
+   La búsqueda pertenece a la ventana principal.
+   La mini-ventana recibe automáticamente el usuario seleccionado.
+============================================================ */
+.admi-perm-mini { min-width:410px; }
+.admi-perm-mini .dash-mini-contenido { padding:14px; }
+
+/* ============================================================
+   NIVEL 1.1 — BUSCADOR DE USUARIO EN MINI
+   Se conserva porque MINI también se utiliza para CREAR.
+   En EDITAR se precarga el usuario seleccionado de PERM.
+============================================================ */
+.admi-perm-mini-busqueda {
+    display:flex;
+    align-items:center;
+    gap:5px;
+    margin-bottom:10px;
+    position:relative;
+}
+.admi-perm-mini-busqueda input {
+    flex:1;
+    min-width:0;
+    height:25px;
+    box-sizing:border-box;
+}
+.admi-perm-mini-busqueda button {
+    height:25px;
+    padding:2px 9px;
+    cursor:pointer;
+}
+.admi-perm-mini-resultados {
+    position:absolute;
+    top:29px;
+    left:0;
+    right:58px;
+    z-index:20;
+    background:#fff;
+    border:1px solid #cbd3dc;
+    box-shadow:0 5px 12px rgba(0,0,0,.14);
+    max-height:150px;
+    overflow-y:auto;
+}
+.admi-perm-mini-resultado-item {
+    display:block;
+    width:100%;
+    padding:6px 8px;
+    border:0;
+    border-bottom:1px solid #e5e8ec;
+    background:#fff;
+    color:#163965;
+    text-align:left;
+    cursor:pointer;
+    box-sizing:border-box;
+}
+.admi-perm-mini-resultado-item:hover { background:#eef3f8; }
+.admi-perm-mini-sin-resultados { display:block; padding:7px 8px; }
+.admi-perm-mini-identidad { margin-bottom:14px; line-height:1.35; }
+.admi-perm-mini-resultado { margin:6px 0 12px; }
+.admi-perm-mini-usuario { padding:9px; margin-bottom:10px; background:#f5f7fa; border:1px solid #d9e0e8; line-height:1.4; }
+
+/* ============================================================
+   NIVEL 2 — CATEGORÍAS
+============================================================ */
+.admi-perm-mini-grupo {
+    margin-top:6px;
+    border:1px solid transparent;
+    border-radius:4px;
+    overflow:hidden;
+}
+
+.admi-perm-mini-grupo-titulo {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:8px 9px;
+    margin:0;
+    font-weight:700;
+    cursor:pointer;
+    user-select:none;
+    border-bottom:1px solid transparent;
+}
+
+.admi-perm-mini-grupo-titulo::after {
+    content:'▸';
+    font-size:12px;
+}
+
+.admi-perm-mini-grupo:hover {
+    border-color:#cfd7e1;
+    background:#f7f9fb;
+}
+
+.admi-perm-mini-grupo:hover .admi-perm-mini-grupo-titulo {
+    border-bottom-color:#dce2e9;
+}
+
+/* El contenido se muestra al pasar o cuando JS añade .is-abierto. */
+.admi-perm-mini-opcion {
+    display:none;
+    align-items:flex-start;
+    gap:5px;
+    margin:0;
+    padding:4px 9px;
+    background:#fff;
+}
+
+.admi-perm-mini-grupo:hover .admi-perm-mini-opcion,
+.admi-perm-mini-grupo.is-abierto .admi-perm-mini-opcion {
+    display:flex;
+}
+
+.admi-perm-mini-grupo:hover .admi-perm-mini-grupo-titulo::after,
+.admi-perm-mini-grupo.is-abierto .admi-perm-mini-grupo-titulo::after {
+    content:'▾';
+}
+
+.admi-perm-mini-opcion:hover { background:#f2f5f8; }
+.admi-perm-mini-opcion input { margin-top:3px; }
+
+/* ============================================================
+   NIVEL 3 — CONTADOR
+============================================================ */
+.admi-perm-mini-grupo-titulo [data-perm-contador] {
+    margin-left:auto;
+    font-weight:700;
+}
+
+/* ============================================================
+   NIVEL 4 — ACCIONES
+============================================================ */
+.admi-perm-mini-acciones { display:flex; justify-content:flex-end; margin-top:15px; }
+.admi-perm-mini-acciones button { padding:7px 14px; cursor:pointer; }
+.admi-perm-mini-mensaje { margin:7px 0; }
+
+/* ============================================================
+   NIVEL FINAL — RESPONSIVE
+============================================================ */
+

@@ -1,0 +1,124 @@
+/* ============================================================
+   Ruta: publi/asset/css/categ/venta/opera/pago.css
+
+   Módulo: Ventas / Operaciones / Pago
+
+   RESPONSABILIDAD: Forma y medio de pagos.
+============================================================ */
+
+.opera-pago{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    align-items:center;
+
+    gap:25px;
+
+    width:100%;
+
+    box-sizing:border-box;
+
+    margin-top:14px;
+
+    padding:10px 14px;
+
+    background:#5210a0;
+
+    border:1px solid #d000a8;
+
+}
+
+
+.opera-pago-campo{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+
+.opera-pago-campo label{
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    color:#ff0000;
+
+}
+
+
+.opera-pago-campo select,
+
+.opera-pago-campo input{
+
+    height:28px;
+
+    box-sizing:border-box;
+
+    padding:4px 8px;
+
+    border:1px solid #d000a8;
+
+    border-radius:3px;
+
+}
+
+
+.opera-pago-campo input{
+
+    width:180px;
+
+}
+
+
+/* ============================================================
+   SUGERENCIAS — MEDIO DE PAGO
+============================================================ */
+
+.opera-medio-sugerencias{
+
+    position:absolute;
+
+    top:100%;
+
+    left:calc(100% - 180px);
+
+    width:180px;
+
+    z-index:9999;
+
+    box-sizing:border-box;
+
+    background:#fff;
+
+    border:1px solid #d000a8;
+
+}
+
+
+.opera-medio-sugerencias div{
+
+    padding:7px 8px;
+
+    background:#fff;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+}
+
+
+.opera-medio-sugerencias div:hover{
+
+    background:#eee;
+
+}

@@ -1,0 +1,6 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/venta/opera.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/venta/opera.css
+============================================================ */
+@import url('./opera/prod.css');

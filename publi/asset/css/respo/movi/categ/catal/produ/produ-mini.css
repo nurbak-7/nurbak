@@ -1,0 +1,26 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/catal/produ/produ-mini.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/catal/produ/produ-mini.css
+============================================================ */
+@media (max-width: 700px) {
+    .dash-mini.catal-prod-mini {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        height: auto;
+        min-height: 0;
+        max-height: 100%;
+    }
+
+    .dash-mini.catal-prod-mini .catal-mini-form {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .dash-mini.catal-prod-mini .catal-mini-grid label {
+        grid-template-columns: 105px minmax(0, 1fr);
+        gap: 8px;
+    }
+}

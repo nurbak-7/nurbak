@@ -1,0 +1,16 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/dash/mini/mini.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/dash/mini/mini.css
+============================================================ */
+@media (max-width: 600px) {
+    .dash-mini {
+        top: 15px;
+        right: 15px;
+        left: 15px;
+        width: auto;
+        min-width: 0;
+        max-width: calc(100% - 30px);
+        max-height: calc(100% - 30px);
+    }
+}

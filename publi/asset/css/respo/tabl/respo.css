@@ -1,0 +1,7 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/tabl/respo.css
+   Función: Agrupar adaptaciones responsive globales.
+   Grupo: TABLET / MEDIANAS
+============================================================ */
+@import url('./dash/body.css');
+@import url('./dash/login/acces.css');

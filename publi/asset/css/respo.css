@@ -1,0 +1,8 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo.css
+   Función: Entrada independiente de estilos responsive.
+   No sustituye ni modifica la estructura CSS base.
+============================================================ */
+@import url('./respo/comun.css');
+@import url('./respo/tabl/respo.css');
+@import url('./respo/movi/respo.css');

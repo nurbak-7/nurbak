@@ -1,0 +1,21 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/catal/equiv.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/catal/equiv.css
+============================================================ */
+@media only screen and (max-width: 700px) {
+    .equiv-form {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .dash-mini.catal-equiv-mini {
+        width:100%;
+        min-width:0;
+        max-width:100%;
+        height:auto;
+        min-height:0;
+        max-height:calc(100% - 30px);
+    }
+}

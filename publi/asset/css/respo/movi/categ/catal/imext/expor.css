@@ -1,0 +1,16 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/catal/imext/expor.css
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/catal/imext/expor.css
+============================================================ */
+@media (max-width: 700px) {
+
+    .expo-cab {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+    }
+
+    .expo-cab button {
+        width: 100%;
+    }
+}

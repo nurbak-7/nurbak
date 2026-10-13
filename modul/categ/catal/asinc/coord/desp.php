@@ -1,0 +1,172 @@
+<?php
+/* ============================================================
+   Ruta: modul/categ/catal/asinc/coord/desp.php
+   Módulo: Catálogo / ASINC / COORD
+   Función: Activar el coordinador en segundo plano.
+
+   RESPONSABILIDAD:
+   - Lanzar únicamente coord.php.
+   - No buscar trabajos.
+   - No ejecutar CRON.
+   - No ejecutar WORKE.
+   - No modificar la base de datos.
+============================================================ */
+declare(strict_types=1);
+
+final class CoordDesp
+{
+    /* ========================================================
+       NIVEL 1 — ACTIVAR COORDINADOR
+    ======================================================== */
+
+    public function activar(): bool
+    {
+        $coord = __DIR__
+            . DIRECTORY_SEPARATOR
+            . 'coord.php';
+
+        if (!is_file($coord)) {
+            return false;
+        }
+
+
+        /* ====================================================
+           NIVEL 2 — RESOLVER PHP CLI REAL
+        ==================================================== */
+
+        $php = $this->php();
+
+
+        if ($php === null) {
+            return false;
+        }
+
+
+        /* ====================================================
+           NIVEL 2 — WINDOWS
+        ==================================================== */
+
+        if (PHP_OS_FAMILY === 'Windows') {
+
+            $cmd = getenv('COMSPEC');
+
+            if (!$cmd) {
+                $cmd = 'C:\\Windows\\System32\\cmd.exe';
+            }
+
+            if (!is_file($cmd)) {
+                return false;
+            }
+
+
+            $comando =
+                '"' . $cmd . '"'
+                . ' /D /C start "" /B '
+                . '"' . $php . '"'
+                . ' "' . $coord . '"'
+                . ' >NUL 2>&1';
+
+
+            exec(
+                $comando,
+                $salida,
+                $codigo
+            );
+
+
+            return $codigo === 0;
+        }
+
+
+        /* ====================================================
+           NIVEL 2 — UNIX / LINUX
+        ==================================================== */
+
+        $comando =
+            escapeshellarg($php)
+            . ' '
+            . escapeshellarg($coord)
+            . ' > /dev/null 2>&1 &';
+
+        exec($comando);
+
+        return true;
+    }
+
+
+    /* ========================================================
+       NIVEL 1 — RESOLVER PHP CLI
+    ======================================================== */
+
+    private function php(): ?string
+    {
+        /* ====================================================
+           NIVEL 2 — CLI DIRECTO
+        ==================================================== */
+
+        if (
+            PHP_SAPI === 'cli'
+            && is_file(PHP_BINARY)
+        ) {
+            return PHP_BINARY;
+        }
+
+
+        /* ====================================================
+           NIVEL 2 — XAMPP DESDE DOCUMENT_ROOT
+        ==================================================== */
+
+        $doc = $_SERVER['DOCUMENT_ROOT'] ?? '';
+
+        if ($doc !== '') {
+
+            $xampp = dirname(
+                rtrim(
+                    $doc,
+                    "\\/"
+                )
+            );
+
+            $php = $xampp
+                . DIRECTORY_SEPARATOR
+                . 'php'
+                . DIRECTORY_SEPARATOR
+                . 'php.exe';
+
+            if (is_file($php)) {
+                return $php;
+            }
+        }
+
+
+        /* ====================================================
+           NIVEL 2 — RUTA ESTÁNDAR XAMPP
+        ==================================================== */
+
+        $php = 'C:\\xampp\\php\\php.exe';
+
+        if (is_file($php)) {
+            return $php;
+        }
+
+
+        /* ====================================================
+           NIVEL 2 — PHPBINDIR
+        ==================================================== */
+
+        $php = PHP_BINDIR
+            . DIRECTORY_SEPARATOR
+            . (
+                PHP_OS_FAMILY === 'Windows'
+                    ? 'php.exe'
+                    : 'php'
+            );
+
+        if (is_file($php)) {
+            return $php;
+        }
+
+
+        return null;
+    }
+}
