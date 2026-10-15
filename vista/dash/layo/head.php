@@ -40,17 +40,26 @@ $accesoTotal = $contPerm->tieneAccesoTotal();
 
 <header class="dash-head">
 
+    <!-- CONTROL RESPONSIVE: solo visible en móvil -->
+    <button class="dash-toggle" type="button" aria-label="Abrir menú" aria-controls="dash-nav" aria-expanded="false">
+        <span></span>
+        <span></span>
+    </button>
+
     <!-- MARCA -->
+    <!-- Fondo para cerrar el menú lateral móvil al pulsarlo. -->
+    <button class="dash-overlay" type="button" aria-label="Cerrar menú" hidden></button>
+
     <strong class="dash-logo">Sistema NUR</strong>
 
     <!-- NAVBAR -->
-    <nav class="dash-nav" aria-label="Menú principal">
+    <nav class="dash-nav" id="dash-nav" aria-label="Menú principal">
         <ul class="dash-menu">
 
             <!-- CATÁLOGO -->
             <li class="dash-item" data-modulo="catalogo">
-                <span class="dash-link">Catálogo</span>
-                <ul class="dash-submenu">
+                <button class="dash-link" type="button" aria-controls="dash-submenu-catalogo" aria-expanded="false">Catálogo</button>
+                <ul class="dash-submenu" id="dash-submenu-catalogo">
                     <li><span class="dash-sub-link" data-submodulo="articulos" data-permiso="PRODV">Artículos</span></li>
                     <li><span class="dash-sub-link" data-submodulo="produ" data-permiso="PRODV">Productos</span></li>
                     <li><span class="dash-sub-link" data-submodulo="vehic" data-permiso="VEHIV">Vehículos</span></li>
@@ -61,8 +70,8 @@ $accesoTotal = $contPerm->tieneAccesoTotal();
 
             <!-- INVENTARIO -->
             <li class="dash-item" data-modulo="inventario">
-                <span class="dash-link">Inventario</span>
-                <ul class="dash-submenu">
+                <button class="dash-link" type="button" aria-controls="dash-submenu-inventario" aria-expanded="false">Inventario</button>
+                <ul class="dash-submenu" id="dash-submenu-inventario">
                     <li><span class="dash-sub-link" data-submodulo="almacenes" data-permiso="ALMAV">Almacenes</span></li>
                     <li><span class="dash-sub-link" data-submodulo="stock" data-permiso="STOCV">Stock</span></li>
                     <li><span class="dash-sub-link" data-submodulo="movimientos" data-permiso="MOVIV">Movimientos</span></li>
@@ -72,8 +81,8 @@ $accesoTotal = $contPerm->tieneAccesoTotal();
 
             <!-- COMPRAS -->
             <li class="dash-item" data-modulo="compras">
-                <span class="dash-link">Compras</span>
-                <ul class="dash-submenu">
+                <button class="dash-link" type="button" aria-controls="dash-submenu-compras" aria-expanded="false">Compras</button>
+                <ul class="dash-submenu" id="dash-submenu-compras">
                     <li><span class="dash-sub-link" data-submodulo="proveedores" data-permiso="PROVV">Proveedores</span></li>
                     <li><span class="dash-sub-link" data-submodulo="orden-compra-ext" data-permiso="ORCEV">Orden compra ext.</span></li>
                     <li><span class="dash-sub-link" data-submodulo="compra-externa" data-permiso="COMEV">Compra externa</span></li>
@@ -83,8 +92,8 @@ $accesoTotal = $contPerm->tieneAccesoTotal();
 
             <!-- VENTAS -->
             <li class="dash-item" data-modulo="ventas">
-                <span class="dash-link">Ventas</span>
-                <ul class="dash-submenu">
+                <button class="dash-link" type="button" aria-controls="dash-submenu-ventas" aria-expanded="false">Ventas</button>
+                <ul class="dash-submenu" id="dash-submenu-ventas">
                     <li><span class="dash-sub-link" data-submodulo="clientes" data-permiso="CLIEV">Clientes</span></li>
                     <li><span class="dash-sub-link" data-submodulo="cotiz" data-permiso="COTIG">Cotización</span></li>
                     <li><span class="dash-sub-link" data-submodulo="operaciones" data-permiso="VENTG">Operaciones</span></li>
@@ -95,8 +104,8 @@ $accesoTotal = $contPerm->tieneAccesoTotal();
 
             <!-- FACTURACIÓN -->
             <li class="dash-item" data-modulo="facturacion">
-                <span class="dash-link">Facturación</span>
-                <ul class="dash-submenu">
+                <button class="dash-link" type="button" aria-controls="dash-submenu-facturacion" aria-expanded="false">Facturación</button>
+                <ul class="dash-submenu" id="dash-submenu-facturacion">
                     <li><span class="dash-sub-link" data-submodulo="facturas" data-permiso="FACTV">Facturas</span></li>
                     <li><span class="dash-sub-link" data-submodulo="boletas" data-permiso="BOLEV">Boletas</span></li>
                     <li><span class="dash-sub-link" data-submodulo="notas-credito" data-permiso="NCREG">Notas de crédito</span></li>
@@ -108,8 +117,8 @@ $accesoTotal = $contPerm->tieneAccesoTotal();
 
             <!-- PAGOS -->
             <li class="dash-item" data-modulo="pagos">
-                <span class="dash-link">Pagos</span>
-                <ul class="dash-submenu">
+                <button class="dash-link" type="button" aria-controls="dash-submenu-pagos" aria-expanded="false">Pagos</button>
+                <ul class="dash-submenu" id="dash-submenu-pagos">
                     <li><span class="dash-sub-link" data-submodulo="registro-pagos" data-permiso="PAGOV">Registro de pagos</span></li>
                     <li><span class="dash-sub-link" data-submodulo="caja" data-permiso="CAJAG">Caja</span></li>
                     <li><span class="dash-sub-link" data-submodulo="creditos" data-permiso="CREDV">Créditos</span></li>
@@ -118,8 +127,8 @@ $accesoTotal = $contPerm->tieneAccesoTotal();
 
             <!-- REPORTES -->
             <li class="dash-item" data-modulo="reportes">
-                <span class="dash-link">Reportes</span>
-                <ul class="dash-submenu">
+                <button class="dash-link" type="button" aria-controls="dash-submenu-reportes" aria-expanded="false">Reportes</button>
+                <ul class="dash-submenu" id="dash-submenu-reportes">
                     <li><span class="dash-sub-link" data-submodulo="informes" data-permiso="INFOV">Informes</span></li>
                     <li><span class="dash-sub-link" data-submodulo="auditoria" data-permiso="AUDIV">Auditoría</span></li>
                 </ul>
@@ -129,9 +138,9 @@ $accesoTotal = $contPerm->tieneAccesoTotal();
 
                 <!-- ADMINISTRACIÓN — SOLO ACCESO TOTAL -->
                 <li class="dash-item" data-modulo="admi">
-                    <span class="dash-link">Administración</span>
+                    <button class="dash-link" type="button" aria-controls="dash-submenu-admi" aria-expanded="false">Administración</button>
 
-                    <ul class="dash-submenu">
+                    <ul class="dash-submenu" id="dash-submenu-admi">
                         <li><span class="dash-sub-link" data-submodulo="admi-perm" data-permiso="PERMV">Permisos</span></li>
                         <li><span class="dash-sub-link" data-submodulo="admi-usua" data-permiso="USUAV">Usuarios</span></li>
                         <li><span class="dash-sub-link" data-submodulo="admi-tiend" data-permiso="TIENV">Tiendas</span></li>
@@ -148,12 +157,19 @@ $accesoTotal = $contPerm->tieneAccesoTotal();
     <div class="dash-user">
         <span><?= htmlspecialchars((string) ($usuarioActual['logi'] ?? ''), ENT_QUOTES, 'UTF-8') ?></span>
 
-        <a href="?salir=1">Cerrar sesión</a>
+        <a href="?salir=1" aria-label="Cerrar sesión" title="Cerrar sesión">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M13 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5" />
+                <path d="M3 12h12m-4-4 4 4-4 4" />
+            </svg>
+            <span class="dash-sr-only">Cerrar sesión</span>
+        </a>
     </div>
 
 </header>
 
 <script src="<?= ASSET_URL ?>/js/dash/logi/acces.js" defer></script>
+<script src="<?= ASSET_URL ?>/js/dash/navb.js" defer></script>
 
 <?php
 ?>

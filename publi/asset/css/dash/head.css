@@ -1,176 +1,121 @@
-
 /* ============================================================
    Ruta: publi/asset/css/dash/head.css
-
-   Función:
-   Estilos de la cabecera y navbar principal del dashboard.
-
-   Estructura:
-   🔹 Cabecera
-   🔹 Marca del sistema
-   🔹 Menú principal
-   🔹 Submenús desplegables
-   🔹 Usuario y cierre de sesión
-
-   Menú:
-   Productos
-   Inventario
-   Compras
-   Ventas
-   Facturación
-   Pagos
-   Reportes
-============================================================ */
-
-
-/* ============================================================
-   ÁREA 1: CABECERA
-
-   🔹 Nivel 1: Definir la altura general del navbar.
-   🔹 Nivel 2: Alinear la marca, el menú y el usuario.
-   🔹 Ejemplo: esta regla controla la franja azul completa.
+   Función: navbar principal, distribución por grupos y submenús.
+   El submenú conserva sus reglas visuales originales.
 ============================================================ */
 
 .dash-head {
-
+    position: relative;
+    z-index: 10;
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
-
-    gap: 1rem;
-
-    padding: 0 1rem;
-
-    min-height: 44px;
-
-    background: #163965;
-
-    color: #fff;
-
+    gap: 0;
+    width: 100%;
+    height: 40px;
+    min-height: 40px;
+    max-height: 40px;
+    padding: 0 12px;
     box-sizing: border-box;
+    color: #fff;
+    background: rgba(13, 22, 29, .93);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-radius: 3px;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, .14);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
+.dash-toggle,
+.dash-overlay {
+    display: none;
+}
 
-/* ============================================================
-   MARCA
-============================================================ */
-
+/* GRUPO 1: identidad */
 .dash-logo {
-
-    flex-shrink: 0;
-
+    flex: 0 0 auto;
+    margin: 0 28px 0 0;
+    padding: 0;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 650;
+    line-height: 1;
     white-space: nowrap;
-
-    font-size: 1.05rem;
 }
 
-
-/* ============================================================
-   NAVBAR
-============================================================ */
-
+/* GRUPO 2: categorías; su ancho depende del contenido, no se estira. */
 .dash-nav {
-
-    flex: 1;
-
+    flex: 1 1 auto;
     display: flex;
     align-items: center;
-
+    justify-content: flex-start;
     min-width: 0;
 }
 
-
-/* ============================================================
-   MENÚ PRINCIPAL
-============================================================ */
-
 .dash-menu {
-
     display: flex;
     align-items: center;
-
-    gap: .15rem;
-
+    justify-content: flex-start;
+    gap: 16px;
+    min-width: 0;
     margin: 0;
     padding: 0;
-
     list-style: none;
 }
 
-
-/* ============================================================
-   ELEMENTO PRINCIPAL
-============================================================ */
-
 .dash-item {
-
     position: relative;
-
-    /* 🔹 Nivel 1: Una sola medida controla separación y flechita. */
+    flex: 0 0 auto;
     --sepa-sub: 6px;
-
     margin: 0;
     padding: 0;
 }
 
-
-/* ============================================================
-   ÁREA 3: CATEGORÍA PRINCIPAL
-
-   🔹 Nivel 1: Dar espacio al nombre de la categoría.
-   🔹 Nivel 2: Mostrar el fondo blanco cuando el cursor pasa encima.
-   🔹 Ejemplo: al pasar por Inventario, este bloque se vuelve blanco.
-============================================================ */
-
 .dash-link {
-
+    appearance: none;
     display: flex;
     align-items: center;
-    gap: .35rem;
-
-    padding: .2rem .75rem;
-
-    color: #dbeafe;
-
-    text-decoration: none;
-
+    gap: 6px;
+    height: 30px;
+    margin: 0;
+    padding: 0 4px;
+    border: 0;
+    border-radius: 4px;
+    color: #f2f5f7;
+    background: transparent;
     font: inherit;
-    font-weight: 600;
-
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
     white-space: nowrap;
-    cursor: default;
+    cursor: pointer;
     user-select: none;
-
-    border-radius: 2px;
-
-    transition:
-        background .2s ease,
-        color .2s ease;
+    transition: background .15s ease, color .15s ease;
 }
 
-
-/* ============================================================
-   INDICADOR DEL SUBMENÚ
-============================================================ */
-
+/* Indicador pequeño de las categorías con submenú. */
 .dash-link::after {
-
-    content: none;
-
+    content: "";
+    flex: 0 0 5px;
+    width: 5px;
+    height: 5px;
+    margin-top: -3px;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform .15s ease;
 }
 
-
-/* ============================================================
-   HOVER DEL MENÚ PRINCIPAL
-============================================================ */
-
-.dash-item:hover > .dash-link {
-
-    color: #163965;
-
-    background: #fff;
-
+.dash-item:hover > .dash-link,
+.dash-item.is-open > .dash-link {
+    color: #fff;
+    background: rgba(255, 255, 255, .13);
 }
 
+.dash-item.is-open > .dash-link::after {
+    margin-top: 2px;
+    transform: rotate(225deg);
+}
 
 /* ============================================================
    ÁREA 4: SUBMENÚ
@@ -266,6 +211,15 @@
 }
 
 
+/* Apertura por clic en tablet y móvil; el diseño original del submenú se conserva. */
+.dash-item.is-open > .dash-submenu {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+
 /* ============================================================
    ELEMENTOS DEL SUBMENÚ
 ============================================================ */
@@ -319,55 +273,69 @@
 }
 
 
-/* ============================================================
-   USUARIO
-============================================================ */
 
+/* GRUPO 3: usuario y salida */
 .dash-user {
-
     display: flex;
     align-items: center;
-
-    gap: .75rem;
-
-    flex-shrink: 0;
-
+    flex: 0 0 auto;
+    gap: 24px;
+    margin-left: auto;
+    padding-left: 24px;
+    border-left: 1px solid rgba(255, 255, 255, .28);
     white-space: nowrap;
-
 }
 
-
-/* ============================================================
-   NOMBRE DEL USUARIO
-============================================================ */
-
-.dash-user span {
-
-    font-weight: 600;
-
+.dash-user span:not(.dash-sr-only) {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
 }
-
-
-/* ============================================================
-   CERRAR SESIÓN
-============================================================ */
 
 .dash-user a {
-
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 20px;
+    width: 20px;
+    height: 24px;
     color: #fff;
-
-    font-weight: 700;
-
     text-decoration: none;
 }
 
-
-/* ============================================================
-   HOVER CERRAR SESIÓN
-============================================================ */
-
 .dash-user a:hover {
+    color: #fff;
+    opacity: .82;
+}
 
-    text-decoration: underline;
+.dash-user a svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
 
+.dash-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dash-link,
+    .dash-link::after,
+    .dash-submenu {
+        transition: none;
+    }
 }
