@@ -1,0 +1,54 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/tabl/dash/head.css
+   Función: compactar el navbar en tablet sin hamburguesa.
+============================================================ */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .dash-head {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+    .dash-logo {
+        margin-right: 10px;
+        font-size: clamp(11px, calc(1vw + 3px), 13px);
+    }
+
+    .dash-menu {
+        /* Separación gradual: evita que las categorías queden pegadas al cambiar el ancho. */
+        gap: clamp(7px, 1vw, 12px);
+    }
+
+    .dash-link {
+        gap: 3px;
+        padding-right: 2px;
+        padding-left: 2px;
+        font-size: clamp(10px, calc(1vw + 2px), 12px);
+    }
+
+    .dash-link::after {
+        flex-basis: 4px;
+        width: 4px;
+        height: 4px;
+    }
+
+    .dash-user {
+        gap: 10px;
+        margin-left: 10px;
+        padding-left: 10px;
+    }
+
+    .dash-user span:not(.dash-sr-only) {
+        font-size: 10px;
+    }
+
+    .dash-user a {
+        flex-basis: 17px;
+        width: 17px;
+    }
+
+    .dash-user a svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
