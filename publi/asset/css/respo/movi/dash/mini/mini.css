@@ -1,16 +1,27 @@
 /* ============================================================
    Ruta: publi/asset/css/respo/movi/dash/mini/mini.css
-   Función: Adaptaciones responsive separadas del CSS base.
-   Origen: publi/asset/css/dash/mini/mini.css
+   Función: Adaptar MINI a móvil sin desbordar el área de trabajo.
 ============================================================ */
-@media (max-width: 600px) {
+@media (max-width: 767px) {
     .dash-mini {
-        top: 15px;
-        right: 15px;
-        left: 15px;
-        width: auto;
+        top: 8px;
+        right: auto;
+        left: 8px;
+        width: calc(100% - 16px);
         min-width: 0;
-        max-width: calc(100% - 30px);
-        max-height: calc(100% - 30px);
+        max-width: calc(100% - 16px);
+        max-height: calc(100% - 16px);
+        border-radius: 6px;
+    }
+
+    .dash-mini-head {
+        min-height: 40px;
+        gap: .5rem;
+        padding: .35rem .5rem;
+    }
+
+    .dash-mini-contenido {
+        min-height: 0;
+        padding: 10px;
     }
 }

@@ -29,12 +29,13 @@
    🔹 Nivel 2: Terminar dentro del navegador.
    🔹 Nivel Final: Permitir eventos solamente en las modals.
 
-   --alto-nav-real es calculado por modal.js. Si JavaScript todavía
-   no lo calculó, se utiliza 44px como valor de respaldo.
+   --coord-nav-inferior contiene la coordenada real del borde inferior
+   del navbar respecto al viewport. La separación de 2px se aplica
+   solamente en la posición inicial de la modal, no en esta área.
 ============================================================ */
 .dash-modal-area {
     position: fixed;
-    top: var(--alto-nav-real, 44px);
+    top: var(--coord-nav-inferior, 40px);
     right: 0;
     bottom: 0;
     left: 0;
@@ -64,7 +65,10 @@
     top: 16px;
     left: 5%;
     z-index: 1001;
-    width: min(90%, calc(100% - 32px));
+    display: flex;
+    flex-direction: column;
+    width: min(88%, 1440px);
+    height: min(78vh, 760px);
     max-width: calc(100% - 32px);
     min-width: 320px;
     min-height: 300px;
@@ -220,10 +224,11 @@
    🔹 Nivel Final: Permitir desplazamiento cuando sea necesario.
 ============================================================ */
 .dash-modal-contenido {
+    flex: 1 1 auto;
     width: 100%;
     min-width: 0;
-    min-height: 240px;
-    max-height: calc(100vh - var(--alto-nav-real, 44px) - 76px);
+    min-height: 0;
+    max-height: none;
     padding: 1rem;
     overflow: auto;
     color: #1f2937;

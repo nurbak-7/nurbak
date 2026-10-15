@@ -1,0 +1,19 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/tabl/dash/modal/modal.css
+   Función: Adaptar MODAL a tablet conservando el navbar.
+============================================================ */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .dash-modal:not(.is-minimizada) {
+        width: 94%;
+        height: min(82vh, 820px);
+        min-width: 320px;
+        max-width: calc(100% - 32px);
+        max-height: calc(100% - 24px);
+        border-radius: 6px;
+    }
+
+    .dash-modal-contenido {
+        min-height: 0;
+        padding: .85rem;
+    }
+}

@@ -1,0 +1,16 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/tabl/dash/mini/mini.css
+   Función: Limitar MINI al área disponible en tablet.
+============================================================ */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .dash-mini {
+        width: min(560px, calc(100% - 32px));
+        min-width: 0;
+        max-width: calc(100% - 32px);
+        max-height: calc(100% - 32px);
+    }
+
+    .dash-mini-contenido {
+        min-height: 0;
+    }
+}

@@ -55,7 +55,7 @@ const iniciarMini = async () => {
     const ajustarDentroDelArea = mini => {
         if (!mini) return;
 
-        const margen = window.matchMedia?.('(max-width: 600px)').matches ? 30 : 48;
+        const margen = window.matchMedia?.('(max-width: 767px)').matches ? 16 : (window.matchMedia?.('(max-width: 1199px)').matches ? 32 : 48);
         const anchoMax = Math.max(1, areaMini.clientWidth - margen);
         const altoMax = Math.max(1, areaMini.clientHeight - margen);
 
@@ -78,7 +78,6 @@ const iniciarMini = async () => {
 
     const prepararRedimension = mini => {
         const zona = 8;
-        const minimoAnchoBase = 560;
         const minimoAlto = 160;
 
         let redimensionando = false;
@@ -102,12 +101,15 @@ const iniciarMini = async () => {
         };
 
         const margenArea = () => {
-            return window.matchMedia?.('(max-width: 600px)').matches ? 30 : 48;
+            return window.matchMedia?.('(max-width: 767px)').matches ? 16 : (window.matchMedia?.('(max-width: 1199px)').matches ? 32 : 48);
         };
 
         const obtenerMinimo = () => {
             const disponible = Math.max(0, areaMini.clientWidth - margenArea());
-            return Math.min(minimoAnchoBase, disponible || minimoAnchoBase);
+            const minimoBase = window.matchMedia?.('(max-width: 767px)').matches
+                ? 280
+                : (window.matchMedia?.('(max-width: 1199px)').matches ? 420 : 560);
+            return Math.min(minimoBase, disponible || minimoBase);
         };
 
         const obtenerMinimoAlto = () => {
@@ -393,10 +395,16 @@ const iniciarMini = async () => {
         areaMini.appendChild(mini);
         minisAbiertas.add(mini);
 
+        const compacto = window.matchMedia?.('(max-width: 767px)').matches;
         const desplazamiento = Math.min(minisAbiertas.size - 1, 5) * 24;
         mini.style.right = 'auto';
-        mini.style.left = `${Math.max(24, areaMini.clientWidth - mini.offsetWidth - 24 - desplazamiento)}px`;
-        mini.style.top = `${24 + desplazamiento}px`;
+        if (compacto) {
+            mini.style.left = '8px';
+            mini.style.top = '8px';
+        } else {
+            mini.style.left = `${Math.max(24, areaMini.clientWidth - mini.offsetWidth - 24 - desplazamiento)}px`;
+            mini.style.top = `${24 + desplazamiento}px`;
+        }
         traerAlFrente(mini);
 
         mini.querySelector('[data-mini-accion="cerrar"]')

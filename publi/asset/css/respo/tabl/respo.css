@@ -4,5 +4,7 @@
    Grupo: TABLET / MEDIANAS
 ============================================================ */
 @import url('./dash/body.css');
+@import url('./dash/modal/modal.css');
+@import url('./dash/mini/mini.css');
 @import url('./dash/login/acces.css');
 @import url('./dash/head.css');

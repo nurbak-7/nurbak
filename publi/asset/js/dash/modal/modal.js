@@ -108,13 +108,15 @@ const iniciarModal = async () => {
 
         const actualizarAltoNavbar = () => {
 
-            const alto = navbar
-                ? navbar.getBoundingClientRect().height
-                : 44;
+            // Coordenada real del borde inferior del navbar en el viewport.
+            // No usar solamente height: el navbar también puede tener un top distinto de 0.
+            const bordeInferior = navbar
+                ? navbar.getBoundingClientRect().bottom
+                : 40;
 
             document.documentElement.style.setProperty(
-                '--alto-nav-real',
-                `${alto}px`
+                '--coord-nav-inferior',
+                `${Math.max(0, bordeInferior)}px`
             );
         };
 
@@ -202,13 +204,20 @@ const iniciarModal = async () => {
                 (areaModals.clientWidth - modal.offsetWidth) / 2
             );
 
-            const arribaInicial = 6;
+            // La modal se coloca cerca del borde inferior del navbar.
+            // El área ya comienza debajo del navbar y su altura se actualiza
+            // dinámicamente; por eso no se centra verticalmente en la pantalla.
+            const inicioY = 2;
+            const desplazamientoY = 18;
 
             modal.style.left =
-                `${centroX + (numer * separacion)}px`;
+                `${Math.min(
+                    areaModals.clientWidth - modal.offsetWidth,
+                    centroX + (numer * separacion)
+                )}px`;
 
             modal.style.top =
-                `${arribaInicial + (numer * separacion)}px`;
+                `${inicioY + (numer * desplazamientoY)}px`;
 
             ajustarDentroDelArea(modal);
         };
@@ -225,6 +234,19 @@ const iniciarModal = async () => {
     })();
 
     estad.actualizarAltoNavbar();
+
+    // Mantener sincronizada la coordenada si cambia la altura del navbar,
+    // cambia el viewport o se desplaza el documento.
+    if (navbar && typeof ResizeObserver === 'function') {
+        const observarNavbar = new ResizeObserver(estad.actualizarAltoNavbar);
+        observarNavbar.observe(navbar);
+    }
+
+    window.addEventListener('resize', estad.actualizarAltoNavbar, { passive: true });
+    window.addEventListener('scroll', estad.actualizarAltoNavbar, {
+        passive: true,
+        capture: true,
+    });
 
     /* ========================================================
        NIVEL 3 — CREAR RECURSOS Y MOVIMIENTO
