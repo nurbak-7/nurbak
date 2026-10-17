@@ -1,6 +1,214 @@
 /* ============================================================
    Ruta: publi/asset/js/categ/catal/equiv.js
    Módulo: Catálogo / Equiv
-   Función: Consulta + creación/eliminación mediante MINI.
+   Función: Gestionar la relación entre productos y vehículos.
 ============================================================ */
-(()=>{const R='modul/categ/catal/equiv/equiv-contr.php',esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');const pedir=async(params,opt={})=>{const x=await fetch(`${R}?${params.toString()}`,{method:opt.method||'GET',body:opt.body||undefined,cache:'no-store',headers:{Accept:'application/json'}});const d=await x.json();if(!x.ok||!d.ok)throw Error(d.mensaje||`HTTP ${x.status}`);return d};const auth=async p=>window.NURBAK_LOGI_AUT?.autorizar?((await window.NURBAK_LOGI_AUT.autorizar(p)).autorizado===true):false;const iniciar=c=>{const r=c.matches?.('[data-equiv]')?c:c.querySelector?.('[data-equiv]');if(!r||r.dataset.iniciado==='si')return;const b=r.querySelector('[data-equiv-busc]'),tb=r.querySelector('[data-equiv-cuer]'),msg=r.querySelector('[data-equiv-vaci]'),nuevo=r.querySelector('[data-equiv-nuevo]');if(!b||!tb||!msg||!nuevo)return;r.dataset.iniciado='si';const listar=async()=>{msg.hidden=false;msg.textContent='Cargando equivalencias...';tb.innerHTML='';try{const d=await pedir(new URLSearchParams({accion:'listar',buscar:b.value.trim(),limite:'50'}));const rows=d.equiv||[];tb.innerHTML=rows.slice(0,20).map(x=>`<tr><td>${esc(x.id)}</td><td>${esc(x.descr||'—')}</td><td>${esc(x.codig||'—')}</td><td>${esc(x.origi||'—')}</td><td>${esc(x.motor||'—')}</td><td>${esc(x.model||'—')}</td><td>${esc(x.anio||'—')}</td><td>${esc(x.gdesd||'—')}-${esc(x.ghast||'—')}</td><td><button type="button" data-equiv-eliminar="${esc(x.id)}">Eliminar</button></td></tr>`).join('');msg.textContent=b.value.trim()?'Sin coincidencias':'Sin registros';msg.hidden=rows.length>0}catch(e){msg.textContent='No se pudieron cargar las equivalencias.';console.error('Equiv:',e)}};nuevo.addEventListener('click',async()=>{if(!(await auth('EQUIG')))return;const mini=await window.NURBAK_MINI.abrir({titulo:'Nueva equivalencia',rutaVista:'vista/categ/catal/equiv-mini.php',modulo:'equiv-mini',clase:'catal-equiv-mini'});const form=mini?.querySelector('[data-equiv-mini-form]');if(!form)return;const p=form.querySelector('[data-equiv-mini-prod]'),v=form.querySelector('[data-equiv-mini-vehi]'),m=form.querySelector('[data-mini-msg]');form.querySelector('[data-mini-cerrar]')?.addEventListener('click',()=>window.NURBAK_MINI.cerrar(mini));try{const d=await pedir(new URLSearchParams({accion:'opciones'}));p.innerHTML=(d.productos||[]).length?(d.productos||[]).map(x=>`<option value="${esc(x.id)}">${esc(x.descr)}${x.codig?' — '+esc(x.codig):''}</option>`).join(''):'<option value="" disabled>Sin productos disponibles</option>';v.innerHTML=(d.vehiculos||[]).length?(d.vehiculos||[]).map(x=>`<option value="${esc(x.id)}">${esc(x.motor)} — ${esc(x.model)} — ${esc(x.anio)}</option>`).join(''):'<option value="" disabled>Sin vehículos disponibles</option>'}catch(e){m.textContent=e.message;return}form.addEventListener('submit',async e=>{e.preventDefault();m.textContent='Guardando...';try{const body=new URLSearchParams(new FormData(form));body.set('accion','agregar');const d=await pedir(new URLSearchParams(),{method:'POST',body});m.textContent=d.mensaje;window.NURBAK_CATE_SINC?.emitir({modu:'equiv',recu:'equiv',acci:'crear',id:Number(d.id||0),dato:d});await listar();setTimeout(()=>window.NURBAK_MINI.cerrar(mini),250)}catch(e){m.textContent=e.message}})});tb.addEventListener('click',async e=>{const x=e.target.closest('[data-equiv-eliminar]');if(!x||!(await auth('EQUIG'))||!confirm('¿Eliminar esta equivalencia?'))return;try{await pedir(new URLSearchParams(),{method:'POST',body:new URLSearchParams({accion:'eliminar',id:x.dataset.equivEliminar})});window.NURBAK_CATE_SINC?.emitir({modu:'equiv',recu:'equiv',acci:'elim',id:Number(x.dataset.equivEliminar||0)});await listar()}catch(err){alert(err.message)}});/* SINCRONIZACIÓN | FASE 2 */window.NURBAK_CATE_SINC?.onCambio(()=>listar().catch(()=>{}),{recu:'produ'},c);window.NURBAK_CATE_SINC?.onCambio(()=>listar().catch(()=>{}),{recu:'vehic'},c);window.NURBAK_CATE_SINC?.onCambio(()=>listar().catch(()=>{}),{recu:'equiv'},c);let t;b.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(listar,250)});listar()};document.addEventListener('modu:cargado',e=>{if(e.detail?.modulo==='equiv')iniciar(e.detail.modal)});document.querySelectorAll('[data-equiv]').forEach(iniciar)})();
+(() => {
+    const R = 'modul/categ/catal/equiv/equiv-contr.php';
+
+    const esc = v => String(v ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+
+    const pedir = async (params, opt = {}) => {
+        const x = await fetch(`${R}?${params.toString()}`, {
+            method: opt.method || 'GET',
+            body: opt.body || undefined,
+            cache: 'no-store',
+            headers: { Accept: 'application/json' }
+        });
+        const d = await x.json();
+
+        if (!x.ok || !d.ok) {
+            throw Error(d.mensaje || `HTTP ${x.status}`);
+        }
+
+        return d;
+    };
+
+    const auth = async p => window.NURBAK_LOGI_AUT?.autorizar
+        ? (await window.NURBAK_LOGI_AUT.autorizar(p)).autorizado === true
+        : false;
+
+    const rango = v => {
+        const am = String(Number(v.anio) % 100).padStart(2, '0');
+        const ah = String(Number(v.ghast) % 100).padStart(2, '0');
+        return `${am}-${v.gdesd}-${ah}`;
+    };
+
+    const iniciar = c => {
+        const r = c.matches?.('[data-equiv]') ? c : c.querySelector?.('[data-equiv]');
+        if (!r || r.dataset.iniciado === 'si') return;
+
+        const b = r.querySelector('[data-equiv-busc]');
+        const tb = r.querySelector('[data-equiv-cuer]');
+        const msg = r.querySelector('[data-equiv-vaci]');
+        const nuevo = r.querySelector('[data-equiv-nuevo]');
+
+        if (!b || !tb || !msg || !nuevo) return;
+        r.dataset.iniciado = 'si';
+
+        const listar = async () => {
+            msg.hidden = false;
+            msg.textContent = 'Cargando equivalencias...';
+            tb.innerHTML = '';
+
+            try {
+                const d = await pedir(new URLSearchParams({
+                    accion: 'listar',
+                    buscar: b.value.trim(),
+                    limite: '50'
+                }));
+
+                const rows = d.equiv || [];
+                tb.innerHTML = rows.slice(0, 20).map(x => `
+                    <tr>
+                        <td>${esc(x.id)}</td>
+                        <td>${esc(x.descr || '—')}</td>
+                        <td>${esc(x.codig || '—')}</td>
+                        <td>${esc(x.origi || '—')}</td>
+                        <td>${esc(x.marca || '—')}</td>
+                        <td>${esc(x.motor || '—')}</td>
+                        <td>${esc(x.model || '—')}</td>
+                        <td>${esc(x.anio || '—')}</td>
+                        <td>${esc(x.gdesd || '—')}-${esc(x.ghast || '—')}</td>
+                        <td><button type="button" data-equiv-eliminar="${esc(x.id)}">Eliminar</button></td>
+                    </tr>
+                `).join('');
+
+                msg.textContent = b.value.trim() ? 'Sin coincidencias' : 'Sin registros';
+                msg.hidden = rows.length > 0;
+            } catch (e) {
+                msg.textContent = 'No se pudieron cargar las equivalencias.';
+                console.error('Equiv:', e);
+            }
+        };
+
+        nuevo.addEventListener('click', async () => {
+            if (!(await auth('EQUIG'))) return;
+
+            const mini = await window.NURBAK_MINI.abrir({
+                titulo: 'Nueva equivalencia',
+                rutaVista: 'vista/categ/catal/equiv-mini.php',
+                modulo: 'equiv-mini',
+                clase: 'catal-equiv-mini'
+            });
+
+            const form = mini?.querySelector('[data-equiv-mini-form]');
+            if (!form) return;
+
+            const p = form.querySelector('[data-equiv-mini-prod]');
+            const v = form.querySelector('[data-equiv-mini-vehi]');
+            const m = form.querySelector('[data-mini-msg]');
+
+            form.querySelector('[data-mini-cerrar]')?.addEventListener(
+                'click',
+                () => window.NURBAK_MINI.cerrar(mini)
+            );
+
+            try {
+                const d = await pedir(new URLSearchParams({ accion: 'opciones' }));
+
+                p.innerHTML = (d.productos || []).length
+                    ? d.productos.map(x => `<option value="${esc(x.id)}">${esc(x.descr)}${x.codig ? ' — ' + esc(x.codig) : ''}</option>`).join('')
+                    : '<option value="" disabled>Sin productos disponibles</option>';
+
+                v.innerHTML = (d.vehiculos || []).length
+                    ? d.vehiculos.map(x => `<option value="${esc(x.id)}">${esc(x.marca)} — ${esc(x.motor)} — ${esc(x.model)} — ${esc(rango(x))}</option>`).join('')
+                    : '<option value="" disabled>Sin vehículos disponibles</option>';
+            } catch (e) {
+                m.textContent = e.message;
+                return;
+            }
+
+            form.addEventListener('submit', async e => {
+                e.preventDefault();
+                m.textContent = 'Guardando...';
+
+                try {
+                    const body = new URLSearchParams(new FormData(form));
+                    body.set('accion', 'agregar');
+
+                    const d = await pedir(new URLSearchParams(), {
+                        method: 'POST',
+                        body
+                    });
+
+                    m.textContent = d.mensaje;
+                    window.NURBAK_CATE_SINC?.emitir({
+                        modu: 'equiv',
+                        recu: 'equiv',
+                        acci: 'crear',
+                        id: Number(d.id || 0),
+                        dato: d
+                    });
+
+                    await listar();
+                    setTimeout(() => window.NURBAK_MINI.cerrar(mini), 250);
+                } catch (e) {
+                    m.textContent = e.message;
+                }
+            });
+        });
+
+        tb.addEventListener('click', async e => {
+            const x = e.target.closest('[data-equiv-eliminar]');
+            if (!x || !(await auth('EQUIG')) || !confirm('¿Eliminar esta equivalencia?')) return;
+
+            try {
+                await pedir(new URLSearchParams(), {
+                    method: 'POST',
+                    body: new URLSearchParams({
+                        accion: 'eliminar',
+                        id: x.dataset.equivEliminar
+                    })
+                });
+
+                window.NURBAK_CATE_SINC?.emitir({
+                    modu: 'equiv',
+                    recu: 'equiv',
+                    acci: 'elim',
+                    id: Number(x.dataset.equivEliminar || 0)
+                });
+
+                await listar();
+            } catch (err) {
+                alert(err.message);
+            }
+        });
+
+        /* SINCRONIZACIÓN | FASE 2 */
+        window.NURBAK_CATE_SINC?.onCambio(
+            () => listar().catch(() => {}),
+            { recu: 'produ' },
+            c
+        );
+        window.NURBAK_CATE_SINC?.onCambio(
+            () => listar().catch(() => {}),
+            { recu: 'vehic' },
+            c
+        );
+        window.NURBAK_CATE_SINC?.onCambio(
+            () => listar().catch(() => {}),
+            { recu: 'equiv' },
+            c
+        );
+
+        let t;
+        b.addEventListener('input', () => {
+            clearTimeout(t);
+            t = setTimeout(listar, 250);
+        });
+
+        listar();
+    };
+
+    document.addEventListener('modu:cargado', e => {
+        if (e.detail?.modulo === 'equiv') iniciar(e.detail.modal);
+    });
+
+    document.querySelectorAll('[data-equiv]').forEach(iniciar);
+})();

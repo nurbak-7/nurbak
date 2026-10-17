@@ -2,7 +2,8 @@
    Ruta: publi/asset/css/categ/catal/vehic.css
 ============================================================ */
 .catal-vehi, .catal-equiv { width:100%; background:#fff; color:#202020; }
-.catal-vehi table, .catal-equiv table { width:100%; border-collapse:collapse; min-width:700px; }
+.catal-vehi table { width:100%; border-collapse:collapse; min-width:760px; }
+.catal-equiv table { width:100%; border-collapse:collapse; min-width:900px; }
 .catal-vehi .vehi-tabla, .catal-equiv .equiv-tabla { overflow-x:auto; margin-top:.75rem; }
 .catal-vehi th, .catal-vehi td, .catal-equiv th, .catal-equiv td { padding:.4rem .5rem; border:1px solid #999; white-space:nowrap; text-align:left; font-size:.8rem; }
 .catal-vehi th, .catal-equiv th { font-weight:700; background:#f3f3f3; }

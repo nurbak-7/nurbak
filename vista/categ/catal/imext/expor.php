@@ -9,7 +9,7 @@
    FORMATO:
    - XLSX.
    - Una hoja por MARCA.
-   - MARCA solo pertenece al intercambio Excel.
+   - MARCA se registra en Vehículos y organiza las hojas del intercambio Excel.
 ============================================================ */
 declare(strict_types=1);
 ?>
