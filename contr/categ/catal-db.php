@@ -1,50 +1,32 @@
 <?php
 /* ============================================================
-   Ruta: contr/categ/catal-db.php
-   Módulo: Núcleo / base de CATAL
+   Ruta: confi/categ/catal-db.php
+   Módulo: Configuración / base de CATAL
 
    FUNCIÓN:
-   Crear y reutilizar la conexión PDO con la base de CATAL.
+   Definir la conexión de la base de CATAL del sistema.
 
    CICLO:
-   repositorio → CATALDB::abrir() → MySQL/MariaDB → consulta.
+   catal-db.php → contr/categ/catal-db.php → repositorios de los módulos.
 
    CONEXIÓN:
-   confi/categ/catal-db.php → configuración de la base de CATAL.
-   Los repositorios de Catálogo y demás módulos utilizarán CATALDB.
+   La base de CATAL es independiente de LOGI.
+   LOGI se mantiene exclusivamente para autenticación.
 
-   IMPORTANTE:
-   LOGINDB continúa reservado para logi/logi.
+   CONFIGURACIÓN:
+   Usa variables de entorno. En local, por defecto:
+   base = CATAL | usuario = root | clave = vacía.
+   En conexiones remotas se entrega el certificado CA al conector PDO.
 ============================================================ */
 
 declare(strict_types=1);
 
-final class CATALDB
-{
-    private static ?PDO $conexion = null;
+$host = getenv('DB_APP_HOST') ?: '127.0.0.1';
+$port = getenv('DB_APP_PORT') ?: '3306';
+$name = getenv('DB_CATAL_NAME') ?: 'catal';
+$user = getenv('DB_APP_USER') ?: 'root';
+$pass = getenv('DB_APP_PASS') ?: '';
+$charset = 'utf8mb4';
+$cert = '/etc/ssl/certs/ca-certificates.crt';
 
-    public static function abrir(): PDO
-    {
-        if (self::$conexion instanceof PDO) {
-            return self::$conexion;
-        }
-
-        $config = require dirname(__DIR__, 2) . '/confi/categ/catal-db.php';
-
-        $dsn = sprintf(
-            'mysql:host=%s;port=%s;dbname=%s;charset=%s',
-            $config['host'],
-            $config['port'],
-            $config['name'],
-            $config['charset']
-        );
-
-        self::$conexion = new PDO($dsn, $config['user'], $config['pass'], [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ]);
-
-        return self::$conexion;
-    }
-}
+return compact('host', 'port', 'name', 'user', 'pass', 'charset', 'cert');
