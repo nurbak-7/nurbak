@@ -16,6 +16,7 @@
    CONFIGURACIÓN:
    Usa variables de entorno. En local, por defecto:
    base = CATAL | usuario = root | clave = vacía.
+   En conexiones remotas se entrega el certificado CA al conector PDO.
 ============================================================ */
 
 declare(strict_types=1);
@@ -26,5 +27,6 @@ $name = getenv('DB_CATAL_NAME') ?: 'catal';
 $user = getenv('DB_APP_USER') ?: 'root';
 $pass = getenv('DB_APP_PASS') ?: '';
 $charset = 'utf8mb4';
+$cert = '/etc/ssl/certs/ca-certificates.crt';
 
-return compact('host', 'port', 'name', 'user', 'pass', 'charset');
+return compact('host', 'port', 'name', 'user', 'pass', 'charset', 'cert');

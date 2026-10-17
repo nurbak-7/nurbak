@@ -7,7 +7,7 @@
    Crear y reutilizar la conexión PDO con la base INVEN.
 
    CICLO:
-   repositorio → INVENDB::abrir() → MySQL/MariaDB → consulta.
+   repositorio → INVENDB::abrir() → MySQL/TiDB → consulta.
 
    CONEXIONES:
    - confi/categ/inven-db.php → configuración de INVEN.
@@ -36,11 +36,23 @@ final class INVENDB
             $config['charset']
         );
 
-        self::$conexion = new PDO($dsn, $config['user'], $config['pass'], [
+        $opciones = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES => false,
-        ]);
+        ];
+
+        /* ========================================================
+           NIVEL — TLS PARA HOSTS REMOTOS
+           Mantener la conexión local sin opciones TLS adicionales.
+        ======================================================== */
+
+        if (!in_array(strtolower($config['host']), ['127.0.0.1', 'localhost', '::1'], true)) {
+            $opciones[PDO::MYSQL_ATTR_SSL_CA] = $config['cert'];
+            $opciones[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = true;
+        }
+
+        self::$conexion = new PDO($dsn, $config['user'], $config['pass'], $opciones);
 
         return self::$conexion;
     }

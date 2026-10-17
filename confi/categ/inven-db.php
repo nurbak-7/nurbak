@@ -20,5 +20,6 @@ $name = getenv('DB_INVEN_NAME') ?: 'INVEN';
 $user = getenv('DB_INVEN_USER') ?: (getenv('DB_APP_USER') ?: 'root');
 $pass = getenv('DB_INVEN_PASS') ?: (getenv('DB_APP_PASS') ?: '');
 $charset = 'utf8mb4';
+$cert = '/etc/ssl/certs/ca-certificates.crt';
 
-return compact('host', 'port', 'name', 'user', 'pass', 'charset');
+return compact('host', 'port', 'name', 'user', 'pass', 'charset', 'cert');
