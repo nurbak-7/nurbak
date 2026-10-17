@@ -46,6 +46,12 @@ final class ImpoValid
             );
         }
 
+        if (preg_match('/^.{2}$/uD', $marca) !== 1) {
+            throw new InvalidArgumentException(
+                'MARCA debe tener exactamente dos caracteres.'
+            );
+        }
+
         if ($hoja !== '' && $marca !== $hoja) {
             throw new InvalidArgumentException(
                 "MARCA {$marca} no coincide con la hoja {$hoja}."

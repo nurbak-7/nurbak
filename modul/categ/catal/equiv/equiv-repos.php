@@ -46,7 +46,7 @@ final class EquivRepo
             $campos = [
                 'p.id', 'p.descr', 'p.codig', 'p.origi',
                 'p.medid', 'p.super', 'p.equiv',
-                'v.id', 'v.motor', 'v.model', 'v.anio',
+                'v.id', 'v.marca', 'v.motor', 'v.model', 'v.anio',
                 'v.gdesd', 'v.ghast'
             ];
 
@@ -76,6 +76,7 @@ final class EquivRepo
                 p.medid,
                 p.super,
                 p.equiv,
+                v.marca,
                 v.motor,
                 v.model,
                 v.anio,
@@ -131,10 +132,10 @@ final class EquivRepo
     public function vehiculos(): array
     {
         $stmt = $this->db->query(
-            'SELECT id, motor, model, anio,
+            'SELECT id, marca, motor, model, anio,
                     gdesd, ghast
              FROM vehic
-             ORDER BY model ASC, motor ASC, id ASC'
+             ORDER BY marca ASC, model ASC, motor ASC, anio ASC, gdesd ASC, ghast ASC, id ASC'
         );
 
         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);

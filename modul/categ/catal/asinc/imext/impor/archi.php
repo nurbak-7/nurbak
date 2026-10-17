@@ -13,9 +13,9 @@
      SUPER, EQUIV, ANIO, QTY, PCOMP, PVENT, FECHA.
 
    IMPORTANTE:
-   MARCA pertenece al intercambio Excel.
-   La hoja también representa la marca.
-   CATAL no la muestra en la vista interna de Artículos.
+   MARCA se registra en vehic y también se intercambia en Excel.
+   La hoja representa el código de marca.
+   La marca no se muestra en la vista interna de Artículos.
 
    DEPENDENCIA:
    PhpSpreadsheet mediante Composer.

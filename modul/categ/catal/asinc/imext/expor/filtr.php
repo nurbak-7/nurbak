@@ -7,7 +7,7 @@
    EXPORTACIÓN:
    - Siempre genera el catálogo integral.
    - Una hoja por MARCA.
-   - MARCA pertenece exclusivamente al intercambio Excel.
+   - MARCA se registra en vehic y organiza las hojas del intercambio Excel.
 ============================================================ */
 declare(strict_types=1);
 

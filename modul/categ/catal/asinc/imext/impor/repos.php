@@ -210,14 +210,14 @@ final class ImpoRepo
         );
 
         /* =====================================================
-           NIVEL 2: Consulta
-           <=> permite comparar correctamente valores NULL.
+           NIVEL 2: Consulta por identidad del vehículo.
+           MARCA es obligatoria en el esquema actual.
         ===================================================== */
 
         $st = $this->db->prepare(
             'SELECT id
              FROM vehic
-             WHERE marca <=> :marca
+             WHERE marca = :marca
                AND motor = :motor
                AND model = :model
                AND anio = :anio

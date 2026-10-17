@@ -13,7 +13,7 @@
      SUPER, EQUIV, ANIO, QTY, PCOMP, PVENT, FECHA.
 
    MARCA:
-   Solo pertenece al intercambio Excel.
+   Se obtiene de vehic y organiza las hojas del intercambio Excel.
 ============================================================ */
 declare(strict_types=1);
 
@@ -121,8 +121,10 @@ final class ExpoArchi
                 trim((string) ($fila['marca'] ?? ''))
             );
 
-            if ($marca === '') {
-                $marca = 'SIN_MARCA';
+            if (preg_match('/^.{2}$/uD', $marca) !== 1) {
+                throw new RuntimeException(
+                    'No se puede exportar un vehículo sin una marca válida de dos caracteres.'
+                );
             }
 
             $nombre = $this->nombreHoja($marca);
@@ -210,7 +212,7 @@ final class ExpoArchi
         $nombre = trim((string) $nombre);
 
         if ($nombre === '') {
-            $nombre = 'SIN_MARCA';
+            throw new RuntimeException('El código de marca no permite crear el nombre de la hoja XLSX.');
         }
 
         return mb_substr($nombre, 0, 31);
