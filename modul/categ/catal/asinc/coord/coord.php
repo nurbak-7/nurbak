@@ -27,7 +27,6 @@ if (PHP_SAPI !== 'cli') {
 
 require_once dirname(__DIR__, 5) . '/contr/categ/catal-db.php';
 require_once dirname(__DIR__) . '/job/repos.php';
-require_once dirname(__DIR__) . '/job/confi.php';
 require_once __DIR__ . '/busca.php';
 
 
@@ -50,7 +49,7 @@ if ($tiempo < 1) {
    NIVEL 1 — LOCK ÚNICO
 ======================================================== */
 
-$lockPath = __DIR__ . '/coord.lock';
+$lockPath = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'nurbak_asinc_coord.lock';
 $lock = fopen($lockPath, 'c+');
 
 if ($lock === false) {
