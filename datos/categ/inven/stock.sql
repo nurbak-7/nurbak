@@ -15,6 +15,8 @@
      si CATAL se mantiene separado de INVEN.
 ============================================================ */
 
+USE inven;
+
 CREATE TABLE IF NOT EXISTS stock (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     produ INT UNSIGNED NOT NULL,
@@ -27,7 +29,6 @@ CREATE TABLE IF NOT EXISTS stock (
         ON UPDATE CURRENT_TIMESTAMP,
 
     UNIQUE KEY uq007 (produ, almac),
-    INDEX ix034 (produ),
     INDEX ix035 (almac),
 
     CONSTRAINT ck005 CHECK (canti >= 0),
