@@ -21,7 +21,7 @@
    DB_CATAL_* y el conector PDO aplica TLS para el host remoto.
 ============================================================ */
 
-declare(strict_types=1);
+
 
 $host = getenv('DB_CATAL_HOST') ?: '127.0.0.1';
 $port = getenv('DB_CATAL_PORT') ?: '3306';
