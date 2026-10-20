@@ -142,11 +142,44 @@ final class ImpoArchi
         $info = $reader->listWorksheetInfo($ruta);
         $total = 0;
 
-        foreach ($info as $hoja) {
-            $total += max(
-                0,
-                (int) ($hoja['totalRows'] ?? 0) - 1
-            );
+        foreach ($info as $hojaInfo) {
+            $nombre = (string) ($hojaInfo['worksheetName'] ?? '');
+            if ($nombre === '') {
+                continue;
+            }
+
+            $lectorHoja = IOFactory::createReaderForFile($ruta);
+            $lectorHoja->setReadDataOnly(true);
+            $lectorHoja->setLoadSheetsOnly([$nombre]);
+            $libro = $lectorHoja->load($ruta);
+            $hoja = $libro->getSheetByName($nombre);
+
+            if (!$hoja) {
+                $libro->disconnectWorksheets();
+                unset($libro);
+                throw new RuntimeException(
+                    "No se pudo leer la hoja {$nombre} al contar sus filas."
+                );
+            }
+
+            $ultima = $hoja->getHighestDataRow();
+            for ($fila = 2; $fila <= $ultima; $fila++) {
+                $conDatos = false;
+                foreach (self::CAMPOS as $indice => $campo) {
+                    $columna = Coordinate::stringFromColumnIndex($indice + 1);
+                    $valor = $hoja->getCell($columna . $fila)->getValue();
+                    if ($valor !== null && trim((string) $valor) !== '') {
+                        $conDatos = true;
+                        break;
+                    }
+                }
+                if ($conDatos) {
+                    $total++;
+                }
+            }
+
+            $libro->disconnectWorksheets();
+            unset($libro);
         }
 
         if ($total < 1) {

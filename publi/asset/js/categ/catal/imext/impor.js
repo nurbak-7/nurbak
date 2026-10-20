@@ -283,14 +283,9 @@
                    NIVEL 2 — ESTADO
                 ============================================ */
 
-                const estadoReal = String(p.estado || '').toUpperCase();
-                estado.textContent = estadoReal || 'ESTADO DESCONOCIDO';
-
-                if (!estadoReal) {
-                    throw new Error(
-                        'El servidor devolvió el proceso sin estado. Revise el registro del proceso en CATAL.'
-                    );
-                }
+                estado.textContent =
+                    p.estado ||
+                    'PROCESANDO';
 
 
                 /* ============================================
@@ -489,15 +484,29 @@
                     }
 
 
+                    const id = Number(d.id);
+
+                    if (!Number.isSafeInteger(id) || id < 1) {
+                        throw new Error(
+                            'SQL no devolvió un ID válido para el proceso.'
+                        );
+                    }
+
+                    if (typeof d.estado !== 'string' || !d.estado) {
+                        throw new Error(
+                            'SQL no confirmó el estado del proceso creado.'
+                        );
+                    }
+
                     msg.textContent =
-                        `Solicitud registrada con el proceso #${d.id}. Consultando su estado real...`;
+                        `Proceso SQL #${id} · ${d.estado}. Consultando estado real…`;
 
 
                     /* ========================================
                        NIVEL 3 — VIGILAR
                     ======================================== */
 
-                    await vigilar(d.id);
+                    await vigilar(id);
 
                 } catch (error) {
 

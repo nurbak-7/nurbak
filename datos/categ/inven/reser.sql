@@ -10,6 +10,8 @@
      independencia física entre módulos/bases.
 ============================================================ */
 
+USE inven;
+
 CREATE TABLE IF NOT EXISTS reser (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     opera INT UNSIGNED NOT NULL,

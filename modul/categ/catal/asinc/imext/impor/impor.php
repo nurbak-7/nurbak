@@ -216,11 +216,25 @@ try {
            NIVEL 2 — RESPUESTA
         ---------------------------------------------------- */
 
+        $registro = $job->obtener($id);
+
+        if (
+            !$registro
+            || (int) $registro['id'] !== $id
+            || (int) $registro['total'] !== $total
+            || (string) $registro['tipo'] !== 'IMPO_INTEG'
+        ) {
+            throw new RuntimeException(
+                'SQL no confirmó el registro del proceso de importación.'
+            );
+        }
+
         echo json_encode(
             [
                 'ok' => true,
-                'id' => $id,
-                'total' => $total,
+                'id' => (int) $registro['id'],
+                'total' => (int) $registro['total'],
+                'estado' => (string) $registro['estado'],
             ],
             JSON_UNESCAPED_UNICODE |
             JSON_UNESCAPED_SLASHES
