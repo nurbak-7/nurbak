@@ -85,6 +85,9 @@ try {
             $progr->actualizar($id, $proce, $corre, $erroN);
             $lotes->cerrar((int) $lote['id'], 'COMPLETADO');
         } catch (Throwable $e) {
+            /* Las filas del lote también cuentan como procesadas si el lote
+             * completo falla; quedan contabilizadas en errores. */
+            $proce += (int) $lote['cantidad'];
             $erroN += (int) $lote['cantidad'];
             $erro->guardar(
                 $id,

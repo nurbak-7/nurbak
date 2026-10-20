@@ -82,12 +82,23 @@ final class CoordDesp
            NIVEL 2 — UNIX / LINUX
         ==================================================== */
 
+        /*
+         * No descartar la salida del coordinador: si PHP CLI no puede
+         * cargar CATAL o falla al arrancar, el proceso termina sin que
+         * el endpoint pueda detectar el motivo. La salida queda en /tmp,
+         * fuera del código de la aplicación.
+         */
+        $registro = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR)
+            . DIRECTORY_SEPARATOR . 'nurbak_asinc_coord.log';
+
         $comando =
             'nohup '
             . escapeshellarg($php)
             . ' '
             . escapeshellarg($coord)
-            . ' > /dev/null 2>&1 < /dev/null & echo $!';
+            . ' >> '
+            . escapeshellarg($registro)
+            . ' 2>&1 < /dev/null & echo $!';
 
         $salida = [];
         $codigo = 0;
@@ -104,16 +115,37 @@ final class CoordDesp
             return false;
         }
 
-        /* Confirmar que el proceso lanzado sigue existiendo. */
+        /*
+         * Esperar a que el intérprete arranque. La comprobación inmediata
+         * anterior podía aceptar un proceso que moría al iniciar (por
+         * ejemplo, por error de conexión o carga de dependencias).
+         */
+        usleep(250000);
+
         if (function_exists('posix_kill')) {
-            return @posix_kill($pid, 0);
+            if (!@posix_kill($pid, 0)) {
+                return false;
+            }
+        } else {
+            $verificar = [];
+            $resultado = 1;
+            exec('kill -0 ' . $pid . ' 2>/dev/null', $verificar, $resultado);
+
+            if ($resultado !== 0) {
+                return false;
+            }
         }
 
-        $verificar = [];
-        $resultado = 1;
-        exec('kill -0 ' . $pid . ' 2>/dev/null', $verificar, $resultado);
+        /* Confirmar que el PID corresponde al PHP coordinador esperado. */
+        $cmdline = '/proc/' . $pid . '/cmdline';
+        if (is_readable($cmdline)) {
+            $proceso = (string) @file_get_contents($cmdline);
+            if ($proceso === '' || !str_contains($proceso, $coord)) {
+                return false;
+            }
+        }
 
-        return $resultado === 0;
+        return true;
     }
 
 

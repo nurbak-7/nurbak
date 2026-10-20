@@ -283,9 +283,14 @@
                    NIVEL 2 — ESTADO
                 ============================================ */
 
-                estado.textContent =
-                    p.estado ||
-                    'PROCESANDO';
+                const estadoReal = String(p.estado || '').toUpperCase();
+                estado.textContent = estadoReal || 'ESTADO DESCONOCIDO';
+
+                if (!estadoReal) {
+                    throw new Error(
+                        'El servidor devolvió el proceso sin estado. Revise el registro del proceso en CATAL.'
+                    );
+                }
 
 
                 /* ============================================
@@ -485,7 +490,7 @@
 
 
                     msg.textContent =
-                        `Proceso #${d.id} creado.`;
+                        `Solicitud registrada con el proceso #${d.id}. Consultando su estado real...`;
 
 
                     /* ========================================
