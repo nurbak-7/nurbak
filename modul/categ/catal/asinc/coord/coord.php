@@ -269,10 +269,7 @@ try {
 
         if (
             $codigo !== 0
-            || !str_starts_with(
-                $resultado,
-                'DESPACHADO '
-            )
+            || !preg_match('/^DESPACHADO\s+(\d+)$/', $resultado, $coincidencia)
         ) {
             $detalle = $resultado !== ''
                 ? $resultado
@@ -291,12 +288,7 @@ try {
            NIVEL 2 — VALIDAR ID DESPACHADO
         ================================================== */
 
-        $despachado = (int) trim(
-            substr(
-                $resultado,
-                strlen('DESPACHADO ')
-            )
-        );
+        $despachado = (int) $coincidencia[1];
 
         if ($despachado !== $id) {
             $busca->fallo(

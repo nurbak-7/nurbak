@@ -496,8 +496,17 @@
 
                 } catch (error) {
 
-                    msg.textContent =
-                        error.message;
+                    if (estado) {
+                        estado.textContent = 'CONSULTA INTERRUMPIDA';
+                    }
+
+                    if (barra) {
+                        barra.style.width = '0%';
+                    }
+
+                    msg.textContent = error instanceof Error
+                        ? error.message
+                        : 'No se pudo completar la consulta del proceso.';
                 }
             }
         );

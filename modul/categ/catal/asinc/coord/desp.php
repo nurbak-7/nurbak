@@ -83,14 +83,37 @@ final class CoordDesp
         ==================================================== */
 
         $comando =
-            escapeshellarg($php)
+            'nohup '
+            . escapeshellarg($php)
             . ' '
             . escapeshellarg($coord)
-            . ' > /dev/null 2>&1 &';
+            . ' > /dev/null 2>&1 < /dev/null & echo $!';
 
-        exec($comando);
+        $salida = [];
+        $codigo = 0;
 
-        return true;
+        exec($comando, $salida, $codigo);
+
+        if ($codigo !== 0 || $salida === []) {
+            return false;
+        }
+
+        $pid = (int) trim((string) end($salida));
+
+        if ($pid < 1) {
+            return false;
+        }
+
+        /* Confirmar que el proceso lanzado sigue existiendo. */
+        if (function_exists('posix_kill')) {
+            return @posix_kill($pid, 0);
+        }
+
+        $verificar = [];
+        $resultado = 1;
+        exec('kill -0 ' . $pid . ' 2>/dev/null', $verificar, $resultado);
+
+        return $resultado === 0;
     }
 
 

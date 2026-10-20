@@ -103,19 +103,32 @@ try {
     ======================================================== */
 
     $actual = $repo->obtener($id);
-    if ($actual) {
-        $estado = ((int) $actual['erro']) > 0
-            ? 'COMPLETADO_ERROR'
-            : 'COMPLETADO';
 
-        $repo->finalizar(
-            $id,
-            $estado,
-            $estado === 'COMPLETADO'
-                ? 'Proceso completado.'
-                : 'Proceso completado con errores.'
+    if (!$actual) {
+        throw new RuntimeException('TRABAJO_NO_EXISTE: no se pudo recuperar el proceso al finalizar.');
+    }
+
+    if ((int) $actual['proce'] < (int) $actual['total']) {
+        throw new RuntimeException(
+            'WORKER_INCOMPLETO: procesados '
+            . (int) $actual['proce']
+            . ' de '
+            . (int) $actual['total']
+            . ' filas.'
         );
     }
+
+    $estado = ((int) $actual['erro']) > 0
+        ? 'COMPLETADO_ERROR'
+        : 'COMPLETADO';
+
+    $repo->finalizar(
+        $id,
+        $estado,
+        $estado === 'COMPLETADO'
+            ? 'Proceso completado.'
+            : 'Proceso completado con errores.'
+    );
 
     echo "FINALIZADO {$id}\n";
 

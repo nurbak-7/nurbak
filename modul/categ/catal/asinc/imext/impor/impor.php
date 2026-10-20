@@ -42,6 +42,9 @@ try {
        NIVEL 1 — AUTENTICACIÓN
     ======================================================== */
 
+    /* Las consultas de progreso durante una importación cuentan como actividad. */
+    CAuth::iniciar(true);
+
     if (!CAuth::autenticado()) {
         http_response_code(401);
 

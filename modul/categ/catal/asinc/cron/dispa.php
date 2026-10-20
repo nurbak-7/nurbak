@@ -190,7 +190,7 @@ final class CronDispa
 
         $cierre = proc_close($proceso);
 
-        if ($codigo < 0) {
+        if ($codigo < 0 || $codigo === 0 && $cierre > 0) {
             $codigo = $cierre;
         }
 
