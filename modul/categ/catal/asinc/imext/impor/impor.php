@@ -18,9 +18,9 @@
    - No modifica la tabla error.
    - Solo entrega información al frontend.
 ============================================================ */
+
 declare(strict_types=1);
 
-/* Nivel 1 — Manejo normal de errores. */
 require_once __DIR__ . '/../../../../../../contr/error.php';
 
 header('Content-Type: application/json; charset=utf-8');
@@ -28,78 +28,86 @@ header('Content-Type: application/json; charset=utf-8');
 try {
 
     /* ========================================================
-       NIVEL 1 — CONTROL DE ERRORES
+       NIVEL 1 — DEPENDENCIAS COMUNES
     ======================================================== */
 
-    set_error_handler(
-        static function (
-            int $nivel,
-            string $mensaje,
-            string $archivo,
-            int $linea
-        ): bool {
-            throw new ErrorException(
-                $mensaje,
-                0,
-                $nivel,
-                $archivo,
-                $linea
-            );
-        }
-    );
+    $raiz = dirname(__DIR__, 6);
+
+    require_once $raiz . '/contr/login/login-db.php';
+    require_once $raiz . '/contr/login/contr-auth.php';
+    require_once $raiz . '/contr/login/contr-perm.php';
 
 
     /* ========================================================
-       NIVEL 1 — CONEXIONES
+       NIVEL 1 — AUTENTICACIÓN
     ======================================================== */
-
-    require_once dirname(__DIR__, 6) . '/contr/categ/catal-db.php';
-    require_once dirname(__DIR__) . '/imext.php';
-    require_once dirname(__DIR__, 2) . '/job/repos.php';
-    require_once __DIR__ . '/archi.php';
-    require_once __DIR__ . '/servi.php';
-    require_once dirname(__DIR__, 6) . '/contr/categ/inven-db.php';
-    require_once dirname(__DIR__, 6) . '/contr/login/login-db.php';
-    require_once dirname(__DIR__, 6) . '/contr/login/contr-auth.php';
-    require_once dirname(__DIR__, 6) . '/contr/login/contr-perm.php';
 
     if (!CAuth::autenticado()) {
         http_response_code(401);
-        echo json_encode(['ok'=>false,'mensaje'=>'Sesión no válida.'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        echo json_encode(
+            [
+                'ok' => false,
+                'mensaje' => 'Sesión no válida.',
+            ],
+            JSON_UNESCAPED_UNICODE |
+            JSON_UNESCAPED_SLASHES
+        );
+
         exit;
     }
 
-    $contPerm = new ContPerm(LOGINDB::abrir());
-    if (!$contPerm->autorizar('IMEXG')) {
-        http_response_code(403);
-        echo json_encode(['ok'=>false,'mensaje'=>'Operación no autorizada.'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        exit;
-    }
 
-    /* AUTORIZACIÓN — Paso 4 | IMEXG */
-
-    $accion = trim((string) ($_REQUEST['accion'] ?? ''));
-    CAuth::metod($accion, ['crear']);
+    /* ========================================================
+       NIVEL 1 — AUTORIZACIÓN
+    ======================================================== */
 
     $log = LOGINDB::abrir();
 
-    $db = CATALDB::abrir();
-    $inve = INVENDB::abrir();
-    $job = ImextCoord::servicio($db);
+    $contPerm = new ContPerm($log);
 
-    $impo = new ImpoServi(
-        $db,
-        $inve,
-        $log
+    if (!$contPerm->autorizar('IMEXG')) {
+        http_response_code(403);
+
+        echo json_encode(
+            [
+                'ok' => false,
+                'mensaje' => 'Operación no autorizada.',
+            ],
+            JSON_UNESCAPED_UNICODE |
+            JSON_UNESCAPED_SLASHES
+        );
+
+        exit;
+    }
+
+
+    /* ========================================================
+       NIVEL 1 — VALIDAR ACCIÓN
+    ======================================================== */
+
+    $accion = trim(
+        (string) ($_REQUEST['accion'] ?? '')
     );
 
-    $erro = new AsinRepo($db);
+    CAuth::metod($accion, ['crear']);
+
 
     /* ========================================================
        NIVEL 1 — TIENDAS ACTIVAS
     ======================================================== */
 
     if ($accion === 'tiendas') {
+
+        require_once $raiz . '/contr/categ/catal-db.php';
+        require_once $raiz . '/contr/categ/inven-db.php';
+        require_once __DIR__ . '/servi.php';
+
+        $impo = new ImpoServi(
+            CATALDB::abrir(),
+            INVENDB::abrir(),
+            $log
+        );
 
         echo json_encode(
             [
@@ -120,6 +128,13 @@ try {
 
     if ($accion === 'crear') {
 
+        require_once $raiz . '/contr/categ/catal-db.php';
+        require_once $raiz . '/contr/categ/inven-db.php';
+        require_once dirname(__DIR__) . '/imext.php';
+        require_once __DIR__ . '/archi.php';
+        require_once __DIR__ . '/servi.php';
+
+
         /* ----------------------------------------------------
            NIVEL 2 — MODO
         ---------------------------------------------------- */
@@ -139,6 +154,20 @@ try {
                 'Modo de importación no válido.'
             );
         }
+
+
+        /* ----------------------------------------------------
+           NIVEL 2 — CONEXIONES Y SERVICIO
+        ---------------------------------------------------- */
+
+        $db = CATALDB::abrir();
+        $inve = INVENDB::abrir();
+
+        $impo = new ImpoServi(
+            $db,
+            $inve,
+            $log
+        );
 
 
         /* ----------------------------------------------------
@@ -168,6 +197,8 @@ try {
         /* ----------------------------------------------------
            NIVEL 2 — CREAR PROCESO
         ---------------------------------------------------- */
+
+        $job = ImextCoord::servicio($db);
 
         $id = $job->crear(
             'IMPO_INTEG',
@@ -202,6 +233,10 @@ try {
 
     if ($accion === 'estado') {
 
+        require_once $raiz . '/contr/categ/catal-db.php';
+        require_once dirname(__DIR__) . '/imext.php';
+
+
         /* ----------------------------------------------------
            NIVEL 2 — ID
         ---------------------------------------------------- */
@@ -218,8 +253,12 @@ try {
 
 
         /* ----------------------------------------------------
-           NIVEL 2 — PROCESO
+           NIVEL 2 — CONSULTAR PROCESO Y ERRORES
         ---------------------------------------------------- */
+
+        $db = CATALDB::abrir();
+
+        $job = ImextCoord::servicio($db);
 
         $dato = $job->obtener($id);
 
@@ -229,10 +268,7 @@ try {
             );
         }
 
-
-        /* ----------------------------------------------------
-           NIVEL 2 — ERRORES PERSISTIDOS
-        ---------------------------------------------------- */
+        $erro = new AsinRepo($db);
 
         $errores = $erro->errores($id);
 
@@ -244,9 +280,7 @@ try {
         echo json_encode(
             [
                 'ok' => true,
-
                 'proceso' => $dato,
-
                 'errores' => $errores,
             ],
             JSON_UNESCAPED_UNICODE |
