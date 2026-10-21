@@ -22,11 +22,13 @@ require_once __DIR__ . '/confi.php';
 
 final class Jober
 {
+    private PDO $db;
     private AsinRepo $repo;
     private array $confi;
 
     public function __construct(PDO $db)
     {
+        $this->db = $db;
         $this->repo = new AsinRepo($db);
         $this->confi = require __DIR__ . '/confi.php';
     }
