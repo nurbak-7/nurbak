@@ -40,26 +40,7 @@ if (!interface_exists('PhpOffice\\PhpSpreadsheet\\Reader\\IReadFilter')) {
 
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
 use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
-
-final class ImpoFiltro implements IReadFilter
-{
-    public function __construct(
-        private int $inicio,
-        private int $fin
-    ) {
-    }
-
-    public function readCell(
-        $columnAddress,
-        $row,
-        $worksheetName = ''
-    ): bool {
-        return $row === 1
-            || ($row >= $this->inicio && $row <= $this->fin);
-    }
-}
 
 final class ImpoArchi
 {
@@ -209,49 +190,18 @@ final class ImpoArchi
         $hojas = $lectorInfo->listWorksheetInfo($ruta);
 
         $salida = [];
-        $desplazamiento = 0;
+        $posicionLogica = 0;
+        $terminar = false;
 
         foreach ($hojas as $info) {
             $nombre = (string) ($info['worksheetName'] ?? '');
-            $totalFilas = max(
-                0,
-                (int) ($info['totalRows'] ?? 0) - 1
-            );
-
-            if ($totalFilas < 1) {
+            if ($nombre === '') {
                 continue;
             }
-
-            $inicioHoja = $desplazamiento + 1;
-            $finHoja = $desplazamiento + $totalFilas;
-
-            if (
-                $finHoja < $inicio
-                || $inicioHoja > $finGlobal
-            ) {
-                $desplazamiento = $finHoja;
-                continue;
-            }
-
-            $desdeLocal = max(
-                1,
-                $inicio - $desplazamiento
-            );
-
-            $hastaLocal = min(
-                $totalFilas,
-                $finGlobal - $desplazamiento
-            );
 
             $reader = IOFactory::createReaderForFile($ruta);
             $reader->setReadDataOnly(true);
             $reader->setLoadSheetsOnly([$nombre]);
-            $reader->setReadFilter(
-                new ImpoFiltro(
-                    $desdeLocal + 1,
-                    $hastaLocal + 1
-                )
-            );
 
             $book = $reader->load($ruta);
             $sheet = $book->getSheetByName($nombre);
@@ -266,28 +216,17 @@ final class ImpoArchi
 
             $cab = $this->encabezados($sheet);
             $this->validarEncabezados($cab);
+            $ultima = $sheet->getHighestDataRow();
 
-            for (
-                $filaLocal = $desdeLocal;
-                $filaLocal <= $hastaLocal;
-                $filaLocal++
-            ) {
+            for ($filaExcel = 2; $filaExcel <= $ultima; $filaExcel++) {
                 $datos = [];
                 $vacia = true;
 
                 foreach ($cab as $indice => $nom) {
-                    $columna = Coordinate::stringFromColumnIndex(
-                        $indice + 1
-                    );
+                    $columna = Coordinate::stringFromColumnIndex($indice + 1);
+                    $valor = $sheet->getCell($columna . $filaExcel)->getValue();
 
-                    $valor = $sheet
-                        ->getCell($columna . ($filaLocal + 1))
-                        ->getValue();
-
-                    if (
-                        $valor !== null
-                        && trim((string) $valor) !== ''
-                    ) {
+                    if ($valor !== null && trim((string) $valor) !== '') {
                         $vacia = false;
                     }
 
@@ -295,17 +234,28 @@ final class ImpoArchi
                         $valor = $this->fechaExcel($valor);
                     }
 
-                    $datos[$nom] = trim(
-                        (string) ($valor ?? '')
-                    );
+                    $datos[$nom] = trim((string) ($valor ?? ''));
                 }
 
+                // Mismo criterio que contar(): las filas vacías no ocupan posición de lote.
                 if ($vacia) {
                     continue;
                 }
 
+                $posicionLogica++;
+
+                if ($posicionLogica < $inicio) {
+                    continue;
+                }
+
+                if ($posicionLogica > $finGlobal) {
+                    $terminar = true;
+                    break;
+                }
+
                 $salida[] = [
-                    'fila' => $desplazamiento + $filaLocal,
+                    // Fila física real dentro de la hoja de Excel.
+                    'fila' => $filaExcel,
                     'hoja' => $nombre,
                     'datos' => $datos,
                 ];
@@ -314,11 +264,9 @@ final class ImpoArchi
             $book->disconnectWorksheets();
             unset($book);
 
-            if ($desplazamiento + $hastaLocal >= $finGlobal) {
+            if ($terminar || $posicionLogica >= $finGlobal) {
                 break;
             }
-
-            $desplazamiento = $finHoja;
         }
 
         return $salida;

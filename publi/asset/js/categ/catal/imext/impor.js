@@ -48,6 +48,11 @@
         const form =
             root.querySelector('[data-impo-form]');
 
+        const enviar =
+            root.querySelector('[data-impo-enviar]');
+
+        let enviando = false;
+
         const modo =
             root.querySelector('[data-impo-modo]');
 
@@ -372,6 +377,11 @@
 
                 evento.preventDefault();
 
+                // Una sola solicitud de creación activa por ventana.
+                if (enviando) {
+                    return;
+                }
+
 
                 /* ============================================
                    NIVEL 2 — LIMPIAR RESULTADO ANTERIOR
@@ -451,6 +461,11 @@
                 );
 
 
+                enviando = true;
+                if (enviar) {
+                    enviar.disabled = true;
+                }
+
                 msg.textContent =
                     'Validando archivo XLSX...';
 
@@ -499,7 +514,7 @@
                     }
 
                     msg.textContent =
-                        `Proceso SQL #${id} · ${d.estado}. Consultando estado real…`;
+                        `Proceso #${id} · ${d.estado}. Consultando estado real…`;
 
 
                     /* ========================================
@@ -521,6 +536,12 @@
                     msg.textContent = error instanceof Error
                         ? error.message
                         : 'No se pudo completar la consulta del proceso.';
+
+                } finally {
+                    enviando = false;
+                    if (enviar) {
+                        enviar.disabled = false;
+                    }
                 }
             }
         );
