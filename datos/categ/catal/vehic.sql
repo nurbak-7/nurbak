@@ -42,6 +42,8 @@
    Debe existir antes de importar datos/categ/catal/equiv.sql.
 ============================================================ */
 
+USE catal;
+
 CREATE TABLE IF NOT EXISTS vehic (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     marca CHAR(2) NULL DEFAULT NULL,

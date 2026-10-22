@@ -35,6 +35,8 @@
    Importar después de datos/categ/catal/produ.sql y datos/categ/catal/vehic.sql.
 ============================================================ */
 
+USE catal; 
+
 CREATE TABLE IF NOT EXISTS equiv (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     produ INT UNSIGNED NOT NULL,
