@@ -22,11 +22,13 @@ require_once __DIR__ . '/confi.php';
 
 final class Jober
 {
+    private PDO $db;
     private AsinRepo $repo;
     private array $confi;
 
     public function __construct(PDO $db)
     {
+        $this->db = $db;
         $this->repo = new AsinRepo($db);
         $this->confi = require __DIR__ . '/confi.php';
     }
@@ -38,21 +40,64 @@ final class Jober
         int $total,
         ?int $tiend = null
     ): int {
-        $id = $this->repo->crear(
-            $tipo,
-            $modo,
-            $archivo,
-            $total,
-            $tiend
-        );
+        if ($total < 1) {
+            throw new InvalidArgumentException(
+                'El proceso debe contener al menos una fila.'
+            );
+        }
 
-        $this->repo->crearLotes(
-            $id,
-            $total,
-            (int) $this->confi['lote']
-        );
+        if ($this->db->inTransaction()) {
+            throw new RuntimeException(
+                'No se puede crear ASINC dentro de una transacción externa.'
+            );
+        }
 
-        return $id;
+        $this->db->beginTransaction();
+
+        try {
+            $id = $this->repo->crear(
+                $tipo,
+                $modo,
+                $archivo,
+                $total,
+                $tiend
+            );
+
+            if ($id < 1) {
+                throw new RuntimeException(
+                    'SQL no devolvió un identificador válido para ASINC.'
+                );
+            }
+
+            $this->repo->crearLotes(
+                $id,
+                $total,
+                (int) $this->confi['lote']
+            );
+
+            $registro = $this->repo->obtener($id);
+
+            if (
+                !$registro
+                || (int) $registro['id'] !== $id
+                || (int) $registro['total'] !== $total
+            ) {
+                throw new RuntimeException(
+                    'El registro ASINC no coincide con los datos creados en SQL.'
+                );
+            }
+
+            $this->db->commit();
+
+            return (int) $registro['id'];
+
+        } catch (Throwable $e) {
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+
+            throw $e;
+        }
     }
 
     public function obtener(int $id): ?array

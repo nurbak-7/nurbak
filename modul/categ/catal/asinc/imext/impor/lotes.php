@@ -64,14 +64,53 @@ final class ImpoLotes
             }
         }
 
-        $resultado = $repo->guardarLote(
-            (string) $trab['modo'],
-            $validas,
-            $this->almac,
-            (int) ($trab['tiend'] ?? 0)
-        );
+        /*
+         * Se conservan el orden del Excel y su comportamiento secuencial.
+         * Cada grupo mantiene una sola modalidad de ID: explícito o automático.
+         * Así el repositorio puede agrupar las consultas sin volver al guardado
+         * individual de todas las filas cuando el libro mezcla ambos casos.
+         */
+        $grupos = [];
+        $grupo = [];
+        $grupoConId = null;
 
-        foreach ($resultado['errores'] as $indice => $mensaje) {
+        foreach ($validas as $indice => $registro) {
+            $conId = (int) ($registro['datos']['id'] ?? 0) > 0;
+
+            if ($grupo !== [] && $conId !== $grupoConId) {
+                $grupos[] = $grupo;
+                $grupo = [];
+            }
+
+            $grupoConId = $conId;
+            $grupo[$indice] = $registro;
+        }
+
+        if ($grupo !== []) {
+            $grupos[] = $grupo;
+        }
+
+        $erroresRepo = [];
+        foreach ($grupos as $grupo) {
+            try {
+                $resultado = $repo->guardarLote(
+                    (string) $trab['modo'],
+                    $grupo,
+                    $this->almac,
+                    (int) ($trab['tiend'] ?? 0)
+                );
+
+                foreach ($resultado['errores'] as $indice => $mensaje) {
+                    $erroresRepo[$indice] = $mensaje;
+                }
+            } catch (Throwable $e) {
+                foreach ($grupo as $indice => $registro) {
+                    $erroresRepo[$indice] = $e->getMessage();
+                }
+            }
+        }
+
+        foreach ($erroresRepo as $indice => $mensaje) {
             $item = $validas[$indice]['item'] ?? null;
             if (!is_array($item)) {
                 continue;
@@ -89,7 +128,7 @@ final class ImpoLotes
             );
         }
 
-        $corre = count($validas) - count($resultado['errores']);
+        $corre = count($validas) - count($erroresRepo);
 
         return [
             'proce' => count($filas),
