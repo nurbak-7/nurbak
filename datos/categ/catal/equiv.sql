@@ -35,15 +35,12 @@
    Importar después de datos/categ/catal/produ.sql y datos/categ/catal/vehic.sql.
 ============================================================ */
 
-USE catal; 
-
 CREATE TABLE IF NOT EXISTS equiv (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     produ INT UNSIGNED NOT NULL,
     vehic INT UNSIGNED NOT NULL,
     UNIQUE KEY uq013 (produ, vehic),
-    INDEX ix069 (produ),
-    INDEX ix070 (vehic),
+    INDEX ix072 (vehic, produ),
     CONSTRAINT fk021
         FOREIGN KEY (produ) REFERENCES produ(id)
         ON UPDATE CASCADE ON DELETE CASCADE,

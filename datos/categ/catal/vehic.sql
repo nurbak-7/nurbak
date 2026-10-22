@@ -42,8 +42,6 @@
    Debe existir antes de importar datos/categ/catal/equiv.sql.
 ============================================================ */
 
-USE catal;
-
 CREATE TABLE IF NOT EXISTS vehic (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     marca CHAR(2) NULL DEFAULT NULL,
@@ -55,5 +53,6 @@ CREATE TABLE IF NOT EXISTS vehic (
     INDEX ix065 (marca),
     INDEX ix066 (motor),
     INDEX ix067 (model),
-    INDEX ix068 (anio)
+    INDEX ix068 (anio),
+    INDEX ix071 (marca, motor, model, anio, gdesd, ghast)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

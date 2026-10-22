@@ -32,8 +32,6 @@
    No migra datos históricos ni modifica o elimina otras tablas.
 ============================================================ */
 
-USE catal;
-
 CREATE TABLE produ (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     descr VARCHAR(150) NOT NULL,
@@ -49,7 +47,8 @@ CREATE TABLE produ (
     PRIMARY KEY (id),
     INDEX ix061 (codig),
     INDEX ix062 (origi),
-    INDEX ix063 (equiv)
+    INDEX ix063 (equiv),
+    INDEX ix064 (descr, codig, origi, medid, super, equiv)
 ) ENGINE=InnoDB
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;

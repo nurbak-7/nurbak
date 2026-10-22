@@ -15,20 +15,6 @@
    IMEXT → JOB → CRON → WORKER
    ============================================================ */
 
-/* IMPORTANTE: este SQL reinicia únicamente las tablas de procesos asíncronos
-   (error, lotes y asinc). Ejecutarlo elimina el historial de esos procesos.
-   No elimina las tablas de catálogo (produ, vehic, equiv).
-*/
-USE catal;
-/* ============================================================
-   NIVEL 1
-   LIMPIEZA
-   ============================================================ */
-
-DROP TABLE IF EXISTS error;
-DROP TABLE IF EXISTS lotes;
-DROP TABLE IF EXISTS asinc;
-
 
 /* ============================================================
    NIVEL 2
@@ -117,8 +103,7 @@ CREATE TABLE lotes (
         ON UPDATE CASCADE
 ) ENGINE=InnoDB
   DEFAULT CHARSET=utf8mb4
-  COLLATE=utf8mb4_unicode_ci
-  AUTO_ID_CACHE=1;
+  COLLATE=utf8mb4_unicode_ci;
 
 
 /* ============================================================
@@ -157,5 +142,4 @@ CREATE TABLE error (
         ON UPDATE CASCADE
 ) ENGINE=InnoDB
   DEFAULT CHARSET=utf8mb4
-  COLLATE=utf8mb4_unicode_ci
-  AUTO_ID_CACHE=1;
+  COLLATE=utf8mb4_unicode_ci;
