@@ -36,20 +36,20 @@ final class ImpoLotes
             (int) $lote['cantidad']
         );
 
-        $corre = 0;
+        $validas = [];
         $erro = 0;
 
-        foreach ($filas as $item) {
+        /* Primero valida todas las filas: solo datos válidos entran al lote SQL. */
+        foreach ($filas as $indice => $item) {
             try {
-                $fila = $valid->fila($item['datos'], (string) ($item['hoja'] ?? ''));
-
-                $repo->guardar(
-                    (string) $trab['modo'],
-                    $fila,
-                    $this->almac
+                $fila = $valid->fila(
+                    $item['datos'],
+                    (string) ($item['hoja'] ?? '')
                 );
-
-                $corre++;
+                $validas[$indice] = [
+                    'item' => $item,
+                    'datos' => $fila,
+                ];
             } catch (Throwable $e) {
                 $erro++;
                 $jrepo->error(
@@ -63,6 +63,33 @@ final class ImpoLotes
                 );
             }
         }
+
+        $resultado = $repo->guardarLote(
+            (string) $trab['modo'],
+            $validas,
+            $this->almac,
+            (int) ($trab['tiend'] ?? 0)
+        );
+
+        foreach ($resultado['errores'] as $indice => $mensaje) {
+            $item = $validas[$indice]['item'] ?? null;
+            if (!is_array($item)) {
+                continue;
+            }
+
+            $erro++;
+            $jrepo->error(
+                (int) $trab['id'],
+                (int) $lote['id'],
+                (int) $item['fila'],
+                'IMPO_FILA',
+                '[' . (string) ($item['hoja'] ?? '') . '!'
+                . (string) ($item['fila'] ?? '') . '] '
+                . (string) $mensaje
+            );
+        }
+
+        $corre = count($validas) - count($resultado['errores']);
 
         return [
             'proce' => count($filas),
