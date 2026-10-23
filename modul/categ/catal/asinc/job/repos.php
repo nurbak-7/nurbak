@@ -30,26 +30,42 @@ final class AsinRepo
         int $total,
         ?int $tiend = null
     ): int {
-        $id = $this->sigId('asinc');
+        $prop = !$this->db->inTransaction();
 
-        $st = $this->db->prepare(
-            'INSERT INTO asinc
-                (id, tipo, modo, estado, tiend, archivo, total)
-             VALUES
-                (:id, :tipo, :modo, :estado, :tiend, :archivo, :total)'
-        );
+        if ($prop) {
+            $this->db->beginTransaction();
+        }
 
-        $st->execute([
-            ':id' => $id,
-            ':tipo' => $tipo,
-            ':modo' => $modo,
-            ':estado' => AsinEsta::PEND,
-            ':tiend' => $tiend,
-            ':archivo' => $archivo,
-            ':total' => $total,
-        ]);
+        try {
+            $id = $this->sigId('asinc');
 
-        return $id;
+            $st = $this->db->prepare(
+                'INSERT INTO asinc
+                    (id, tipo, modo, estado, tiend, archivo, total)
+                 VALUES
+                    (:id, :tipo, :modo, :estado, :tiend, :archivo, :total)'
+            );
+
+            $st->execute([
+                ':id' => $id,
+                ':tipo' => $tipo,
+                ':modo' => AsinEsta::PEND,
+                ':tiend' => $tiend,
+                ':archivo' => $archivo,
+                ':total' => $total,
+            ]);
+
+            if ($prop) {
+                $this->db->commit();
+            }
+
+            return $id;
+        } catch (Throwable $e) {
+            if ($prop && $this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+            throw $e;
+        }
     }
 
 
@@ -72,37 +88,54 @@ final class AsinRepo
             );
         }
 
-        $nlot = intdiv($total + $tam - 1, $tam);
-        $iniId = $this->sigId('lotes', $nlot);
+        $prop = !$this->db->inTransaction();
 
-        $st = $this->db->prepare(
-            'INSERT INTO lotes
-                (id, asinc_id, numero, inicio, cantidad)
-             VALUES
-                (:id, :asinc, :numero, :inicio, :cantidad)'
-        );
+        if ($prop) {
+            $this->db->beginTransaction();
+        }
 
-        $numero = 1;
+        try {
+            $nlot = intdiv($total + $tam - 1, $tam);
+            $iniId = $this->sigId('lotes', $nlot);
 
-        for (
-            $inicio = 1;
-            $inicio <= $total;
-            $inicio += $tam
-        ) {
-            $cantidad = min(
-                $tam,
-                $total - $inicio + 1
+            $st = $this->db->prepare(
+                'INSERT INTO lotes
+                    (id, asinc_id, numero, inicio, cantidad)
+                 VALUES
+                    (:id, :asinc, :numero, :inicio, :cantidad)'
             );
 
-            $st->execute([
-                ':id' => $iniId + $numero - 1,
-                ':asinc' => $asinc,
-                ':numero' => $numero,
-                ':inicio' => $inicio,
-                ':cantidad' => $cantidad,
-            ]);
+            $numero = 1;
 
-            $numero++;
+            for (
+                $inicio = 1;
+                $inicio <= $total;
+                $inicio += $tam
+            ) {
+                $cantidad = min(
+                    $tam,
+                    $total - $inicio + 1
+                );
+
+                $st->execute([
+                    ':id' => $iniId + $numero - 1,
+                    ':asinc' => $asinc,
+                    ':numero' => $numero,
+                    ':inicio' => $inicio,
+                    ':cantidad' => $cantidad,
+                ]);
+
+                $numero++;
+            }
+
+            if ($prop) {
+                $this->db->commit();
+            }
+        } catch (Throwable $e) {
+            if ($prop && $this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+            throw $e;
         }
     }
 
