@@ -49,7 +49,8 @@ final class AsinRepo
             $st->execute([
                 ':id' => $id,
                 ':tipo' => $tipo,
-                ':modo' => AsinEsta::PEND,
+                ':modo' => $modo,
+                ':estado' => AsinEsta::PEND,
                 ':tiend' => $tiend,
                 ':archivo' => $archivo,
                 ':total' => $total,
