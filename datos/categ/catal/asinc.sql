@@ -7,6 +7,7 @@
    para los procesos de importación y exportación.
 
    TABLAS:
+   - secue    → JOB / contadores transaccionales de IDs.
    - asinc   → JOB / proceso asíncrono.
    - lotes   → WORKER / bloques de procesamiento.
    - error   → WORKER / errores del proceso.
@@ -17,13 +18,35 @@
 
 
 /* ============================================================
+   NIVEL 1
+   ÁREA: JOB
+   CONTADORES TRANSACCIONALES
+
+   Cada ID se reserva dentro de la transacción que guarda la fila.
+   Un rollback revierte también el contador.
+   ============================================================ */
+
+CREATE TABLE secue (
+    clave VARCHAR(5) NOT NULL PRIMARY KEY,
+    valor BIGINT UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO secue (clave, valor) VALUES
+    ('asinc', 0),
+    ('lotes', 0),
+    ('error', 0);
+
+
+/* ============================================================
    NIVEL 2
    ÁREA: JOB
    PROCESOS ASÍNCRONOS
    ============================================================ */
 
 CREATE TABLE asinc (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id INT UNSIGNED NOT NULL PRIMARY KEY,
 
     tipo VARCHAR(30) NOT NULL,
     modo VARCHAR(20) NOT NULL DEFAULT 'AMBOS',
@@ -54,8 +77,7 @@ CREATE TABLE asinc (
     INDEX idx_fechc (fechc)
 ) ENGINE=InnoDB
   DEFAULT CHARSET=utf8mb4
-  COLLATE=utf8mb4_unicode_ci
-  AUTO_ID_CACHE=1;
+  COLLATE=utf8mb4_unicode_ci;
 
 
 /* ============================================================
@@ -78,7 +100,7 @@ CREATE TABLE asinc (
    ============================================================ */
 
 CREATE TABLE lotes (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT UNSIGNED NOT NULL PRIMARY KEY,
 
     asinc_id INT UNSIGNED NOT NULL,
 
@@ -113,7 +135,7 @@ CREATE TABLE lotes (
    ============================================================ */
 
 CREATE TABLE error (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT UNSIGNED NOT NULL PRIMARY KEY,
 
     asinc_id INT UNSIGNED NOT NULL,
     lote_id BIGINT UNSIGNED DEFAULT NULL,

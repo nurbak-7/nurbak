@@ -30,14 +30,17 @@ final class AsinRepo
         int $total,
         ?int $tiend = null
     ): int {
+        $id = $this->sigId('asinc');
+
         $st = $this->db->prepare(
             'INSERT INTO asinc
-                (tipo, modo, estado, tiend, archivo, total)
+                (id, tipo, modo, estado, tiend, archivo, total)
              VALUES
-                (:tipo, :modo, :estado, :tiend, :archivo, :total)'
+                (:id, :tipo, :modo, :estado, :tiend, :archivo, :total)'
         );
 
         $st->execute([
+            ':id' => $id,
             ':tipo' => $tipo,
             ':modo' => $modo,
             ':estado' => AsinEsta::PEND,
@@ -46,7 +49,7 @@ final class AsinRepo
             ':total' => $total,
         ]);
 
-        return (int) $this->db->lastInsertId();
+        return $id;
     }
 
 
@@ -63,11 +66,20 @@ final class AsinRepo
             return;
         }
 
+        if ($tam < 1) {
+            throw new InvalidArgumentException(
+                'El tamaño de lote debe ser mayor que cero.'
+            );
+        }
+
+        $nlot = intdiv($total + $tam - 1, $tam);
+        $iniId = $this->sigId('lotes', $nlot);
+
         $st = $this->db->prepare(
             'INSERT INTO lotes
-                (asinc_id, numero, inicio, cantidad)
+                (id, asinc_id, numero, inicio, cantidad)
              VALUES
-                (:asinc, :numero, :inicio, :cantidad)'
+                (:id, :asinc, :numero, :inicio, :cantidad)'
         );
 
         $numero = 1;
@@ -83,11 +95,14 @@ final class AsinRepo
             );
 
             $st->execute([
+                ':id' => $iniId + $numero - 1,
                 ':asinc' => $asinc,
-                ':numero' => $numero++,
+                ':numero' => $numero,
                 ':inicio' => $inicio,
                 ':cantidad' => $cantidad,
             ]);
+
+            $numero++;
         }
     }
 
@@ -441,20 +456,105 @@ final class AsinRepo
         string $codigo,
         string $mens
     ): void {
-        $st = $this->db->prepare(
-            'INSERT INTO error
-                (asinc_id, lote_id, fila, codigo, mens)
-             VALUES
-                (:asinc, :lote, :fila, :codigo, :mens)'
-        );
+        $prop = !$this->db->inTransaction();
 
+        if ($prop) {
+            $this->db->beginTransaction();
+        }
+
+        try {
+            $id = $this->sigId('error');
+
+            $st = $this->db->prepare(
+                'INSERT INTO error
+                    (id, asinc_id, lote_id, fila, codigo, mens)
+                 VALUES
+                    (:id, :asinc, :lote, :fila, :codigo, :mens)'
+            );
+
+            $st->execute([
+                ':id' => $id,
+                ':asinc' => $asinc,
+                ':lote' => $lote,
+                ':fila' => $fila,
+                ':codigo' => $codigo,
+                ':mens' => $mens,
+            ]);
+
+            if ($prop) {
+                $this->db->commit();
+            }
+        } catch (Throwable $e) {
+            if ($prop && $this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+            throw $e;
+        }
+    }
+
+
+    /* ========================================================
+       NIVEL 1 — RESERVAR RANGO DE ID
+
+       Debe ejecutarse dentro de la transacción del INSERT.
+       UPDATE bloquea/serializa la fila del contador; si se revierte
+       la operación que inserta la fila, también se revierte el valor.
+    ======================================================== */
+
+    private function sigId(string $clave, int $cant = 1): int
+    {
+        if (!$this->db->inTransaction()) {
+            throw new LogicException(
+                'La reserva de ID requiere una transacción activa.'
+            );
+        }
+
+        if (!in_array($clave, ['asinc', 'lotes', 'error'], true) || $cant < 1) {
+            throw new InvalidArgumentException(
+                'Contador o cantidad de IDs no válidos.'
+            );
+        }
+
+        $st = $this->db->prepare(
+            'UPDATE secue
+             SET valor = valor + :cant
+             WHERE clave = :clave'
+        );
         $st->execute([
-            ':asinc' => $asinc,
-            ':lote' => $lote,
-            ':fila' => $fila,
-            ':codigo' => $codigo,
-            ':mens' => $mens,
+            ':cant' => $cant,
+            ':clave' => $clave,
         ]);
+
+        if ($st->rowCount() !== 1) {
+            throw new RuntimeException(
+                'No existe el contador transaccional solicitado en secue.'
+            );
+        }
+
+        $st = $this->db->prepare(
+            'SELECT valor
+             FROM secue
+             WHERE clave = :clave'
+        );
+        $st->execute([
+            ':clave' => $clave,
+        ]);
+
+        $fin = $st->fetchColumn();
+        if ($fin === false) {
+            throw new RuntimeException(
+                'No se pudo leer el contador transaccional.'
+            );
+        }
+
+        $fin = (int) $fin;
+        if ($fin < $cant) {
+            throw new RuntimeException(
+                'El contador devolvió un rango de IDs no válido.'
+            );
+        }
+
+        return $fin - $cant + 1;
     }
 
 
