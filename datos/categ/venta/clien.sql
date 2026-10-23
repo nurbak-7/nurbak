@@ -12,8 +12,16 @@
    - VENTA.devol.clien → clien.id
 
    La tabla solamente define la estructura. No inserta datos.
+   orden subir a tidb
+   clien.sql
+   numer.sql
+   opera.sql
+   cotiz.sql
+   notav.sql
+   devol.sql
 ============================================================ */
 
+USE venta;
 CREATE TABLE IF NOT EXISTS clien (
     id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     tipod  VARCHAR(10) NOT NULL DEFAULT 'DNI',

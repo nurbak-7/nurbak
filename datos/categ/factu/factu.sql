@@ -3,6 +3,14 @@
    Ruta: datos/categ/factu/factu.sql
    Módulo: Facturación
    Base: factu
+   orden a subir a tidb
+   factu.sql
+   bolet.sql
+   gremi.sql
+   ncred.sql
+   ndebi.sql
+   numer.sql
+   sunat.sql
 ============================================================ */
 
 CREATE TABLE IF NOT EXISTS factu (

@@ -10,6 +10,11 @@
 
    RELACIÓN:
    orden.prove y recep.prove apuntarán al proveedor.
+   orden a subir a tidb
+   prove.sql
+   comex.sql
+   orcex.sql
+   recep.sql
 ============================================================ */
 
 CREATE TABLE IF NOT EXISTS prove (

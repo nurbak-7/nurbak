@@ -11,6 +11,10 @@
    - usape / usaci → logi.usuarios.id
    - pago          → pago.regis.id
    - opera         → VENTA.opera.id
+   orden a subir tidb
+   caja.sql
+   regip.sql
+   credi.sql
 ============================================================ */
 
 CREATE TABLE IF NOT EXISTS caja (
