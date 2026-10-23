@@ -16,20 +16,22 @@
 ============================================================ */
 
 CREATE TABLE IF NOT EXISTS numer (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    tipo VARCHAR(20) NOT NULL,
-    serie VARCHAR(4) NOT NULL,
-    ultim INT UNSIGNED NOT NULL DEFAULT 0,
+    id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    tipo   VARCHAR(20) NOT NULL,
+    serie  VARCHAR(4) NOT NULL,
+    ultim  INT UNSIGNED NOT NULL DEFAULT 0,
+
     UNIQUE KEY uq003 (tipo, serie)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
 
 /* ============================================================
-   MIGRACIÓN — RETIRO DE TIPOS QUE AHORA PERTENECEN A FACTU
+   NUMERACIÓN INICIAL
 ============================================================ */
 
-DELETE FROM numer
-WHERE tipo IN ('boleta','factura','ncred','ndebi','gremi');
-
-INSERT IGNORE INTO numer (tipo, serie, ultim) VALUES
+INSERT IGNORE INTO numer (tipo, serie, ultim)
+VALUES
     ('notav', 'N001', 0),
     ('cotiz', 'C001', 99);

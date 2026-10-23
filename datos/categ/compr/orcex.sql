@@ -30,21 +30,6 @@ CREATE TABLE IF NOT EXISTS orcex (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-/* AJUSTE DE ESTRUCTURA: proveedor y datos documentales pueden quedar vacíos. */
-SET @p01 := (
-    SELECT COUNT(*)
-    FROM information_schema.COLUMNS
-    WHERE TABLE_SCHEMA=DATABASE()
-      AND TABLE_NAME='orcex'
-      AND COLUMN_NAME='prove'
-);
-SET @s01 := IF(
-    @p01=1,
-    'ALTER TABLE orcex MODIFY prove INT UNSIGNED NULL, MODIFY razon VARCHAR(180) NULL',
-    'SELECT 1'
-);
-PREPARE x01 FROM @s01; EXECUTE x01; DEALLOCATE PREPARE x01;
-
 
 
 /* ============================================================

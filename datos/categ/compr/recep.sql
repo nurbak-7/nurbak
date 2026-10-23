@@ -37,6 +37,3 @@ CREATE TABLE IF NOT EXISTS detre (
     CONSTRAINT fk027 FOREIGN KEY (recep) REFERENCES recep(id)
         ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-/* MIGRACIÓN: instalaciones anteriores pueden tener orden; comex es la referencia nueva. */
-ALTER TABLE recep ADD COLUMN IF NOT EXISTS comex INT UNSIGNED NULL AFTER id;

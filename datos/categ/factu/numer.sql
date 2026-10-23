@@ -1,3 +1,4 @@
+
 /* ============================================================
    Ruta: datos/categ/factu/numer.sql
    Módulo: Facturación / Numeración
@@ -16,14 +17,19 @@
 ============================================================ */
 
 CREATE TABLE IF NOT EXISTS numer (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    tipo VARCHAR(20) NOT NULL,
-    serie VARCHAR(4) NOT NULL,
-    ultim INT UNSIGNED NOT NULL DEFAULT 0,
-    UNIQUE KEY uq001 (tipo, serie)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    tipo   VARCHAR(20) NOT NULL,
+    serie  VARCHAR(4) NOT NULL,
+    ultim  INT UNSIGNED NOT NULL DEFAULT 0,
 
-INSERT IGNORE INTO numer (tipo, serie, ultim) VALUES
+    UNIQUE KEY uq001 (tipo, serie)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+
+INSERT IGNORE INTO numer (tipo, serie, ultim)
+VALUES
     ('boleta',  'B001', 0),
     ('factura', 'F001', 0),
     ('ncred',   'FC01', 0),

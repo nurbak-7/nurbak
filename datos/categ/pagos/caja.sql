@@ -4,63 +4,68 @@
    Base: pago
 
    RESPONSABILIDAD:
-   Controlar la apertura/cierre de caja y sus movimientos monetarios.
+   Controlar la apertura/cierre de caja y sus movimientos
+   monetarios.
 
    CONEXIONES LÓGICAS:
-   - usuario_apertura / usuario_cierre → logi.usuarios.id
-   - pago → pago.regis.id
-   - opera → VENTA.opera.id
+   - usape / usaci → logi.usuarios.id
+   - pago          → pago.regis.id
+   - opera         → VENTA.opera.id
 ============================================================ */
 
 CREATE TABLE IF NOT EXISTS caja (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    usape INT UNSIGNED NOT NULL,
-    faper DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    saldi DECIMAL(14,2) NOT NULL DEFAULT 0.00,
-    usaci INT UNSIGNED NULL,
-    fecie DATETIME NULL,
-    saldc DECIMAL(14,2) NULL,
-    estad ENUM('abierta','cerrada') NOT NULL DEFAULT 'abierta',
-    obser VARCHAR(255) NULL,
+    id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    usape  INT UNSIGNED NOT NULL,
+    faper  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    saldi  DECIMAL(14,2) NOT NULL DEFAULT 0.00,
+    usaci  INT UNSIGNED NULL,
+    fecie  DATETIME NULL,
+    saldc  DECIMAL(14,2) NULL,
+
+    estad  ENUM('abierta', 'cerrada')
+           NOT NULL DEFAULT 'abierta',
+
+    obser  VARCHAR(255) NULL,
+
     INDEX ix103 (faper),
     INDEX ix104 (estad),
     INDEX ix105 (usape)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
 
 CREATE TABLE IF NOT EXISTS cajmo (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    caja INT UNSIGNED NOT NULL,
-    pago INT UNSIGNED NULL,
-    opera INT UNSIGNED NULL,
-    usuar INT UNSIGNED NULL,
-    tipo ENUM('ingreso','salida') NOT NULL,
-    conce VARCHAR(150) NOT NULL,
-    monto DECIMAL(14,2) NOT NULL,
-    fecha DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    estad ENUM('registrado','anulado') NOT NULL DEFAULT 'registrado',
+    id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    caja   INT UNSIGNED NOT NULL,
+    pago   INT UNSIGNED NULL,
+    opera  INT UNSIGNED NULL,
+    usuar  INT UNSIGNED NULL,
+
+    tipo   ENUM('ingreso', 'salida') NOT NULL,
+    conce  VARCHAR(150) NOT NULL,
+    monto  DECIMAL(14,2) NOT NULL,
+    fecha  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    estad  ENUM('registrado', 'anulado')
+           NOT NULL DEFAULT 'registrado',
+
     INDEX ix106 (caja),
     INDEX ix107 (pago),
     INDEX ix108 (opera),
     INDEX ix109 (fecha),
+
     CONSTRAINT fk028
-        FOREIGN KEY (caja) REFERENCES caja(id)
-        ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        FOREIGN KEY (caja)
+        REFERENCES caja(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
 
-/* ============================================================
-   MIGRACIÓN — RELACIÓN MOVIMIENTO / PAGO
-============================================================ */
-
-SET @hay_regis := (
-    SELECT COUNT(*) FROM information_schema.TABLES
-    WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='regis'
-);
-SET @fcp := (
-    SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
-    WHERE CONSTRAINT_SCHEMA=DATABASE() AND TABLE_NAME='cajmo'
-      AND CONSTRAINT_NAME='fk_cajmo_pago'
-);
-SET @scp := IF(@hay_regis=0,'SELECT 1',IF(@fcp=0,
-    'ALTER TABLE cajmo ADD CONSTRAINT fk_cajmo_pago FOREIGN KEY (pago) REFERENCES regis(id) ON UPDATE CASCADE ON DELETE RESTRICT',
-    'SELECT 1'));
-PREPARE xcp FROM @scp; EXECUTE xcp; DEALLOCATE PREPARE xcp;
+    CONSTRAINT fk_cajmo_pago
+        FOREIGN KEY (pago)
+        REFERENCES regis(id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
