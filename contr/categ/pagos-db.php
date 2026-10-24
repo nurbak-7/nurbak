@@ -4,11 +4,12 @@
    Módulo: Núcleo / Base de Pagos
 
    FUNCIÓN:
-   Crear y reutilizar una conexión PDO exclusiva para la BD pago.
+   Crear y reutilizar una conexión PDO exclusiva para pago.
 
    FLUJO:
-   controlador → PAGOSDB::abrir() → MySQL → repositorio.
+   controlador → PAGOSDB::abrir() → MySQL/TiDB → repositorio.
 ============================================================ */
+
 declare(strict_types=1);
 
 final class PAGOSDB
@@ -25,14 +26,25 @@ final class PAGOSDB
 
         $dsn = sprintf(
             'mysql:host=%s;port=%s;dbname=%s;charset=%s',
-            $config['host'], $config['port'], $config['name'], $config['charset']
+            $config['host'],
+            $config['port'],
+            $config['name'],
+            $config['charset']
         );
 
-        self::$conexion = new PDO($dsn, $config['user'], $config['pass'], [
+        $opciones = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES => false,
-        ]);
+        ];
+
+        /* Verificar TLS para servidores remotos; local no requiere TLS. */
+        if (!in_array(strtolower($config['host']), ['127.0.0.1', 'localhost', '::1'], true)) {
+            $opciones[PDO::MYSQL_ATTR_SSL_CA] = $config['cert'];
+            $opciones[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = true;
+        }
+
+        self::$conexion = new PDO($dsn, $config['user'], $config['pass'], $opciones);
 
         return self::$conexion;
     }

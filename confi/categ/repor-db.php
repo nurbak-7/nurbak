@@ -4,17 +4,22 @@
    Módulo: Configuración / Base de Reportes
 
    FUNCIÓN:
-   Entregar la configuración exclusiva de la base "REPO".
-   Reportes/Informes consulta las bases operativas; Auditoría
-   utiliza REPO para conservar su historial.
+   Entregar la configuración exclusiva de la base repor.
+   La conexión PDO se crea en contr/categ/repor-db.php.
+
+   CONEXIÓN:
+   Reutiliza las credenciales comunes DB_LOGIN_* del servidor
+   y selecciona únicamente la base de datos correspondiente.
 ============================================================ */
+
 declare(strict_types=1);
 
-$host = getenv('DB_REPOR_HOST') ?: (getenv('DB_APP_HOST') ?: '127.0.0.1');
-$port = getenv('DB_REPOR_PORT') ?: (getenv('DB_APP_PORT') ?: '3306');
-$name = getenv('DB_REPOR_NAME') ?: 'REPO';
-$user = getenv('DB_REPOR_USER') ?: (getenv('DB_APP_USER') ?: 'root');
-$pass = getenv('DB_REPOR_PASS') ?: (getenv('DB_APP_PASS') ?: '');
+$host = getenv('DB_LOGIN_HOST') ?: '127.0.0.1';
+$port = getenv('DB_LOGIN_PORT') ?: '3306';
+$name = 'repor';
+$user = getenv('DB_LOGIN_USER') ?: 'root';
+$pass = getenv('DB_LOGIN_PASS') ?: '';
 $charset = 'utf8mb4';
+$cert = '/etc/ssl/certs/ca-certificates.crt';
 
-return compact('host', 'port', 'name', 'user', 'pass', 'charset');
+return compact('host', 'port', 'name', 'user', 'pass', 'charset', 'cert');
