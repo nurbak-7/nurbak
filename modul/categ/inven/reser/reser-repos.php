@@ -38,6 +38,7 @@ final class ReseR
                 AND actua >= (NOW() - INTERVAL ".self::VIGE." SECOND)
                 AND produ IN ({$lis})";
         if($exclOpera>0)$sql.=' AND opera<>:opera';
+        $sql.=' GROUP BY produ';
         $qr=$this->db->prepare($sql); if($exclOpera>0)$par['opera']=$exclOpera;
         $qr->execute($par);$res=[];
         foreach($qr->fetchAll(PDO::FETCH_ASSOC) as $r)$res[(int)$r['produ']]=(float)$r['reser'];
