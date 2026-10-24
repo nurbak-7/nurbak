@@ -59,8 +59,12 @@
 
         const vaci =
             root.querySelector('[data-arti-vaci]');
+        const movil = root.querySelector('[data-arti-movil]');
+        const movUno = root.querySelector('[data-arti-mov-uno]');
+        const movDos = root.querySelector('[data-arti-mov-dos]');
+        const movTres = root.querySelector('[data-arti-mov-tres]');
 
-        if (!busc || !cuer || !vaci) {
+        if (!busc || !cuer || !vaci || !movil || !movUno || !movDos || !movTres) {
             return;
         }
 
@@ -79,6 +83,9 @@
                 'Cargando artículos...';
 
             cuer.innerHTML = '';
+            movUno.innerHTML = '';
+            movDos.innerHTML = '';
+            movTres.innerHTML = '';
 
             try {
 
@@ -125,6 +132,35 @@
                         <td>${esc(row.super || '—')}</td>
                         <td>${esc(row.equiv || '—')}</td>
                         <td>${esc(row.anio || '—')}</td>
+                        <td>${esc(row.qty ?? 0)}</td>
+                        <td>${Number(row.pcomp || 0).toFixed(2)}</td>
+                        <td>${Number(row.pvent || 0).toFixed(2)}</td>
+                        <td>${esc(row.fecha || '—')}</td>
+                    </tr>
+                `).join('');
+
+                movUno.innerHTML = rows.map(row => `
+                    <tr>
+                        <td>${esc(row.id ?? '—')}</td>
+                        <td>${esc(row.motor || '—')}</td>
+                        <td>${esc(row.model || '—')}</td>
+                        <td>${esc(row.descr || '—')}</td>
+                        <td>${esc(row.codig || '—')}</td>
+                    </tr>
+                `).join('');
+
+                movDos.innerHTML = rows.map(row => `
+                    <tr>
+                        <td>${esc(row.origi || '—')}</td>
+                        <td>${esc(row.medid || '—')}</td>
+                        <td>${esc(row.super || '—')}</td>
+                        <td>${esc(row.equiv || '—')}</td>
+                        <td>${esc(row.anio || '—')}</td>
+                    </tr>
+                `).join('');
+
+                movTres.innerHTML = rows.map(row => `
+                    <tr>
                         <td>${esc(row.qty ?? 0)}</td>
                         <td>${Number(row.pcomp || 0).toFixed(2)}</td>
                         <td>${Number(row.pvent || 0).toFixed(2)}</td>

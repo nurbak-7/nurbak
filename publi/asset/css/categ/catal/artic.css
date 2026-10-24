@@ -4,3 +4,7 @@
    Función: Diseño propio de la consulta consolidada.
 ============================================================ */
 .catal-arti{width:100%;color:#202020;background:#fff}.arti-busc{padding:.35rem}.arti-busc label{display:block;margin-bottom:.25rem;font-size:.8rem;font-weight:700}.arti-busc input{width:100%;padding:.45rem;box-sizing:border-box}.arti-tabla{overflow:auto;margin-top:.75rem;max-height:65vh;border:1px solid #999}.arti-tabla table{width:100%;min-width:1500px;border-collapse:collapse}.arti-tabla th,.arti-tabla td{padding:.4rem .5rem;border:1px solid #999;white-space:nowrap;text-align:left;font-size:.78rem}.arti-tabla th{background:#f3f3f3;font-weight:700;position:sticky;top:0;z-index:1}.arti-tabla td:nth-child(4){white-space:normal;min-width:180px}.arti-tabla td:nth-child(9){white-space:normal;min-width:180px}.arti-tabla td:nth-child(11),.arti-tabla td:nth-child(12),.arti-tabla td:nth-child(13){text-align:right}.arti-tabla td:nth-child(14){font-size:.74rem}
+
+/* La vista móvil tiene su propia estructura; escritorio conserva la tabla consolidada. */
+.arti-movil{display:none}
+.arti-vaci{padding:.5rem;color:#555}

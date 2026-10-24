@@ -15,6 +15,7 @@
 
 (() => {
     const mapa = Object.freeze({
+        'catal/artic': { movi: 'publi/asset/css/respo/movi/categ/catal/artic.css' },
         'catal/produ': { movi: 'publi/asset/css/respo/movi/categ/catal/produ.css' },
         'catal/vehic': { movi: 'publi/asset/css/respo/movi/categ/catal/vehic.css' },
         'catal/equiv': { movi: 'publi/asset/css/respo/movi/categ/catal/equiv.css' },
