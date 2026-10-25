@@ -389,13 +389,13 @@ ctx.cerrar('error');
                 const filas = datos.cotizaciones || [];
                 cuerp.innerHTML = filas.map(fila => `
                     <tr>
-                        <td>${esc(fila.serie)}-${esc(String(fila.numco).padStart(4,'0'))}</td>
+                        <td class="cotiz-lista-num">${esc(fila.serie)}-${esc(String(fila.numco).padStart(4,'0'))}</td>
                         <td class="cotiz-lista-cliente">
                             <strong>${esc(fila.razon || '—')}</strong>
-                            <span class="cotiz-lista-fechas">${esc(fech(fila.fecha))} <span aria-hidden="true">|</span> ${esc(fech(fila.vigia))}</span>
+                            <span class="cotiz-lista-fechas">${esc(fech(fila.fecha))}<span aria-hidden="true"> | </span>${esc(fech(fila.vigia))}</span>
                         </td>
                         <td class="cotiz-lista-estado">${esc(situa(fila))}</td>
-                        <td>${Number(fila.total || 0).toFixed(2)}</td>
+                        <td class="cotiz-lista-total">${Number(fila.total || 0).toFixed(2)}</td>
                         <td class="cotiz-lista-acc">
                             <button type="button" data-cotiz-list-abrir="${esc(fila.id)}">Editar</button>
                             <button type="button" data-cotiz-list-ver="${esc(fila.id)}">Ver</button>

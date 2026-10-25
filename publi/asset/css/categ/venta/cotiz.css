@@ -46,7 +46,7 @@
    NIVEL 1 — LISTA PRINCIPAL
    Consulta, búsqueda y acceso a Nueva/Editar Cotización.
 ============================================================ */
-.cotiz-lista{
+ .cotiz-lista{
     width:100%;
     box-sizing:border-box;
     font-family:Arial,sans-serif;
@@ -67,19 +67,23 @@
     border-bottom:2px solid #d000a8;
     outline:0;
     font-size:14px;
+    background:transparent;
+}
+
+.cotiz-lista-barra input:hover,
+.cotiz-lista-barra input:focus{
+    border-bottom-color:#60a5fa;
 }
 
 .cotiz-lista-barra button{
     flex-shrink:0;
-    padding:8px 12px;
-    border:1px solid #2878b8;
+    padding:9px 14px;
+    border:1px solid #3984b5;
     border-radius:10px;
-    color:#2878b8;
+    color:#34769c;
     background:#fff;
     cursor:pointer;
 }
-.cotiz-lista-barra input:hover,
-.cotiz-lista-barra input:focus{border-bottom-color:#60a5fa;}
 
 .cotiz-lista-tabla{
     width:100%;
@@ -89,67 +93,78 @@
 .cotiz-lista-tabla table{
     width:100%;
     min-width:0;
-    border-collapse:collapse;
     table-layout:fixed;
+    border-collapse:collapse;
     font-size:14px;
 }
 
 .cotiz-lista-tabla th,
 .cotiz-lista-tabla td{
     border:1px solid #cbd5e1;
-    padding:8px 9px;
+    padding:9px 8px;
     text-align:left;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    vertical-align:middle;
+    white-space:normal;
+    overflow-wrap:anywhere;
 }
 
 .cotiz-lista-tabla th{
+    background:#e6eef9;
+    color:#374151;
     font-weight:700;
-    background:#e8f1fb;
-    color:#334155;
 }
 
 .cotiz-lista-tabla th:nth-child(1),
-.cotiz-lista-tabla td:nth-child(1){width:18%;}
+.cotiz-lista-tabla td:nth-child(1){width:14%;}
 
 .cotiz-lista-tabla th:nth-child(2),
 .cotiz-lista-tabla td:nth-child(2){width:40%;}
 
 .cotiz-lista-tabla th:nth-child(3),
-.cotiz-lista-tabla td:nth-child(3){width:13%;}
+.cotiz-lista-tabla td:nth-child(3){width:14%;}
 
 .cotiz-lista-tabla th:nth-child(4),
-.cotiz-lista-tabla td:nth-child(4){width:13%;text-align:right;}
+.cotiz-lista-tabla td:nth-child(4){width:12%;text-align:right;}
 
 .cotiz-lista-tabla th:nth-child(5),
-.cotiz-lista-tabla td:nth-child(5){width:16%;}
-
-.cotiz-lista-cliente{white-space:normal!important;}
-.cotiz-lista-cliente strong{display:block;font-weight:700;}
-.cotiz-lista-fechas{display:block;margin-top:4px;color:#64748b;font-size:12px;}
-.cotiz-lista-fechas span{padding:0 5px;color:#94a3b8;}
+.cotiz-lista-tabla td:nth-child(5){width:20%;text-align:center;}
 
 .cotiz-lista-tabla button{
     padding:5px 9px;
-    border:1px solid #bbb;
-    background:#f4f4f4;
+    border:1px solid #3984b5;
+    border-radius:8px;
+    background:#fff;
+    color:#34769c;
     cursor:pointer;
+}
+
+.cotiz-lista-tabla button[data-cotiz-list-ver]{
+    border-color:#b77936;
+    color:#94612b;
 }
 
 .cotiz-lista-acc{
     display:table-cell;
-    vertical-align:middle;
+    text-align:center;
+    white-space:nowrap;
 }
-.cotiz-lista-acc button{
-    display:inline-block;
-    box-sizing:border-box;
-    border:1px solid #2878b8;
-    border-radius:8px;
-    background:#fff;
-    color:#2878b8;
+
+.cotiz-lista-cliente strong{
+    display:block;
+    font-weight:700;
 }
-.cotiz-lista-acc button[data-cotiz-list-ver]{border-color:#c58b43;color:#9a6423;}
+
+.cotiz-lista-fechas{
+    display:block;
+    margin-top:4px;
+    color:#64748b;
+    font-size:0.95em;
+    white-space:nowrap;
+}
+
+.cotiz-lista-estado{
+    font-weight:600;
+}
 
 .cotiz-lista-mensaje{
     margin:10px 0;
