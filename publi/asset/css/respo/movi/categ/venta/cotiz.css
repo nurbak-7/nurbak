@@ -12,18 +12,59 @@
 @media (max-width: 700px){
     .cotiz-lista-barra{gap:8px;margin-bottom:8px;}
     .cotiz-lista-barra input{font-size:14px;padding:7px 6px;border-bottom:2px solid #d000a8;}
+    .cotiz-lista-barra input:hover,
+    .cotiz-lista-barra input:focus{border-bottom-color:#60a5fa;}
     .cotiz-lista-barra button{padding:7px 10px;border-radius:10px;font-size:13px;background:#fff;}
-    .cotiz-lista-tabla{overflow-x:hidden;}
-    .cotiz-lista-tabla table{width:100%;min-width:0;table-layout:fixed;font-size:11px;}
-    .cotiz-lista-tabla th,.cotiz-lista-tabla td{padding:7px 4px;white-space:normal;overflow-wrap:anywhere;text-overflow:clip;}
-    .cotiz-lista-tabla th:nth-child(1),.cotiz-lista-tabla td:nth-child(1){width:18%;}
-    .cotiz-lista-tabla th:nth-child(2),.cotiz-lista-tabla td:nth-child(2){width:40%;}
-    .cotiz-lista-tabla th:nth-child(3),.cotiz-lista-tabla td:nth-child(3){width:13%;}
-    .cotiz-lista-tabla th:nth-child(4),.cotiz-lista-tabla td:nth-child(4){width:13%;text-align:right;}
-    .cotiz-lista-tabla th:nth-child(5),.cotiz-lista-tabla td:nth-child(5){width:16%;}
-    .cotiz-lista-cliente strong{font-size:11px;line-height:1.25;}
-    .cotiz-lista-fechas{font-size:10px;line-height:1.3;margin-top:3px;}
+
+    .cotiz-lista-tabla{width:100%;overflow-x:hidden;}
+    .cotiz-lista-tabla table{
+        width:100%;
+        min-width:0;
+        table-layout:fixed;
+        border-collapse:collapse;
+        font-size:11px;
+    }
+    .cotiz-lista-tabla th,
+    .cotiz-lista-tabla td{
+        box-sizing:border-box;
+        padding:6px 4px;
+        white-space:normal;
+        overflow-wrap:anywhere;
+        text-overflow:clip;
+        vertical-align:middle;
+        line-height:1.25;
+    }
+    .cotiz-lista-tabla th:nth-child(1),
+    .cotiz-lista-tabla td:nth-child(1){width:18%;}
+    .cotiz-lista-tabla th:nth-child(2),
+    .cotiz-lista-tabla td:nth-child(2){width:34%;}
+    .cotiz-lista-tabla th:nth-child(3),
+    .cotiz-lista-tabla td:nth-child(3){width:12%;}
+    .cotiz-lista-tabla th:nth-child(4),
+    .cotiz-lista-tabla td:nth-child(4){width:14%;text-align:right;}
+    .cotiz-lista-tabla th:nth-child(5),
+    .cotiz-lista-tabla td:nth-child(5){width:22%;}
+
+    .cotiz-lista-cliente strong{display:block;font-size:11px;line-height:1.2;}
+    .cotiz-lista-fechas{display:block;font-size:10px;line-height:1.25;margin-top:3px;color:#64748b;}
     .cotiz-lista-fechas span{padding:0 2px;}
-    .cotiz-lista-acc{display:flex;flex-direction:column;gap:3px;}
-    .cotiz-lista-acc button{width:100%;padding:4px 2px;font-size:10px;line-height:1.2;}
+
+    /* La clase pertenece al TD: no convertir la celda en flex. */
+    .cotiz-lista-tabla td.cotiz-lista-acc{
+        display:table-cell;
+        vertical-align:middle;
+        padding:4px;
+    }
+    .cotiz-lista-acc button{
+        display:block;
+        width:100%;
+        min-width:0;
+        box-sizing:border-box;
+        padding:5px 2px;
+        margin:0;
+        font-size:10px;
+        line-height:1.15;
+        white-space:nowrap;
+    }
+    .cotiz-lista-acc button+button{margin-top:3px;}
 }

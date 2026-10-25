@@ -138,10 +138,12 @@
 }
 
 .cotiz-lista-acc{
-    display:flex;
-    gap:5px;
+    display:table-cell;
+    vertical-align:middle;
 }
 .cotiz-lista-acc button{
+    display:inline-block;
+    box-sizing:border-box;
     border:1px solid #2878b8;
     border-radius:8px;
     background:#fff;
