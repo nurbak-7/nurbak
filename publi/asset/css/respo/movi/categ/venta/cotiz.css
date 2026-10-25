@@ -6,3 +6,15 @@
 @import url('./cotiz/clien.css');
 @import url('./cotiz/produ.css');
 @import url('./cotiz/total.css');
+
+/* ============================================================
+   COTIZACIÓN — BUSCADOR DEL MODAL PRINCIPAL EN MÓVIL
+   Estado normal: conserva el magenta definido en el CSS base.
+   Estado activo: línea inferior azul claro.
+============================================================ */
+@media (max-width: 700px){
+    .cotiz-lista-barra input:hover,
+    .cotiz-lista-barra input:focus{
+        border-bottom-color:#60a5fa;
+    }
+}
