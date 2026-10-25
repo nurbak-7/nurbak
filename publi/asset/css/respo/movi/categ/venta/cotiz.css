@@ -8,13 +8,102 @@
 @import url('./cotiz/total.css');
 
 /* ============================================================
-   COTIZACIÓN — BUSCADOR DEL MODAL PRINCIPAL EN MÓVIL
-   Estado normal: conserva el magenta definido en el CSS base.
-   Estado activo: línea inferior azul claro.
+   COTIZACIÓN — LISTA PRINCIPAL EN MÓVIL
+   Solo presentación responsive: conserva las 7 columnas reales.
 ============================================================ */
-@media (max-width: 700px){
+@media (max-width:700px){
+    .cotiz-lista-barra{
+        gap:6px;
+        margin-bottom:8px;
+    }
+
+    .cotiz-lista-barra input{
+        padding:7px 8px;
+        border-bottom-color:#d000a8;
+    }
+
     .cotiz-lista-barra input:hover,
     .cotiz-lista-barra input:focus{
         border-bottom-color:#60a5fa;
+    }
+
+    .cotiz-lista-barra button{
+        padding:6px 8px;
+        border:1px solid #2874a6;
+        border-radius:7px;
+        background:#fff;
+        color:#2874a6;
+        font-size:12px;
+        line-height:1.2;
+    }
+
+    .cotiz-lista-tabla{
+        width:100%;
+        min-width:0;
+        overflow-x:hidden;
+    }
+
+    .cotiz-lista-tabla table{
+        width:100%;
+        min-width:0;
+        table-layout:fixed;
+        border-collapse:collapse;
+        font-size:6px;
+    }
+
+    .cotiz-lista-tabla th,
+    .cotiz-lista-tabla td{
+        box-sizing:border-box;
+        padding:5px 2px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+    }
+
+    .cotiz-lista-tabla th{
+        font-size:7px;
+        line-height:1.15;
+        overflow-wrap:anywhere;
+    }
+
+    .cotiz-lista-tabla th:nth-child(1),
+    .cotiz-lista-tabla td:nth-child(1){width:8%}
+
+    .cotiz-lista-tabla th:nth-child(2),
+    .cotiz-lista-tabla td:nth-child(2){
+        width:22%;
+        min-width:0;
+        white-space:nowrap;
+    }
+
+    .cotiz-lista-tabla th:nth-child(3),
+    .cotiz-lista-tabla td:nth-child(3){width:14%}
+
+    .cotiz-lista-tabla th:nth-child(4),
+    .cotiz-lista-tabla td:nth-child(4){width:14%}
+
+    .cotiz-lista-tabla th:nth-child(5),
+    .cotiz-lista-tabla td:nth-child(5){width:12%}
+
+    .cotiz-lista-tabla th:nth-child(6),
+    .cotiz-lista-tabla td:nth-child(6){width:12%}
+
+    .cotiz-lista-tabla th:nth-child(7),
+    .cotiz-lista-tabla td:nth-child(7){width:18%}
+
+    .cotiz-lista-tabla td:nth-child(6){text-align:right}
+
+    .cotiz-lista-tabla button{
+        max-width:100%;
+        padding:2px;
+        font-size:6px;
+        line-height:1.2;
+        white-space:normal;
+    }
+
+    .cotiz-lista-acc{
+        display:flex;
+        gap:2px;
+        min-width:0;
     }
 }
