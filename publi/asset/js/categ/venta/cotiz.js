@@ -389,7 +389,7 @@ ctx.cerrar('error');
                 const filas = datos.cotizaciones || [];
                 cuerp.innerHTML = filas.map(fila => `
                     <tr>
-                        <td class="cotiz-lista-num">${esc(fila.serie)}-${esc(String(fila.numco).padStart(4,'0'))}</td>
+                        <td class="cotiz-lista-num">${esc(fila.serie)}-${esc(String(fila.numco))}</td>
                         <td class="cotiz-lista-cliente">
                             <strong>${esc(fila.razon || '—')}</strong>
                             <span class="cotiz-lista-fechas">${esc(fech(fila.fecha))}<span aria-hidden="true"> | </span>${esc(fech(fila.vigia))}</span>

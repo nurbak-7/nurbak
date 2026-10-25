@@ -164,7 +164,16 @@
 
 .cotiz-lista-estado{
     font-weight:600;
+    text-align:center;
 }
+.cotiz-lista-tabla td.cotiz-lista-estado{
+    font-weight:700;
+    text-align:center;
+}
+.cotiz-lista-tabla td.cotiz-lista-estado[data-estado="Vigente"]{
+    color:#075b35;
+}
+
 
 .cotiz-lista-mensaje{
     margin:10px 0;
