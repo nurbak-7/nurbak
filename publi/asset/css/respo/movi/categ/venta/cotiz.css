@@ -7,159 +7,23 @@
 @import url('./cotiz/produ.css');
 @import url('./cotiz/total.css');
 
-/* ============================================================
-   COTIZACIÓN — LISTA PRINCIPAL EN MÓVIL
-   Alcance: solo la presentación móvil de la lista principal.
-   Conserva las siete columnas y las acciones reales.
-============================================================ */
-@media (max-width:700px){
-    .cotiz-lista-barra{
-        display:flex;
-        align-items:center;
-        gap:8px;
-        margin-bottom:8px;
-        min-width:0;
-    }
 
-    /* Buscador sin marco: mantiene la línea inferior magenta. */
-    .cotiz-lista-barra input{
-        flex:1 1 auto;
-        width:0;
-        min-width:0;
-        box-sizing:border-box;
-        padding:7px 4px;
-        border:0;
-        border-bottom:2px solid #d000a8;
-        border-radius:0;
-        background:transparent;
-        outline:0;
-        box-shadow:none;
-        font-size:12px;
-        line-height:1.35;
-    }
-
-    .cotiz-lista-barra input:hover,
-    .cotiz-lista-barra input:focus,
-    .cotiz-lista-barra input:focus-visible{
-        border-bottom-color:#60a5fa;
-    }
-
-    /* + Nueva: compacto, fondo blanco y contorno azul. */
-    .cotiz-lista-barra button{
-        flex:0 0 auto;
-        box-sizing:border-box;
-        padding:7px 10px;
-        border:1px solid #2874a6;
-        border-radius:9px;
-        background:#fff;
-        color:#2874a6;
-        font-size:12px;
-        line-height:1.2;
-        white-space:nowrap;
-        cursor:pointer;
-    }
-
-    .cotiz-lista-tabla{
-        width:100%;
-        min-width:0;
-        overflow:hidden;
-    }
-
-    /* Las siete columnas se distribuyen dentro del ancho disponible. */
-    .cotiz-lista-tabla table{
-        width:100%;
-        min-width:0;
-        table-layout:fixed;
-        border-collapse:collapse;
-        font-size:10px;
-    }
-
-    .cotiz-lista-tabla th,
-    .cotiz-lista-tabla td{
-        box-sizing:border-box;
-        min-width:0;
-        padding:5px 2px;
-        border:1px solid #e3c3dc;
-        text-align:left;
-        vertical-align:middle;
-        overflow:hidden;
-        text-overflow:ellipsis;
-        white-space:nowrap;
-    }
-
-    .cotiz-lista-tabla th{
-        background:#edf1f5;
-        color:#344054;
-        font-size:9px;
-        font-weight:700;
-        line-height:1.15;
-        white-space:normal;
-        overflow-wrap:anywhere;
-    }
-
-    .cotiz-lista-tabla tbody tr{
-        height:auto;
-    }
-
-    .cotiz-lista-tabla th:nth-child(1),
-    .cotiz-lista-tabla td:nth-child(1){width:10%}
-
-    .cotiz-lista-tabla th:nth-child(2),
-    .cotiz-lista-tabla td:nth-child(2){width:21%}
-
-    .cotiz-lista-tabla th:nth-child(3),
-    .cotiz-lista-tabla td:nth-child(3){width:12%}
-
-    .cotiz-lista-tabla th:nth-child(4),
-    .cotiz-lista-tabla td:nth-child(4){width:13%}
-
-    .cotiz-lista-tabla th:nth-child(5),
-    .cotiz-lista-tabla td:nth-child(5){width:14%}
-
-    .cotiz-lista-tabla th:nth-child(6),
-    .cotiz-lista-tabla td:nth-child(6){
-        width:12%;
-        text-align:right;
-    }
-
-    .cotiz-lista-tabla th:nth-child(7),
-    .cotiz-lista-tabla td:nth-child(7){width:18%}
-
-    /* La clase base usa flex; dentro de una tabla debe conservarse como celda. */
-    .cotiz-lista-tabla td.cotiz-lista-acc{
-        display:table-cell;
-        min-width:0;
-        padding:3px 2px;
-        text-align:center;
-        vertical-align:middle;
-        white-space:normal;
-    }
-
-    .cotiz-lista-tabla td.cotiz-lista-acc button{
-        display:block;
-        width:100%;
-        max-width:100%;
-        box-sizing:border-box;
-        margin:2px 0;
-        padding:3px 1px;
-        border:1px solid #2874a6;
-        border-radius:5px;
-        background:#fff;
-        color:#2874a6;
-        font-size:8px;
-        line-height:1.15;
-        text-align:center;
-        white-space:nowrap;
-        cursor:pointer;
-    }
-
-    .cotiz-lista-tabla td.cotiz-lista-acc button[data-cotiz-list-ver]{
-        border-color:#b96823;
-        color:#a65317;
-    }
-
-    .cotiz-lista-mensaje{
-        margin:8px 0;
-        font-size:11px;
-    }
+/* Lista principal de Cotización: distribución compacta para móvil. */
+@media (max-width: 700px){
+    .cotiz-lista-barra{gap:8px;margin-bottom:8px;}
+    .cotiz-lista-barra input{font-size:14px;padding:7px 6px;border-bottom:2px solid #d000a8;}
+    .cotiz-lista-barra button{padding:7px 10px;border-radius:10px;font-size:13px;background:#fff;}
+    .cotiz-lista-tabla{overflow-x:hidden;}
+    .cotiz-lista-tabla table{width:100%;min-width:0;table-layout:fixed;font-size:11px;}
+    .cotiz-lista-tabla th,.cotiz-lista-tabla td{padding:7px 4px;white-space:normal;overflow-wrap:anywhere;text-overflow:clip;}
+    .cotiz-lista-tabla th:nth-child(1),.cotiz-lista-tabla td:nth-child(1){width:18%;}
+    .cotiz-lista-tabla th:nth-child(2),.cotiz-lista-tabla td:nth-child(2){width:40%;}
+    .cotiz-lista-tabla th:nth-child(3),.cotiz-lista-tabla td:nth-child(3){width:13%;}
+    .cotiz-lista-tabla th:nth-child(4),.cotiz-lista-tabla td:nth-child(4){width:13%;text-align:right;}
+    .cotiz-lista-tabla th:nth-child(5),.cotiz-lista-tabla td:nth-child(5){width:16%;}
+    .cotiz-lista-cliente strong{font-size:11px;line-height:1.25;}
+    .cotiz-lista-fechas{font-size:10px;line-height:1.3;margin-top:3px;}
+    .cotiz-lista-fechas span{padding:0 2px;}
+    .cotiz-lista-acc{display:flex;flex-direction:column;gap:3px;}
+    .cotiz-lista-acc button{width:100%;padding:4px 2px;font-size:10px;line-height:1.2;}
 }

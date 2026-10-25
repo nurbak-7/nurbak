@@ -390,9 +390,10 @@ ctx.cerrar('error');
                 cuerp.innerHTML = filas.map(fila => `
                     <tr>
                         <td>${esc(fila.serie)}-${esc(String(fila.numco).padStart(4,'0'))}</td>
-                        <td>${esc(fila.razon || '—')}</td>
-                        <td>${esc(fech(fila.fecha))}</td>
-                        <td>${esc(fech(fila.vigia))}</td>
+                        <td class="cotiz-lista-cliente">
+                            <strong>${esc(fila.razon || '—')}</strong>
+                            <span class="cotiz-lista-fechas">${esc(fech(fila.fecha))} <span aria-hidden="true">|</span> ${esc(fech(fila.vigia))}</span>
+                        </td>
                         <td class="cotiz-lista-estado">${esc(situa(fila))}</td>
                         <td>${Number(fila.total || 0).toFixed(2)}</td>
                         <td class="cotiz-lista-acc">

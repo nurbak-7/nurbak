@@ -25,8 +25,6 @@
                 <tr>
                     <th>N°</th>
                     <th>Cliente</th>
-                    <th>Fecha</th>
-                    <th>Vigencia</th>
                     <th>Estado</th>
                     <th>Total</th>
                     <th>Acción</th>
