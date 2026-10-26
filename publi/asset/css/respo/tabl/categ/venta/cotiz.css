@@ -5,7 +5,7 @@
 ============================================================ */
 @import url('./cotiz/docum.css');
 
-@media (min-width: 768px) and (max-width: 1200px) {
+@media(max-width:1200px){
     .dash-mini.cotiz-mini{
         width:100%;
         min-width:0;

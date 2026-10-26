@@ -3,25 +3,9 @@
    Función: Adaptaciones responsive separadas del CSS base.
    Origen: publi/asset/css/categ/venta/cotiz/produ.css
 ============================================================ */
-@media (max-width: 767px) {
-    .dash-mini.cotiz-mini .cotiz-productos {
-        width: 100%;
-        min-width: 0;
-        max-width: 100%;
-        padding: 6px 0 0;
-    }
-
-    .dash-mini.cotiz-mini .cotiz-productos > button {
-        max-width: 100%;
-        margin-bottom: 7px;
-        padding: 6px 10px;
-        font-size: 12px;
-        line-height: 1.2;
-        white-space: nowrap;
-    }
-
-    .cotiz-mini-busca { display: block; }
-    .cotiz-mini-busca label { display: block; margin-bottom: 5px; }
-    .cotiz-mini-tabla { width: max-content; min-width: 0; }
-    .cotiz-mini-tabla-wrap { overflow-x: auto; }
+@media(max-width:700px){
+    .cotiz-mini-busca{display:block}
+    .cotiz-mini-busca label{display:block;margin-bottom:5px}
+    .cotiz-mini-tabla{width:max-content;min-width:0}
+    .cotiz-mini-tabla-wrap{overflow-x:auto}
 }
