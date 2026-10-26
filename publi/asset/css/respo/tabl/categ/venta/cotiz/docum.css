@@ -1,8 +1,10 @@
 /* ============================================================
    Ruta: publi/asset/css/respo/tabl/categ/venta/cotiz/docum.css
-   Función: Adaptar los campos de documento en tablet.
-   Alcance: 701–980 px; móvil tiene su propia hoja responsive.
+   Función: Adaptar el encabezado de Cotización a anchos de tablet.
+   El rango comienza en 701 px para no interferir con el CSS móvil.
 ============================================================ */
-@media (min-width:701px) and (max-width:980px){
-    .cotiz-encabezado{grid-template-columns:minmax(0,1fr)}
+@media (min-width:701px) and (max-width:1200px){
+    .dash-mini.cotiz-mini .cotiz-encabezado{
+        grid-template-columns:minmax(0,1fr);
+    }
 }
