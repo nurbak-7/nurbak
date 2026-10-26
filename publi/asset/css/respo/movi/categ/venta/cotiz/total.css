@@ -1,29 +1,43 @@
 /* ============================================================
    Ruta: publi/asset/css/respo/movi/categ/venta/cotiz/total.css
-   Funcion: Totales compactos en una sola fila para movil.
+   Funcion: Mantener subtotal, IGV y total en una fila compacta.
 ============================================================ */
-@media (max-width:700px) {
+@media (max-width: 767px) {
     .dash-mini.cotiz-mini .cotiz-totales {
-        display: flex;
-        flex-wrap: nowrap;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 3px;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        margin-top: 8px;
         padding: 3px;
     }
+
     .dash-mini.cotiz-mini .cotiz-total-item {
-        flex: 1 1 0;
+        display: flex;
         min-width: 0;
+        max-width: 100%;
         gap: 2px;
-        padding: 2px;
+        padding: 3px 2px;
+        align-items: center;
         justify-content: space-between;
     }
+
     .dash-mini.cotiz-mini .cotiz-total-item span {
         min-width: 0;
-        font-size: 8px;
+        font-size: 7px;
+        line-height: 1.1;
+        white-space: nowrap;
     }
+
     .dash-mini.cotiz-mini .cotiz-total-item strong {
+        flex: 0 1 43%;
+        width: 43%;
         min-width: 0;
-        width: 45%;
+        max-width: 43%;
         padding: 3px 1px;
         font-size: 9px;
+        line-height: 1.15;
     }
 }
