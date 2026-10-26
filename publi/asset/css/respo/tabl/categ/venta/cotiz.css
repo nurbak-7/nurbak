@@ -1,12 +1,11 @@
 /* ============================================================
    Ruta: publi/asset/css/respo/tabl/categ/venta/cotiz.css
-   Función: Adaptaciones generales de Cotización para tablet.
-   Responsabilidad: tamaño de MINI y restricciones del panel.
-   La distribución del encabezado corresponde a su hoja de componente.
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/venta/cotiz.css
 ============================================================ */
 @import url('./cotiz/docum.css');
 
-@media (min-width:701px) and (max-width:1200px){
+@media (min-width: 701px) and (max-width: 1200px){
     .dash-mini.cotiz-mini{
         width:100%;
         min-width:0;
@@ -14,13 +13,7 @@
         height:auto;
         min-height:0;
         max-height:calc(100% - 30px);
-        box-sizing:border-box;
     }
-    .dash-mini.cotiz-mini .cotiz-panel,
-    .dash-mini.cotiz-mini .cotiz-form{
-        width:100%;
-        min-width:0;
-        max-width:100%;
-        box-sizing:border-box;
-    }
+    .dash-mini.cotiz-mini .cotiz-panel{min-width:0}
+    .dash-mini.cotiz-mini .cotiz-encabezado{grid-template-columns:1fr}
 }

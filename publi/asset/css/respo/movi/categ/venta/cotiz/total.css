@@ -1,44 +1,29 @@
 /* ============================================================
    Ruta: publi/asset/css/respo/movi/categ/venta/cotiz/total.css
-   Función: Mantener los tres importes alineados en una fila móvil.
+   Funcion: Totales compactos en una sola fila para movil.
 ============================================================ */
-@media (max-width:700px){
-    .dash-mini.cotiz-mini .cotiz-totales{
-        display:flex;
-        flex-wrap:nowrap;
-        justify-content:stretch;
-        gap:2px;
-        width:100%;
-        min-width:0;
-        margin-top:7px;
-        padding:3px;
-        overflow:hidden;
-        box-sizing:border-box;
+@media (max-width:700px) {
+    .dash-mini.cotiz-mini .cotiz-totales {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 3px;
+        padding: 3px;
     }
-    .dash-mini.cotiz-mini .cotiz-total-item{
-        display:flex;
-        flex:1 1 0;
-        align-items:center;
-        justify-content:space-between;
-        gap:2px;
-        min-width:0;
-        padding:4px 3px;
-        box-sizing:border-box;
+    .dash-mini.cotiz-mini .cotiz-total-item {
+        flex: 1 1 0;
+        min-width: 0;
+        gap: 2px;
+        padding: 2px;
+        justify-content: space-between;
     }
-    .dash-mini.cotiz-mini .cotiz-total-item span{
-        min-width:0;
-        font-size:clamp(7px,1.9vw,9px);
-        line-height:1.05;
-        overflow-wrap:anywhere;
+    .dash-mini.cotiz-mini .cotiz-total-item span {
+        min-width: 0;
+        font-size: 8px;
     }
-    .dash-mini.cotiz-mini .cotiz-total-item strong{
-        flex:0 1 42%;
-        min-width:0;
-        max-width:48%;
-        padding:4px 2px;
-        font-size:clamp(8px,2vw,10px);
-        line-height:1.05;
-        box-sizing:border-box;
-        overflow:hidden;
+    .dash-mini.cotiz-mini .cotiz-total-item strong {
+        min-width: 0;
+        width: 45%;
+        padding: 3px 1px;
+        font-size: 9px;
     }
 }
