@@ -1,20 +1,32 @@
+
 /* ============================================================
    Ruta: publi/asset/css/respo/movi/categ/venta/cotiz/tabla.css
-   Función: Compactar a la mitad la altura de la tabla de detalle
-   en Cotización MINI móvil, sin cambiar sus siete columnas.
-============================================================ */
-@media (max-width:700px) {
+   Función: Compactar la tabla de Cotización MINI en móvil.
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+    /* ========================================================
+       1. CONTENEDOR DE LA TABLA
+       Controla el ancho y el desplazamiento.
+       ======================================================== */
     .dash-mini.cotiz-mini .cotiz-tabla-area {
         box-sizing: border-box;
         width: 100%;
         min-width: 0;
         max-width: 100%;
-        min-height: 70px;
-        max-height: 130px;
+        min-height: 0;
+        max-height: 105px;
         overflow-x: auto;
         overflow-y: auto;
+        margin: 0;
+        padding: 0;
     }
 
+    /* ========================================================
+       2. ESTRUCTURA GENERAL DE LA TABLA
+       Conserva las siete columnas.
+       ======================================================== */
     .dash-mini.cotiz-mini table.cotiz-tabla.cotiz-detalle {
         display: table;
         box-sizing: border-box;
@@ -23,55 +35,113 @@
         max-width: 100%;
         table-layout: fixed;
         border-collapse: collapse;
-        font-size: 7px;
+        border-spacing: 0;
+        margin: 0;
+        font-size: 6px;
+        line-height: 1;
     }
 
-    .dash-mini.cotiz-mini table.cotiz-detalle th,
-    .dash-mini.cotiz-mini table.cotiz-detalle td {
+    /* ========================================================
+       3. CABECERA
+       Comprende los títulos IT, CÓDIGO, DESCRIPCIÓN, QTY,
+       P.UNIT, TOTAL y X.
+       ======================================================== */
+    .dash-mini.cotiz-mini table.cotiz-detalle thead th {
         box-sizing: border-box;
-        min-width: 0;
-        height: 28px;
-        padding: 1px;
+        height: 20px;
+        min-height: 0;
+        padding: 0 1px;
+        font-size: 6px;
+        font-weight: 700;
         line-height: 1;
-        overflow: hidden;
-        text-overflow: clip;
         white-space: nowrap;
+        overflow: hidden;
         vertical-align: middle;
     }
 
-    .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(1) { width: 7%; }
-    .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(2) { width: 15%; }
-    .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(3) { width: 28%; }
-    .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(4) { width: 10%; }
-    .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(5) { width: 13%; }
-    .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(6) { width: 17%; }
-    .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(7) { width: 10%; }
+    /* Ancho de cada una de las siete columnas. */
+    .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(1) {
+        width: 7%;
+    }
 
-    .dash-mini.cotiz-mini table.cotiz-detalle th {
-        height: 28px;
-        padding: 1px;
-        font-size: 7px;
+    .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(2) {
+        width: 15%;
+    }
+
+    .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(3) {
+        width: 28%;
+    }
+
+    .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(4) {
+        width: 10%;
+    }
+
+    .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(5) {
+        width: 13%;
+    }
+
+    .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(6) {
+        width: 17%;
+    }
+
+    .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(7) {
+        width: 10%;
+    }
+
+    /* ========================================================
+       4. FILAS Y CELDAS
+       Reduce la altura de cada fila de productos.
+       ======================================================== */
+    .dash-mini.cotiz-mini table.cotiz-detalle tbody tr {
+        height: 18px;
+        min-height: 0;
+    }
+
+    .dash-mini.cotiz-mini table.cotiz-detalle tbody td {
+        box-sizing: border-box;
+        height: 18px;
+        min-height: 0;
+        padding: 0 1px;
+        font-size: 6px;
+        line-height: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+        vertical-align: middle;
+    }
+
+    /* ========================================================
+       5. CAMPOS DENTRO DE LAS CELDAS
+       Cantidad, precio unitario y total.
+       ======================================================== */
+    .dash-mini.cotiz-mini table.cotiz-detalle tbody td input {
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        height: 14px;
+        min-height: 0;
+        margin: 0;
+        padding: 0 1px;
+        font-size: 6px;
         line-height: 1;
     }
 
-    .dash-mini.cotiz-mini table.cotiz-detalle td input {
+    /* ========================================================
+       6. BOTÓN DE ELIMINAR
+       Mantiene el botón compacto dentro de su celda.
+       ======================================================== */
+    .dash-mini.cotiz-mini table.cotiz-detalle tbody td button,
+    .dash-mini.cotiz-mini table.cotiz-detalle tbody td .cotiz-eliminar {
         box-sizing: border-box;
         width: 100%;
         min-width: 0;
-        height: 14px;
+        min-height: 15px;
+        height: 15px;
         margin: 0;
-        padding: 0 1px;
+        padding: 0;
         font-size: 7px;
-        line-height: 1;
-    }
-
-    .dash-mini.cotiz-mini table.cotiz-detalle td button,
-    .dash-mini.cotiz-mini table.cotiz-detalle td .cotiz-eliminar {
-        box-sizing: border-box;
-        min-height: 18px;
-        height: 18px;
-        padding: 0 2px;
-        font-size: 9px;
         line-height: 1;
     }
 }
