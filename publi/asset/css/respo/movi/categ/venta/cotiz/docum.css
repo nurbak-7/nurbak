@@ -1,43 +1,38 @@
-/* ============================================================
-   Responsabilidad: Fecha, Vigencia, Serie y Número en móvil.
-   El selector funcional de cada campo se conserva.
-============================================================ */
-@media (max-width: 700px) {
-    .dash-mini.cotiz-mini .cotiz-documento .cotiz-fila:nth-child(1),
-    .dash-mini.cotiz-mini .cotiz-documento .cotiz-fila:nth-child(2) {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        width: 100%;
-        min-width: 0;
-    }
-
-    .dash-mini.cotiz-mini .cotiz-documento .cotiz-fila input[type="date"] {
-        width: 100%;
-        min-width: 0;
-        max-width: 100%;
-        height: 34px;
-        padding: 2px 1px;
-        font-size: 9px;
-        letter-spacing: 0;
-    }
-
-    .dash-mini.cotiz-mini .cotiz-documento .cotiz-fila:nth-child(3) {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        gap: 4px;
-        width: 100%;
-        min-width: 0;
-    }
-
-    .dash-mini.cotiz-mini .cotiz-documento .cotiz-fila:nth-child(3) input[data-cotiz-serie],
-    .dash-mini.cotiz-mini .cotiz-documento .cotiz-fila:nth-child(3) input[data-cotiz-numero] {
-        width: 100%;
-        min-width: 0;
-        max-width: 100%;
-        height: 32px;
-        padding: 2px 1px;
-        font-size: 11px;
-        font-weight: 700;
-        text-align: center;
-    }
+/* Documento: fechas completas y serie/número compactos. */
+@media (max-width:700px) {
+ .dash-mini.cotiz-mini .cotiz-documento .cotiz-fila:has(input[data-cotiz-fecha]),
+ .dash-mini.cotiz-mini .cotiz-documento .cotiz-fila:has(input[data-cotiz-vigia]) {
+   display:grid;
+   grid-template-columns:minmax(0,1fr);
+   width:100%; min-width:0;
+ }
+ .dash-mini.cotiz-mini .cotiz-documento input[type="date"] {
+   display:block;
+   box-sizing:border-box;
+   width:100% !important;
+   min-width:0 !important;
+   max-width:100%;
+   height:32px;
+   padding:2px 1px;
+   font-size:10px;
+   letter-spacing:-.2px;
+ }
+ .dash-mini.cotiz-mini .cotiz-documento .cotiz-fila:has(input[data-cotiz-serie]) {
+   display:grid;
+   grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+   gap:4px;
+   width:100%; min-width:0;
+ }
+ .dash-mini.cotiz-mini .cotiz-documento input[data-cotiz-serie],
+ .dash-mini.cotiz-mini .cotiz-documento input[data-cotiz-numero] {
+   box-sizing:border-box;
+   display:block;
+   width:100% !important;
+   min-width:0 !important;
+   max-width:100%;
+   height:29px;
+   padding:2px 1px;
+   font-size:10px;
+   text-align:center;
+ }
 }

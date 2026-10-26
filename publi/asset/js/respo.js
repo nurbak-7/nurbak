@@ -82,12 +82,19 @@
         }
 
         // El orden es intencional: adaptaciones de tablet primero y de móvil después.
-        const archivos = [rutas.tabl, rutas.movi].filter(Boolean);
-        Promise.allSettled(archivos.map(cargar)).then(resultados => {
+        // Carga secuencial determinista: tablet primero y móvil después.
+        // Si se cargan en paralelo, la hoja que termina última puede ganar
+        // la cascada independientemente del orden declarado en el mapa.
+        (async () => {
+            const archivos = [rutas.tabl, rutas.movi].filter(Boolean);
+            for (const ruta of archivos) {
+                try {
+                    await cargar(ruta);
+                } catch (error) {
+                    console.error('RESPONSIVE:', error);
+                }
+            }
             reordenar();
-            resultados
-                .filter(resultado => resultado.status === 'rejected')
-                .forEach(resultado => console.error('RESPONSIVE:', resultado.reason));
-        });
+        })();
     });
 })();

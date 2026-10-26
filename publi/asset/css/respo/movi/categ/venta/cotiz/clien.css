@@ -1,37 +1,19 @@
-/* ============================================================
-   Responsabilidad: RUC/DNI, Razón social y Dirección en móvil.
-   Los tres controles quedan en una columna dentro del bloque central.
-============================================================ */
-@media (max-width: 700px) {
-    .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila-doble {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        gap: 4px;
-        align-items: stretch;
-        width: 100%;
-        min-width: 0;
-    }
-
-    .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila-doble > label,
-    .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila:not(.cotiz-fila-doble) > label {
-        display: none;
-    }
-
-    .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila-doble > input,
-    .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila:not(.cotiz-fila-doble) > input {
-        display: block;
-        width: 100%;
-        min-width: 0;
-        max-width: 100%;
-        height: 34px;
-        padding: 4px 6px;
-        font-size: 11px;
-    }
-
-    .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        min-width: 0;
-        margin-bottom: 4px;
-    }
+/* Cliente: tres campos contenidos en la columna central. */
+@media (max-width:700px) {
+ .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila-doble {
+   display:grid;
+   grid-template-columns:minmax(0,1fr);
+   gap:4px; width:100%; min-width:0;
+ }
+ .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila > label {display:none;}
+ .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila,
+ .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila-doble {
+   display:grid;
+   grid-template-columns:minmax(0,1fr);
+   min-width:0; margin-bottom:4px;
+ }
+ .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila input {
+   box-sizing:border-box; width:100%; min-width:0; max-width:100%;
+   height:32px; padding:4px 5px; font-size:10px;
+ }
 }
