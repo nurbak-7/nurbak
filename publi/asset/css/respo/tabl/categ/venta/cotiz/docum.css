@@ -1,8 +1,9 @@
 /* ============================================================
    Ruta: publi/asset/css/respo/tabl/categ/venta/cotiz/docum.css
-   Función: Adaptaciones responsive separadas del CSS base.
-   Origen: publi/asset/css/categ/venta/cotiz/docum.css
+   Responsabilidad: columnas documentales de Cotización en tablet.
 ============================================================ */
-@media(max-width:980px){
-    .cotiz-encabezado{grid-template-columns:1fr}
+@media (min-width:701px) and (max-width:980px) {
+    .dash-mini.cotiz-mini .cotiz-encabezado {
+        grid-template-columns:minmax(200px,.95fr) minmax(0,1.8fr) minmax(160px,.8fr);
+    }
 }
