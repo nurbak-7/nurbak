@@ -9,6 +9,7 @@
 ============================================================ */
 ?>
 <div class="cotiz-bloque cotiz-vendedor">
+    <h3 class="cotiz-bloque-titulo">Otros datos</h3>
     <div class="cotiz-fila">
         <label>VENDEDOR:</label>
         <input type="text" data-cotiz-vende-cod placeholder="Ingresar código" maxlength="20" autocomplete="off">

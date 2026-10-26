@@ -7,6 +7,61 @@
 @import url('./cotiz/produ.css');
 @import url('./cotiz/total.css');
 
+/* FORMULARIO MINI | diseño B: documento, cliente y otros datos */
+@media(max-width:700px){
+    .dash-mini.cotiz-mini{
+        width:calc(100vw - 12px)!important;
+        min-width:0!important;
+        max-width:calc(100vw - 12px)!important;
+        height:calc(100dvh - 86px)!important;
+        min-height:0!important;
+        max-height:calc(100dvh - 86px)!important;
+    }
+    .cotiz-panel,.cotiz-form{width:100%;min-width:0;box-sizing:border-box}
+    .cotiz-encabezado{
+        grid-template-columns:minmax(0,.9fr) minmax(0,1.45fr) minmax(0,.85fr);
+        gap:4px;padding:5px;border-width:1px;border-radius:5px;
+    }
+    .cotiz-bloque{padding:4px;border-radius:4px}
+    .cotiz-bloque-titulo{
+        margin:0 0 5px;font-size:9px;line-height:1.15;
+        min-height:20px;overflow-wrap:anywhere;
+    }
+    .cotiz-fila{
+        display:flex;flex-direction:column;align-items:stretch;gap:2px;
+        min-height:0;margin-bottom:5px;
+    }
+    .cotiz-fila label{
+        flex:none;font-size:7px;line-height:1.1;white-space:normal;
+    }
+    .cotiz-fila input{
+        width:100%;height:24px;padding:3px 2px;font-size:9px;
+        border-radius:2px;
+    }
+    .cotiz-documento .cotiz-fila input[type=date]{width:100%;min-width:0;font-size:8px}
+    .cotiz-documento .cotiz-fila input[data-cotiz-serie]{width:100%}
+    .cotiz-documento .cotiz-fila input[data-cotiz-numero]{width:100%}
+    .cotiz-documento .cotiz-fila:last-child{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}
+    .cotiz-documento .cotiz-fila:last-child label{grid-column:1/-1}
+    .cotiz-cliente .cotiz-fila-doble{
+        display:flex;flex-direction:column;gap:2px;
+    }
+    .cotiz-cliente .cotiz-fila-doble label:nth-of-type(2){grid-column:auto}
+    .cotiz-cliente .cotiz-fila:not(.cotiz-fila-doble){display:flex}
+    .cotiz-productos{padding-top:5px}
+    .cotiz-productos>button{padding:6px 9px;margin-bottom:6px;font-size:10px}
+    .cotiz-tabla-area{min-height:110px;max-height:34dvh;overflow:auto}
+    .cotiz-detalle{font-size:8px;min-width:490px}
+    .cotiz-detalle th{height:24px;padding:3px;font-size:8px}
+    .cotiz-detalle tbody tr,.cotiz-detalle td{height:30px}
+    .cotiz-detalle td{padding:2px}
+    .cotiz-detalle td input{height:22px;min-height:22px;padding:2px;font-size:9px}
+    .cotiz-detalle td button{width:18px;height:18px}
+    .cotiz-acciones{gap:5px;padding:6px 4px}
+    .cotiz-acciones button{padding:6px 9px;font-size:10px}
+    .cotiz-mensaje{font-size:10px}
+}
+
 /* LISTA COTIZACION | proporciones móviles ajustadas a la referencia */
 @media (max-width:700px){
     .cotiz-lista-barra{gap:8px;margin-bottom:9px;}
