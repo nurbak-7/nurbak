@@ -73,15 +73,15 @@
     }
 
     .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(4) {
-        width: 5%;
+        width: 3%;
     }
 
     .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(5) {
-        width: 7%;
+        width: 5%;
     }
 
     .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(6) {
-        width: 7%;
+        width: 5%;
     }
 
     .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(7) {
