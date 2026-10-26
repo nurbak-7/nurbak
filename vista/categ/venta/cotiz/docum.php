@@ -8,7 +8,7 @@
 ============================================================ */
 ?>
 <div class="cotiz-bloque cotiz-documento">
-    <h3 class="cotiz-bloque-titulo">Datos de cotización</h3>
+    <h3 class="cotiz-bloque-titulo" style="display:none">Cotización</h3>
     <div class="cotiz-fila">
         <label>FECHA:</label>
         <input type="date" data-cotiz-fecha>

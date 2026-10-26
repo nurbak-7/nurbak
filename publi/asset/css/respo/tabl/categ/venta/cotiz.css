@@ -1,22 +1,19 @@
 /* ============================================================
    Ruta: publi/asset/css/respo/tabl/categ/venta/cotiz.css
-   Responsabilidad: ajustes de Cotización exclusivamente en tablet.
+   Función: Adaptaciones responsive separadas del CSS base.
+   Origen: publi/asset/css/categ/venta/cotiz.css
 ============================================================ */
 @import url('./cotiz/docum.css');
 
-@media (min-width:701px) and (max-width:1200px) {
-    .dash-mini.cotiz-mini {
-        box-sizing:border-box;
-        width:calc(100vw - 32px);
+@media (min-width: 701px) and (max-width: 1200px){
+    .dash-mini.cotiz-mini{
+        width:100%;
         min-width:0;
-        max-width:calc(100vw - 32px);
+        max-width:100%;
         height:auto;
         min-height:0;
-        max-height:calc(100vh - 60px);
+        max-height:calc(100% - 30px);
     }
-    .dash-mini.cotiz-mini .cotiz-panel,
-    .dash-mini.cotiz-mini .cotiz-form { width:100%; min-width:0; max-width:100%; }
-    .dash-mini.cotiz-mini .cotiz-encabezado {
-        grid-template-columns:minmax(210px,.95fr) minmax(0,1.8fr) minmax(170px,.8fr);
-    }
+    .dash-mini.cotiz-mini .cotiz-panel{min-width:0}
+    .dash-mini.cotiz-mini .cotiz-encabezado{grid-template-columns:1fr}
 }

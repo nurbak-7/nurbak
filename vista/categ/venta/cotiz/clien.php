@@ -8,7 +8,7 @@
 ============================================================ */
 ?>
 <div class="cotiz-bloque cotiz-cliente">
-    <h3 class="cotiz-bloque-titulo">Datos de cliente</h3>
+    <h3 class="cotiz-bloque-titulo" style="display:none">Datos de cliente</h3>
     <div class="cotiz-fila cotiz-fila-doble">
         <label>RUC/DNI:</label>
         <input type="text" data-cotiz-docum autocomplete="off" placeholder="Ingrese RUC o DNI">
