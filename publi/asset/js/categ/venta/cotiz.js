@@ -394,7 +394,7 @@ ctx.cerrar('error');
                             <strong>${esc(fila.razon || '—')}</strong>
                             <span class="cotiz-lista-fechas">${esc(fech(fila.fecha))}<span aria-hidden="true"> | </span>${esc(fech(fila.vigia))}</span>
                         </td>
-                        <td class="cotiz-lista-estado">${esc(situa(fila))}</td>
+                        <td class="cotiz-lista-estado"><span class="cotiz-lista-etiqueta">${esc(situa(fila))}</span></td>
                         <td class="cotiz-lista-total">${Number(fila.total || 0).toFixed(2)}</td>
                         <td class="cotiz-lista-acc">
                             <button type="button" data-cotiz-list-abrir="${esc(fila.id)}">Editar</button>

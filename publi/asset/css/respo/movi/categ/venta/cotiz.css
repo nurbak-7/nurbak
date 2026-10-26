@@ -7,40 +7,30 @@
 @import url('./cotiz/produ.css');
 @import url('./cotiz/total.css');
 
-/* Lista principal: igualar la composición aprobada de referencia. */
+/* LISTA COTIZACION | adaptación móvil de la referencia aprobada */
 @media (max-width:700px){
-    .cotiz-lista-barra{gap:8px;margin-bottom:10px;}
-    .cotiz-lista-barra input{padding:8px 6px;font-size:14px;border-bottom:2px solid #d000a8;}
+    .cotiz-lista-barra{gap:10px;margin-bottom:10px;}
+    .cotiz-lista-barra input{padding:8px 8px;font-size:16px;border-bottom:3px solid #d000a8;}
     .cotiz-lista-barra input:hover,.cotiz-lista-barra input:focus{border-bottom-color:#60a5fa;}
-    .cotiz-lista-barra button{padding:8px 12px;font-size:13px;white-space:nowrap;}
-
-    .cotiz-lista-tabla{width:100%;overflow-x:hidden;}
-    .cotiz-lista-tabla table{width:100%;min-width:0;table-layout:fixed;border-collapse:collapse;font-size:12px;}
-    .cotiz-lista-tabla th,.cotiz-lista-tabla td{
-        box-sizing:border-box;padding:8px 5px;line-height:1.25;
-        border:1px solid #cbd5e1;vertical-align:middle;overflow-wrap:anywhere;
-    }
-    .cotiz-lista-tabla th{background:#e6eef9;color:#374151;text-align:center;font-size:12px;}
-    .cotiz-lista-tabla th:nth-child(1),.cotiz-lista-tabla td:nth-child(1){width:17%;text-align:left;}
+    .cotiz-lista-barra button{padding:9px 12px;font-size:14px;}
+    .cotiz-lista-tabla{overflow-x:hidden;}
+    .cotiz-lista-tabla table{width:100%;min-width:0;table-layout:fixed;font-size:12px;}
+    .cotiz-lista-tabla th,.cotiz-lista-tabla td{padding:8px 5px;line-height:1.25;}
+    .cotiz-lista-tabla th{font-size:12px;text-align:center;}
+    .cotiz-lista-tabla th:nth-child(1),.cotiz-lista-tabla td:nth-child(1){width:18%;text-align:left;}
     .cotiz-lista-tabla th:nth-child(2),.cotiz-lista-tabla td:nth-child(2){width:39%;text-align:left;}
-    .cotiz-lista-tabla th:nth-child(3),.cotiz-lista-tabla td:nth-child(3){width:14%;text-align:center;}
-    .cotiz-lista-tabla th:nth-child(4),.cotiz-lista-tabla td:nth-child(4){width:12%;text-align:right;white-space:nowrap;}
-    .cotiz-lista-tabla th:nth-child(5),.cotiz-lista-tabla td:nth-child(5){width:18%;text-align:center;}
-
+    .cotiz-lista-tabla th:nth-child(3),.cotiz-lista-tabla td:nth-child(3){width:15%;text-align:center;}
+    .cotiz-lista-tabla th:nth-child(4),.cotiz-lista-tabla td:nth-child(4){width:12%;text-align:right;}
+    .cotiz-lista-tabla th:nth-child(5),.cotiz-lista-tabla td:nth-child(5){width:16%;text-align:center;}
     .cotiz-lista-num{font-size:11px;white-space:nowrap;overflow-wrap:normal;}
-    .cotiz-lista-cliente strong{display:block;font-size:12px;line-height:1.2;font-weight:700;}
-    .cotiz-lista-fechas{display:block;margin-top:5px;color:#64748b;font-size:11px;line-height:1.2;white-space:nowrap;overflow-wrap:normal;}
-    .cotiz-lista-fechas span{padding:0 2px;}
-    .cotiz-lista-tabla td.cotiz-lista-estado{font-size:11px;font-weight:700;text-align:center;}
-    .cotiz-lista-tabla td.cotiz-lista-estado[data-estado="Vigente"]{background:#d1fae5;color:#075b35;border-radius:20px;}
-    .cotiz-lista-total{font-size:12px;white-space:nowrap;text-align:right;}
-
-    .cotiz-lista-tabla td.cotiz-lista-acc{display:table-cell;padding:6px 3px;text-align:center;white-space:nowrap;}
+    .cotiz-lista-cliente strong{font-size:12px;line-height:1.2;}
+    .cotiz-lista-fechas{font-size:11px;line-height:1.25;margin-top:5px;white-space:nowrap;}
+    .cotiz-lista-etiqueta{padding:5px 7px;font-size:11px;background:#d1fae5;color:#075b35;border-radius:20px;}
+    .cotiz-lista-total{font-size:12px;white-space:nowrap;}
+    .cotiz-lista-tabla td.cotiz-lista-acc{padding:6px 3px;text-align:center;white-space:nowrap;}
     .cotiz-lista-acc button{
-        display:inline-block;width:calc(50% - 3px);min-width:0;box-sizing:border-box;
-        padding:7px 1px;margin:0;border:1px solid #3984b5;border-radius:10px;
-        background:#fff;color:#34769c;font-size:11px;line-height:1.1;white-space:nowrap;
+        width:calc(50% - 3px);min-width:0;padding:7px 1px;
+        font-size:11px;line-height:1.1;white-space:nowrap;border-radius:10px;
     }
-    .cotiz-lista-acc button[data-cotiz-list-ver]{border-color:#b77936;color:#94612b;}
     .cotiz-lista-acc button+button{margin-left:2px;}
 }
