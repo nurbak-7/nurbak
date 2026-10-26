@@ -61,7 +61,7 @@
 
     /* Ancho de cada una de las siete columnas. */
     .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(1) {
-        width: 3%;
+        width: 2%;
     }
 
     .dash-mini.cotiz-mini table.cotiz-detalle th:nth-child(2) {
