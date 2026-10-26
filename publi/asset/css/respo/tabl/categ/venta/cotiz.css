@@ -1,11 +1,14 @@
 /* ============================================================
    Ruta: publi/asset/css/respo/tabl/categ/venta/cotiz.css
-   Función: Adaptaciones responsive separadas del CSS base.
-   Origen: publi/asset/css/categ/venta/cotiz.css
+   Función: Adaptar la MINI de Cotización a pantallas de tablet.
+
+   RESPONSABILIDAD:
+   - Aplicarse solo en el rango de tablet.
+   - No imponer reglas de tablet sobre el diseño móvil.
 ============================================================ */
 @import url('./cotiz/docum.css');
 
-@media(max-width:1200px){
+@media (min-width:701px) and (max-width:1200px){
     .dash-mini.cotiz-mini{
         width:100%;
         min-width:0;
@@ -14,6 +17,7 @@
         min-height:0;
         max-height:calc(100% - 30px);
     }
+
     .dash-mini.cotiz-mini .cotiz-panel{min-width:0}
-    .dash-mini.cotiz-mini .cotiz-encabezado{grid-template-columns:1fr}
+    .dash-mini.cotiz-mini .cotiz-encabezado{grid-template-columns:minmax(0,1fr)}
 }

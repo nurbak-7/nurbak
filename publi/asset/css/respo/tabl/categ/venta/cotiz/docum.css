@@ -1,8 +1,8 @@
 /* ============================================================
    Ruta: publi/asset/css/respo/tabl/categ/venta/cotiz/docum.css
-   Función: Adaptaciones responsive separadas del CSS base.
-   Origen: publi/asset/css/categ/venta/cotiz/docum.css
+   Función: Adaptar los campos de documento en tablet.
+   Alcance: 701–980 px; móvil tiene su propia hoja responsive.
 ============================================================ */
-@media(max-width:980px){
-    .cotiz-encabezado{grid-template-columns:1fr}
+@media (min-width:701px) and (max-width:980px){
+    .cotiz-encabezado{grid-template-columns:minmax(0,1fr)}
 }
