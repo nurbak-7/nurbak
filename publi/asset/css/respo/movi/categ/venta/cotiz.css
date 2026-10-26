@@ -7,59 +7,96 @@
 @import url('./cotiz/produ.css');
 @import url('./cotiz/total.css');
 
-/* FORMULARIO MINI | diseño B: documento, cliente y otros datos */
-@media(max-width:700px){
+/* MINI NUEVA COTIZACIÓN | diseño B, solo móvil */
+@media (max-width:700px){
     .dash-mini.cotiz-mini{
-        width:calc(100vw - 12px)!important;
+        width:calc(100vw - 16px)!important;
         min-width:0!important;
-        max-width:calc(100vw - 12px)!important;
+        max-width:calc(100vw - 16px)!important;
         height:calc(100dvh - 86px)!important;
-        min-height:0!important;
+        min-height:160px!important;
         max-height:calc(100dvh - 86px)!important;
     }
-    .cotiz-panel,.cotiz-form{width:100%;min-width:0;box-sizing:border-box}
-    .cotiz-encabezado{
-        grid-template-columns:minmax(0,.9fr) minmax(0,1.45fr) minmax(0,.85fr);
+    .dash-mini.cotiz-mini .dash-mini-contenido{padding:6px}
+    .dash-mini.cotiz-mini .cotiz-panel,
+    .dash-mini.cotiz-mini .cotiz-form{width:100%;min-width:0;box-sizing:border-box}
+
+    /* La especificidad iguala la regla de tablet que fuerza una sola columna. */
+    .dash-mini.cotiz-mini .cotiz-encabezado{
+        grid-template-columns:minmax(112px,.9fr) minmax(150px,1.45fr) minmax(100px,.85fr);
         gap:4px;padding:5px;border-width:1px;border-radius:5px;
+        overflow-x:auto;
     }
-    .cotiz-bloque{padding:4px;border-radius:4px}
-    .cotiz-bloque-titulo{
-        margin:0 0 5px;font-size:9px;line-height:1.15;
+    .dash-mini.cotiz-mini .cotiz-bloque-titulo{
+        display:block;margin:0 0 5px;font-size:9px;line-height:1.15;
         min-height:20px;overflow-wrap:anywhere;
     }
-    .cotiz-fila{
+    .dash-mini.cotiz-mini .cotiz-bloque{padding:4px;border-radius:4px}
+    .dash-mini.cotiz-mini .cotiz-fila{
         display:flex;flex-direction:column;align-items:stretch;gap:2px;
         min-height:0;margin-bottom:5px;
     }
-    .cotiz-fila label{
+    .dash-mini.cotiz-mini .cotiz-fila label{
         flex:none;font-size:7px;line-height:1.1;white-space:normal;
     }
-    .cotiz-fila input{
-        width:100%;height:24px;padding:3px 2px;font-size:9px;
+    .dash-mini.cotiz-mini .cotiz-fila input{
+        width:100%;height:22px;min-width:0;padding:2px;font-size:8px;
         border-radius:2px;
     }
-    .cotiz-documento .cotiz-fila input[type=date]{width:100%;min-width:0;font-size:8px}
-    .cotiz-documento .cotiz-fila input[data-cotiz-serie]{width:100%}
-    .cotiz-documento .cotiz-fila input[data-cotiz-numero]{width:100%}
-    .cotiz-documento .cotiz-fila:last-child{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}
-    .cotiz-documento .cotiz-fila:last-child label{grid-column:1/-1}
-    .cotiz-cliente .cotiz-fila-doble{
+    .dash-mini.cotiz-mini .cotiz-documento .cotiz-fila input[type=date]{
+        width:100%;min-width:100px;font-size:8px;
+    }
+    .dash-mini.cotiz-mini .cotiz-documento .cotiz-fila input[data-cotiz-serie],
+    .dash-mini.cotiz-mini .cotiz-documento .cotiz-fila input[data-cotiz-numero]{
+        width:100%;min-width:0;
+    }
+    .dash-mini.cotiz-mini .cotiz-documento .cotiz-fila:last-child{
+        display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);
+    }
+    .dash-mini.cotiz-mini .cotiz-documento .cotiz-fila:last-child label{grid-column:1/-1}
+    .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila-doble{
         display:flex;flex-direction:column;gap:2px;
     }
-    .cotiz-cliente .cotiz-fila-doble label:nth-of-type(2){grid-column:auto}
-    .cotiz-cliente .cotiz-fila:not(.cotiz-fila-doble){display:flex}
-    .cotiz-productos{padding-top:5px}
-    .cotiz-productos>button{padding:6px 9px;margin-bottom:6px;font-size:10px}
-    .cotiz-tabla-area{min-height:110px;max-height:34dvh;overflow:auto}
-    .cotiz-detalle{font-size:8px;min-width:490px}
-    .cotiz-detalle th{height:24px;padding:3px;font-size:8px}
-    .cotiz-detalle tbody tr,.cotiz-detalle td{height:30px}
-    .cotiz-detalle td{padding:2px}
-    .cotiz-detalle td input{height:22px;min-height:22px;padding:2px;font-size:9px}
-    .cotiz-detalle td button{width:18px;height:18px}
-    .cotiz-acciones{gap:5px;padding:6px 4px}
-    .cotiz-acciones button{padding:6px 9px;font-size:10px}
-    .cotiz-mensaje{font-size:10px}
+    .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila:not(.cotiz-fila-doble){display:flex}
+    .dash-mini.cotiz-mini .cotiz-productos{padding-top:5px}
+    .dash-mini.cotiz-mini .cotiz-productos>button{
+        padding:5px 8px;margin-bottom:5px;font-size:9px;
+    }
+    .dash-mini.cotiz-mini .cotiz-tabla-area{
+        width:100%;min-width:0;min-height:0;max-height:34dvh;overflow:auto;
+    }
+    /* Las siete columnas permanecen dentro del ancho visible de MINI. */
+    .dash-mini.cotiz-mini table.cotiz-detalle{
+        width:100%;min-width:0;max-width:100%;table-layout:fixed;
+        border-collapse:collapse;font-size:6px;
+    }
+    .dash-mini.cotiz-mini .cotiz-detalle th{
+        height:auto;padding:2px 1px;font-size:7px;line-height:1.05;
+        white-space:normal;overflow-wrap:anywhere;
+    }
+    .dash-mini.cotiz-mini .cotiz-detalle th:nth-child(1){width:6%}
+    .dash-mini.cotiz-mini .cotiz-detalle th:nth-child(2){width:15%}
+    .dash-mini.cotiz-mini .cotiz-detalle th:nth-child(3){width:34%}
+    .dash-mini.cotiz-mini .cotiz-detalle th:nth-child(4){width:9%}
+    .dash-mini.cotiz-mini .cotiz-detalle th:nth-child(5){width:14%}
+    .dash-mini.cotiz-mini .cotiz-detalle th:nth-child(6){width:16%}
+    .dash-mini.cotiz-mini .cotiz-detalle th:nth-child(7){width:6%}
+    .dash-mini.cotiz-mini .cotiz-detalle tbody tr,
+    .dash-mini.cotiz-mini .cotiz-detalle td{height:25px}
+    .dash-mini.cotiz-mini .cotiz-detalle td{
+        padding:1px;font-size:6px;line-height:1.05;
+        overflow-wrap:anywhere;word-break:break-word;
+    }
+    .dash-mini.cotiz-mini .cotiz-detalle td input{
+        width:100%;height:19px;min-height:19px;min-width:0;
+        padding:1px;font-size:7px;
+    }
+    .dash-mini.cotiz-mini .cotiz-detalle td button{
+        width:15px;height:15px;padding:0;font-size:10px;line-height:1;
+    }
+    .dash-mini.cotiz-mini .cotiz-acciones{gap:5px;padding:5px 3px}
+    .dash-mini.cotiz-mini .cotiz-acciones button{padding:5px 8px;font-size:9px}
+    .dash-mini.cotiz-mini .cotiz-mensaje{font-size:9px}
 }
 
 /* LISTA COTIZACION | proporciones móviles ajustadas a la referencia */

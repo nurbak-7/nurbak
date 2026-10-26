@@ -15,12 +15,14 @@
 }
 
 .cotiz-bloque-titulo{
+    display:none;
     margin:0 0 9px;
     font-size:13px;
     line-height:1.2;
     font-weight:700;
     color:#52009a;
 }
+
 .cotiz-bloque{
     box-sizing:border-box;
     padding:10px;
