@@ -8,6 +8,7 @@
 
    FORMATO:
    - Una hoja por marca.
+   - La hoja VR contiene el producto comodín VARIOS.
    - Encabezados:
      ID, MARCA, MOTOR, MODEL, DESCR, CODIG, ORIGI, MEDID,
      SUPER, EQUIV, ANIO, QTY, PCOMP, PVENT, FECHA.
@@ -129,7 +130,7 @@ final class ExpoArchi
                 );
             }
 
-            $nombre = $esVar ? 'VARIOS' : $this->nombreHoja($marca);
+            $nombre = $esVar ? 'VR' : $this->nombreHoja($marca);
             $sheet = $this->obtenerHoja($book, $nombre);
 
             if ($sheet->getHighestRow() === 1

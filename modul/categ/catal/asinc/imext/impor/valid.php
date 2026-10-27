@@ -43,17 +43,17 @@ final class ImpoValid
         $descr = trim((string) $fila['descr']);
         $esVar = strtoupper($descr) === 'VARIOS';
 
-        if ($hoja === 'VARIOS' || $esVar) {
-            if ($hoja !== 'VARIOS' || !$esVar) {
+        if ($hoja === 'VR' || $esVar) {
+            if ($hoja !== 'VR' || !$esVar) {
                 throw new InvalidArgumentException(
-                    'VARIOS debe intercambiarse en la hoja independiente VARIOS.'
+                    'El producto VARIOS debe intercambiarse en la hoja independiente VR.'
                 );
             }
 
             if ($marca !== '' || $motor !== '' || $model !== ''
                 || trim((string) $fila['anio']) !== '') {
                 throw new InvalidArgumentException(
-                    'La fila VARIOS no debe contener MARCA, MOTOR, MODEL ni ANIO.'
+                    'La fila VARIOS de la hoja VR no debe contener MARCA, MOTOR, MODEL ni ANIO.'
                 );
             }
 

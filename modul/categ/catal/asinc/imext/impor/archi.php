@@ -8,6 +8,7 @@
 
    FORMATO EXCEL:
    - Una hoja por MARCA: HD, MZ, HY, etc.
+   - Hoja VR reservada al producto comodín VARIOS, sin aplicación vehicular.
    - Cada hoja utiliza el mismo encabezado:
      ID, MARCA, MOTOR, MODEL, DESCR, CODIG, ORIGI, MEDID,
      SUPER, EQUIV, ANIO, QTY, PCOMP, PVENT, FECHA.
@@ -329,7 +330,7 @@ final class ImpoArchi
             );
             $hoja = strtoupper(trim($nombre));
 
-            if ($hoja === 'VARIOS') {
+            if ($hoja === 'VR') {
                 $descr = strtoupper(trim(
                     (string) $sheet->getCell('E2')->getValue()
                 ));
@@ -338,7 +339,7 @@ final class ImpoArchi
                     $book->disconnectWorksheets();
                     unset($book);
                     throw new RuntimeException(
-                        'La hoja VARIOS debe tener MARCA vacía y DESCR igual a VARIOS en la primera fila de datos.'
+                        'La hoja VR debe tener MARCA vacía y DESCR igual a VARIOS en la primera fila de datos.'
                     );
                 }
             } else {
