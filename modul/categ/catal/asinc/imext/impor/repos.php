@@ -23,6 +23,8 @@
 
 declare(strict_types=1);
 
+require_once dirname(__DIR__, 3) . '/produ/sepro.php';
+
 final class ImpoRepo
 {
     /* ========================================================
@@ -420,13 +422,16 @@ final class ImpoRepo
             if ($existe > 0) {
                 $this->upvar($existe, $f);
             } else {
+                $nuevo = SePro::reservar($this->db)[0];
+                $par = $this->parvar($f);
+                $par['id'] = $nuevo;
                 $ins = $this->db->prepare(
                     'INSERT INTO produ
-                        (descr,codig,origi,medid,super,equiv,pcomp,pvent,fecha)
+                        (id,descr,codig,origi,medid,super,equiv,pcomp,pvent,fecha)
                      VALUES
-                        (:descr,:codig,:origi,:medid,:super,:equiv,:pcomp,:pvent,COALESCE(:fecha,NOW()))'
+                        (:id,:descr,:codig,:origi,:medid,:super,:equiv,:pcomp,:pvent,COALESCE(:fecha,NOW()))'
                 );
-                $ins->execute($this->parvar($f));
+                $ins->execute($par);
             }
 
             $this->db->commit();
@@ -717,28 +722,29 @@ final class ImpoRepo
 
     private function insertarProductosLote(array $grupos): array
     {
-        $ids = [];
         if ($grupos === []) {
-            return $ids;
+            return [];
         }
+
+        /* Reserva IDs una sola vez; el contador y todas las inserciones
+           pertenecen a la transacción abierta por guardarLote(). */
+        $reservados = SePro::reservar($this->db, count($grupos));
+        $ids = [];
+        $pos = 0;
 
         foreach (array_chunk($grupos, 100, true) as $grupo) {
             $valores = [];
             $params = [];
-            $marcadores = [];
             $i = 0;
 
             foreach ($grupo as $clave => $d) {
                 $f = $d['ultimo'];
-                $marca = '__IMPO_' . bin2hex(random_bytes(12)) . '_' . $i;
-                $marcadores[$marca] = [
-                    'clave' => $clave,
-                    'descr' => $f['descr'],
-                ];
+                $id = $reservados[$pos++];
+                $ids[$clave] = $id;
 
-                /* El marcador existe solo dentro de la transacción sin confirmar. */
-                $valores[] = "(:d{$i},:c{$i},:o{$i},:m{$i},:s{$i},:e{$i},:pc{$i},:pv{$i},COALESCE(:fe{$i},NOW()))";
-                $params[":d{$i}"] = $marca;
+                $valores[] = "(:id{$i},:d{$i},:c{$i},:o{$i},:m{$i},:s{$i},:e{$i},:pc{$i},:pv{$i},COALESCE(:fe{$i},NOW()))";
+                $params[":id{$i}"] = $id;
+                $params[":d{$i}"] = $f['descr'];
                 $params[":c{$i}"] = $f['codig'];
                 $params[":o{$i}"] = $f['origi'];
                 $params[":m{$i}"] = $f['medid'];
@@ -750,50 +756,10 @@ final class ImpoRepo
                 $i++;
             }
 
-            $sql = 'INSERT INTO produ (descr,codig,origi,medid,super,equiv,pcomp,pvent,fecha) VALUES '
+            $sql = 'INSERT INTO produ (id,descr,codig,origi,medid,super,equiv,pcomp,pvent,fecha) VALUES '
                 . implode(',', $valores);
             $st = $this->db->prepare($sql);
             $st->execute($params);
-
-            /* Recupera cada ID por su marcador real; no asume IDs consecutivos en TiDB. */
-            $marcas = array_keys($marcadores);
-            $consulta = 'SELECT id, descr FROM produ WHERE descr IN ('
-                . implode(',', array_fill(0, count($marcas), '?')) . ')';
-            $st = $this->db->prepare($consulta);
-            $st->execute($marcas);
-            $porMarca = [];
-            foreach ($st->fetchAll(PDO::FETCH_ASSOC) as $fila) {
-                $porMarca[(string) $fila['descr']] = (int) $fila['id'];
-            }
-
-            $restaurar = [];
-            foreach ($marcadores as $marca => $dato) {
-                $id = (int) ($porMarca[$marca] ?? 0);
-                if ($id < 1) {
-                    throw new RuntimeException(
-                        'No se pudo recuperar el ID generado para un producto del lote.'
-                    );
-                }
-                $ids[$dato['clave']] = $id;
-                $restaurar[$id] = $dato['descr'];
-            }
-
-            /* Restituye la descripción original antes de confirmar la transacción. */
-            foreach (array_chunk($restaurar, 100, true) as $grupoRestaurar) {
-                $partes = [];
-                $params = [];
-                $n = 0;
-                foreach ($grupoRestaurar as $id => $descr) {
-                    $partes[] = "SELECT :id{$n} AS id,:d{$n} AS descr";
-                    $params[":id{$n}"] = (int) $id;
-                    $params[":d{$n}"] = $descr;
-                    $n++;
-                }
-                $sql = 'UPDATE produ p INNER JOIN (' . implode(' UNION ALL ', $partes) . ') d ON d.id=p.id '
-                    . 'SET p.descr=d.descr';
-                $st = $this->db->prepare($sql);
-                $st->execute($params);
-            }
         }
 
         return $ids;

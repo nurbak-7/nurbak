@@ -18,6 +18,8 @@
 ============================================================ */
 declare(strict_types=1);
 
+require_once __DIR__ . '/sepro.php';
+
 final class ProdRepo
 {
     public function __construct(private PDO $db)
@@ -144,12 +146,15 @@ final class ProdRepo
                     'id' => $id,
                 ]);
             } else {
+                $id = SePro::reservar($this->db)[0];
+
                 $this->db->prepare(
                     'INSERT INTO produ
-                        (descr,codig,origi,medid,super,equiv,pcomp,pvent,fecha)
+                        (id,descr,codig,origi,medid,super,equiv,pcomp,pvent,fecha)
                      VALUES
-                        (:descr,:codig,:origi,:medid,:super,:equiv,:pcomp,:pvent,NOW())'
+                        (:id,:descr,:codig,:origi,:medid,:super,:equiv,:pcomp,:pvent,NOW())'
                 )->execute([
+                    'id' => $id,
                     'descr' => $descr,
                     'codig' => $codig === '' ? null : $codig,
                     'origi' => $origi === '' ? null : $origi,
@@ -159,8 +164,6 @@ final class ProdRepo
                     'pcomp' => $pcomp,
                     'pvent' => $pvent,
                 ]);
-
-                $id = (int) $this->db->lastInsertId();
             }
 
             $this->db->commit();
