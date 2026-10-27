@@ -37,8 +37,60 @@ final class ImpoValid
         $marca = strtoupper(
             trim((string) $fila['marca'])
         );
-
         $hoja = strtoupper(trim($hoja));
+        $motor = trim((string) $fila['motor']);
+        $model = trim((string) $fila['model']);
+        $descr = trim((string) $fila['descr']);
+        $esVar = strtoupper($descr) === 'VARIOS';
+
+        if ($hoja === 'VARIOS' || $esVar) {
+            if ($hoja !== 'VARIOS' || !$esVar) {
+                throw new InvalidArgumentException(
+                    'VARIOS debe intercambiarse en la hoja independiente VARIOS.'
+                );
+            }
+
+            if ($marca !== '' || $motor !== '' || $model !== ''
+                || trim((string) $fila['anio']) !== '') {
+                throw new InvalidArgumentException(
+                    'La fila VARIOS no debe contener MARCA, MOTOR, MODEL ni ANIO.'
+                );
+            }
+
+            $qty = $this->numero($fila['qty'], 'QTY');
+            $pcomp = $this->numero($fila['pcomp'], 'PCOMP');
+            $pvent = $this->numero($fila['pvent'], 'PVENT');
+
+            if ($qty < 0 || $pcomp < 0 || $pvent < 0) {
+                throw new InvalidArgumentException(
+                    'QTY, PCOMP y PVENT no pueden ser negativos.'
+                );
+            }
+            if ($qty != 0.0) {
+                throw new InvalidArgumentException(
+                    'VARIOS es un producto comodín sin stock propio; QTY debe ser 0.'
+                );
+            }
+
+            return [
+                'id' => $this->id($fila['id']),
+                'marca' => '',
+                'motor' => '',
+                'model' => '',
+                'descr' => 'VARIOS',
+                'codig' => $this->nulo($fila['codig']),
+                'origi' => $this->nulo($fila['origi']),
+                'medid' => $this->nulo($fila['medid']),
+                'super' => $this->nulo($fila['super']),
+                'equiv' => $this->nulo($fila['equiv']),
+                'anio' => null,
+                'qty' => 0.0,
+                'pcomp' => $pcomp,
+                'pvent' => $pvent,
+                'fecha' => $this->fecha($fila['fecha']),
+                'vario' => true,
+            ];
+        }
 
         if ($marca === '') {
             throw new InvalidArgumentException(
@@ -57,10 +109,6 @@ final class ImpoValid
                 "MARCA {$marca} no coincide con la hoja {$hoja}."
             );
         }
-
-        $motor = trim((string) $fila['motor']);
-        $model = trim((string) $fila['model']);
-        $descr = trim((string) $fila['descr']);
 
         if ($motor === '') {
             throw new InvalidArgumentException('MOTOR es obligatorio.');

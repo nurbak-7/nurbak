@@ -327,24 +327,36 @@ final class ImpoArchi
                     ->getCell('B2')
                     ->getValue()
             );
+            $hoja = strtoupper(trim($nombre));
 
-            if ($marca === '') {
-                $book->disconnectWorksheets();
-                unset($book);
-                throw new RuntimeException(
-                    "La hoja {$nombre} no contiene MARCA."
-                );
-            }
+            if ($hoja === 'VARIOS') {
+                $descr = strtoupper(trim(
+                    (string) $sheet->getCell('E2')->getValue()
+                ));
 
-            if (
-                strtoupper($marca)
-                !== strtoupper(trim($nombre))
-            ) {
-                $book->disconnectWorksheets();
-                unset($book);
-                throw new RuntimeException(
-                    "La MARCA de la hoja {$nombre} no coincide con su nombre."
-                );
+                if ($marca !== '' || $descr !== 'VARIOS') {
+                    $book->disconnectWorksheets();
+                    unset($book);
+                    throw new RuntimeException(
+                        'La hoja VARIOS debe tener MARCA vacía y DESCR igual a VARIOS en la primera fila de datos.'
+                    );
+                }
+            } else {
+                if ($marca === '') {
+                    $book->disconnectWorksheets();
+                    unset($book);
+                    throw new RuntimeException(
+                        "La hoja {$nombre} no contiene MARCA."
+                    );
+                }
+
+                if (strtoupper($marca) !== $hoja) {
+                    $book->disconnectWorksheets();
+                    unset($book);
+                    throw new RuntimeException(
+                        "La MARCA de la hoja {$nombre} no coincide con su nombre."
+                    );
+                }
             }
 
             $book->disconnectWorksheets();

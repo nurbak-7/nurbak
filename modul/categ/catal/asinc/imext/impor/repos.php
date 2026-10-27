@@ -53,6 +53,34 @@ final class ImpoRepo
             return ['errores' => []];
         }
 
+        $vars = [];
+        $norm = [];
+        foreach ($items as $idx => $reg) {
+            if (!empty($reg['datos']['vario'])) {
+                $vars[$idx] = $reg;
+            } else {
+                $norm[$idx] = $reg;
+            }
+        }
+
+        if ($vars !== []) {
+            $err = [];
+            foreach ($vars as $idx => $reg) {
+                try {
+                    $this->grvar($modo, $reg['datos']);
+                } catch (Throwable $e) {
+                    $err[$idx] = $e->getMessage();
+                }
+            }
+
+            if ($norm !== []) {
+                $res = $this->guardarLote($modo, $norm, $almac, $tiend);
+                $err += $res['errores'];
+            }
+
+            return ['errores' => $err];
+        }
+
         $sinId = 0;
         $modalidadId = null;
 
@@ -304,6 +332,137 @@ final class ImpoRepo
         }
 
         return ['errores' => $errores];
+    }
+
+    /* ========================================================
+       VARIOS: producto comodín sin aplicación vehicular ni stock.
+       Se guarda una sola vez en PRODU y no crea VEHIC/EQUIV.
+    ======================================================== */
+    private function grvar(string $modo, array $f): void
+    {
+        $modo = strtoupper(trim($modo));
+        if (!in_array($modo, ['NUEVO', 'ACTUAL', 'AMBOS'], true)) {
+            throw new InvalidArgumentException('Modo de importación no válido.');
+        }
+
+        $id = (int) ($f['id'] ?? 0);
+        $this->db->beginTransaction();
+        try {
+            $st = $this->db->prepare(
+                "SELECT id FROM produ WHERE UPPER(TRIM(descr))='VARIOS' ORDER BY id FOR UPDATE"
+            );
+            $st->execute();
+            $all = array_map('intval', $st->fetchAll(PDO::FETCH_COLUMN));
+
+            $free = [];
+            $link = [];
+            foreach ($all as $pid) {
+                $q = $this->db->prepare(
+                    'SELECT 1 FROM equiv WHERE produ=:id LIMIT 1'
+                );
+                $q->execute(['id' => $pid]);
+                $has = $q->fetchColumn() !== false;
+                $link[$pid] = $has;
+                if (!$has) {
+                    $free[] = $pid;
+                }
+            }
+            if (in_array(true, $link, true)) {
+                throw new InvalidArgumentException(
+                    'Existe un producto llamado VARIOS asociado a un vehículo; resuelve esa coincidencia antes de importar el comodín.'
+                );
+            }
+
+            if ($id > 0) {
+                $q = $this->db->prepare(
+                    'SELECT id,descr FROM produ WHERE id=:id FOR UPDATE'
+                );
+                $q->execute(['id' => $id]);
+                $cur = $q->fetch(PDO::FETCH_ASSOC);
+                if (!$cur) {
+                    throw new InvalidArgumentException("El producto {$id} no existe.");
+                }
+                if (strtoupper(trim((string) $cur['descr'])) !== 'VARIOS'
+                    || !empty($link[$id])) {
+                    throw new InvalidArgumentException(
+                        'El ID indicado no corresponde al producto comodín VARIOS independiente.'
+                    );
+                }
+                if (count($free) > 1) {
+                    throw new InvalidArgumentException(
+                        'Existen varios registros VARIOS independientes; elimina los duplicados antes de importar.'
+                    );
+                }
+                $this->upvar($id, $f);
+                $this->db->commit();
+                return;
+            }
+
+            if (count($free) > 1) {
+                throw new InvalidArgumentException(
+                    'Existen varios registros VARIOS independientes; elimina los duplicados antes de importar.'
+                );
+            }
+            if ($free === [] && $all !== []) {
+                throw new InvalidArgumentException(
+                    'Ya existe un registro VARIOS asociado a una aplicación vehicular; no se creará otro para evitar duplicados.'
+                );
+            }
+
+            $existe = $free[0] ?? 0;
+            if ($modo === 'NUEVO' && $existe > 0) {
+                throw new InvalidArgumentException('El producto VARIOS ya existe.');
+            }
+            if ($modo === 'ACTUAL' && $existe < 1) {
+                throw new InvalidArgumentException('El producto VARIOS no existe para actualizar.');
+            }
+
+            if ($existe > 0) {
+                $this->upvar($existe, $f);
+            } else {
+                $ins = $this->db->prepare(
+                    'INSERT INTO produ
+                        (descr,codig,origi,medid,super,equiv,pcomp,pvent,fecha)
+                     VALUES
+                        (:descr,:codig,:origi,:medid,:super,:equiv,:pcomp,:pvent,COALESCE(:fecha,NOW()))'
+                );
+                $ins->execute($this->parvar($f));
+            }
+
+            $this->db->commit();
+        } catch (Throwable $e) {
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+            throw $e;
+        }
+    }
+
+    private function upvar(int $id, array $f): void
+    {
+        $par = $this->parvar($f);
+        $par['id'] = $id;
+        $st = $this->db->prepare(
+            'UPDATE produ SET descr=:descr,codig=:codig,origi=:origi,
+                medid=:medid,super=:super,equiv=:equiv,pcomp=:pcomp,
+                pvent=:pvent,fecha=COALESCE(:fecha,NOW()) WHERE id=:id'
+        );
+        $st->execute($par);
+    }
+
+    private function parvar(array $f): array
+    {
+        return [
+            'descr' => 'VARIOS',
+            'codig' => $f['codig'] ?? null,
+            'origi' => $f['origi'] ?? null,
+            'medid' => $f['medid'] ?? null,
+            'super' => $f['super'] ?? null,
+            'equiv' => $f['equiv'] ?? null,
+            'pcomp' => (float) ($f['pcomp'] ?? 0),
+            'pvent' => (float) ($f['pvent'] ?? 0),
+            'fecha' => $f['fecha'] ?? null,
+        ];
     }
 
     private function claveTextoLote(mixed $valor): ?string

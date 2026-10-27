@@ -41,13 +41,17 @@ final class ExpoRepo
             $params
         );
 
-        $sql = 'SELECT COUNT(*)
+        $sql = "SELECT COUNT(*)
                 FROM produ p
-                INNER JOIN equiv c ON c.produ=p.id
-                INNER JOIN vehic v ON v.id=c.vehic';
+                LEFT JOIN equiv c ON c.produ=p.id
+                LEFT JOIN vehic v ON v.id=c.vehic
+                WHERE ((v.id IS NOT NULL AND UPPER(TRIM(p.descr))<>'VARIOS') OR (
+                    UPPER(TRIM(p.descr))='VARIOS'
+                    AND NOT EXISTS (SELECT 1 FROM equiv c2 WHERE c2.produ=p.id)
+                ))";
 
         if ($where !== '') {
-            $sql .= ' WHERE ' . $where;
+            $sql .= ' AND (' . $where . ')';
         }
 
         $st = $this->db->prepare($sql);
@@ -100,14 +104,18 @@ final class ExpoRepo
                     p.pvent,
                     p.fecha
                 FROM produ p
-                INNER JOIN equiv c ON c.produ=p.id
-                INNER JOIN vehic v ON v.id=c.vehic";
+                LEFT JOIN equiv c ON c.produ=p.id
+                LEFT JOIN vehic v ON v.id=c.vehic
+                WHERE ((v.id IS NOT NULL AND UPPER(TRIM(p.descr))<>'VARIOS') OR (
+                    UPPER(TRIM(p.descr))='VARIOS'
+                    AND NOT EXISTS (SELECT 1 FROM equiv c2 WHERE c2.produ=p.id)
+                ))";
 
         if ($where !== '') {
-            $sql .= ' WHERE ' . $where;
+            $sql .= ' AND (' . $where . ')';
         }
 
-        $sql .= ' ORDER BY v.marca,v.id,p.id
+        $sql .= ' ORDER BY (v.id IS NULL),v.marca,v.id,p.id
                   LIMIT :lim OFFSET :off';
 
         $st = $this->db->prepare($sql);
@@ -153,7 +161,9 @@ final class ExpoRepo
 
         foreach ($filas as &$fila) {
             $id = (int) $fila['id'];
-            $fila['qty'] = $qty[$id] ?? 0;
+            $esVar = strtoupper(trim((string) ($fila['descr'] ?? ''))) === 'VARIOS'
+                && trim((string) ($fila['marca'] ?? '')) === '';
+            $fila['qty'] = $esVar ? 0 : ($qty[$id] ?? 0);
             $fila['fecha'] = (string) (
                 $fila['fecha'] ?? ''
             );

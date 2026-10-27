@@ -120,14 +120,16 @@ final class ExpoArchi
             $marca = strtoupper(
                 trim((string) ($fila['marca'] ?? ''))
             );
+            $descr = strtoupper(trim((string) ($fila['descr'] ?? '')));
+            $esVar = $marca === '' && $descr === 'VARIOS';
 
-            if (preg_match('/^.{2}$/uD', $marca) !== 1) {
+            if (!$esVar && preg_match('/^.{2}$/uD', $marca) !== 1) {
                 throw new RuntimeException(
                     'No se puede exportar un vehículo sin una marca válida de dos caracteres.'
                 );
             }
 
-            $nombre = $this->nombreHoja($marca);
+            $nombre = $esVar ? 'VARIOS' : $this->nombreHoja($marca);
             $sheet = $this->obtenerHoja($book, $nombre);
 
             if ($sheet->getHighestRow() === 1

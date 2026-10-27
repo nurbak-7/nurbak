@@ -315,12 +315,14 @@ final class CotizRepo
                 ) AS anio,
                 COALESCE(p.pvent,0) AS preci
             FROM produ p
-            INNER JOIN equiv e ON e.produ=p.id
-            INNER JOIN vehic v ON v.id=e.vehic
+            LEFT JOIN equiv e ON e.produ=p.id
+            LEFT JOIN vehic v ON v.id=e.vehic
         ";
 
         $par = [];
-        $cond = [];
+        $cond = ["((v.id IS NOT NULL AND UPPER(TRIM(p.descr))<>'VARIOS')
+            OR (UPPER(TRIM(p.descr))='VARIOS'
+            AND NOT EXISTS (SELECT 1 FROM equiv e2 WHERE e2.produ=p.id)))"];
 
         if ($buscar !== '') {
             $tokn = preg_split('/\s+/u', mb_strtolower($buscar), -1, PREG_SPLIT_NO_EMPTY) ?: [];

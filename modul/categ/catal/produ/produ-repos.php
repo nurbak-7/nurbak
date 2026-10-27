@@ -243,12 +243,15 @@ final class ProdRepo
             }
             $where[]='('.implode(' OR ',$g).')';
         }
+        $where[]="((v.id IS NOT NULL AND UPPER(TRIM(p.descr))<>'VARIOS')
+                    OR (UPPER(TRIM(p.descr))='VARIOS'
+                    AND NOT EXISTS (SELECT 1 FROM equiv e2 WHERE e2.produ=p.id)))";
         $sql="SELECT p.id,p.descr,p.codig,p.origi,p.medid,p.super,p.equiv,p.pvent,
                       v.motor,v.model,
                       CONCAT(LPAD(MOD(v.anio,100),2,'0'),'-',v.gdesd,'-',LPAD(MOD(v.ghast,100),2,'0')) anio
                FROM produ p
-               INNER JOIN equiv e ON e.produ=p.id
-               INNER JOIN vehic v ON v.id=e.vehic";
+               LEFT JOIN equiv e ON e.produ=p.id
+               LEFT JOIN vehic v ON v.id=e.vehic";
         if($where)$sql.=' WHERE '.implode(' AND ',$where);
         $sql.=" ORDER BY p.id DESC,v.id ASC LIMIT {$limite}";
         $st=$this->db->prepare($sql);$st->execute($par);return $st->fetchAll(PDO::FETCH_ASSOC);
