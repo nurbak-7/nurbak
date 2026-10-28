@@ -26,14 +26,25 @@
                         <td>${i + 1}</td>
                         <td>${codig}</td>
                         <td>${descr}</td>
-                        <td><input type="number" min="0.001" step="0.001" value="${numero(item.canti)}" data-cotiz-canti="${i}" aria-label="Cantidad"></td>
-                        <td><input type="number" min="0" step="0.01" value="${numero(item.preun).toFixed(2)}" data-cotiz-preun="${i}" aria-label="Precio unitario"></td>
-                        <td><input type="number" min="0" step="0.01" value="${numero(item.total).toFixed(2)}" data-cotiz-total-fila="${i}" aria-label="Total"></td>
+                        <td><input type="text" inputmode="numeric" pattern="[1-9][0-9]*" value="${numero(item.canti)}" data-cotiz-canti="${i}" aria-label="Cantidad" autocomplete="off"></td>
+                        <td><input type="text" inputmode="decimal" value="${numero(item.preun).toFixed(2)}" data-cotiz-preun="${i}" aria-label="Precio unitario" autocomplete="off"></td>
+                        <td><input type="text" inputmode="decimal" value="${numero(item.total).toFixed(2)}" data-cotiz-total-fila="${i}" aria-label="Total" autocomplete="off"></td>
                         <td><button type="button" data-cotiz-quitar="${i}" aria-label="Eliminar línea">×</button></td>
                     </tr>`;
             }).join('');
             ctx.api.calcularTotales?.();
         };
+
+        // Facilita reemplazar el valor completo sin borrarlo primero.
+        body.addEventListener('focusin', evento => {
+            const campo = evento.target.closest('input[data-cotiz-codig], input[data-cotiz-descr], input[data-cotiz-canti], input[data-cotiz-preun], input[data-cotiz-total-fila]');
+            if (campo) campo.select();
+        });
+
+        body.addEventListener('click', evento => {
+            const campo = evento.target.closest('input[data-cotiz-codig], input[data-cotiz-descr], input[data-cotiz-canti], input[data-cotiz-preun], input[data-cotiz-total-fila]');
+            if (campo) campo.select();
+        });
 
         body.addEventListener('input', evento => {
             const target = evento.target;
@@ -57,21 +68,35 @@
             const i = Number((can || pre || total).dataset[can ? 'cotizCanti' : pre ? 'cotizPreun' : 'cotizTotalFila']);
             const item = ctx.state.detalles[i];
             if (!item) return;
-            const val = Number((can || pre || total).value);
-            if (!Number.isFinite(val) || val < 0 || (can && val <= 0)) return;
 
-            if (can) item.canti = val;
-            else if (pre) item.preun = Math.round((val + Number.EPSILON) * 100) / 100;
-            else {
-                const qty = numero(item.canti);
-                if (qty <= 0) return;
-                item.preun = Math.round((val / qty + Number.EPSILON) * 100) / 100;
+            const texto = (can || pre || total).value.trim();
+            // Permite vaciar temporalmente el campo mientras se reemplaza el valor.
+            if (texto === '') return;
+
+            if (can) {
+                // Cantidad entera positiva; no convertir decimales silenciosamente.
+                if (!/^\d+$/.test(texto)) return;
+                const val = Number(texto);
+                if (!Number.isSafeInteger(val) || val <= 0) return;
+                item.canti = val;
+            } else {
+                const val = Number(texto);
+                if (!Number.isFinite(val) || val < 0) return;
+                if (pre) {
+                    item.preun = Math.round((val + Number.EPSILON) * 100) / 100;
+                } else {
+                    const qty = numero(item.canti);
+                    if (!Number.isInteger(qty) || qty <= 0) return;
+                    item.preun = Math.round((val / qty + Number.EPSILON) * 100) / 100;
+                }
             }
+
             item.total = importe(item);
             const totalInput = body.querySelector(`[data-cotiz-total-fila="${i}"]`);
             const preInput = body.querySelector(`[data-cotiz-preun="${i}"]`);
-            if (totalInput) totalInput.value = item.total.toFixed(2);
-            if (preInput) preInput.value = numero(item.preun).toFixed(2);
+            if (totalInput && !total) totalInput.value = item.total.toFixed(2);
+            if (preInput && !pre) preInput.value = numero(item.preun).toFixed(2);
+            if (total && preInput) preInput.value = numero(item.preun).toFixed(2);
             ctx.api.calcularTotales?.();
         });
 
@@ -80,8 +105,9 @@
             if (can) {
                 const i = Number(can.dataset.cotizCanti);
                 const item = ctx.state.detalles[i];
-                const val = Number(can.value);
-                if (!item || !Number.isFinite(val) || val <= 0) {
+                const texto = can.value.trim();
+                const val = Number(texto);
+                if (!item || !/^\d+$/.test(texto) || !Number.isSafeInteger(val) || val <= 0) {
                     dibujar();
                     return;
                 }

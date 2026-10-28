@@ -56,9 +56,10 @@
             if (vigia !== esperada) return {ok:false,mensaje:'La vigencia de la cotización debe ser de 3 días.'};
             if (!state.detalles.length) return {ok:false,mensaje:'La cotización debe contener productos.'};
             for (const [i,item] of state.detalles.entries()) {
-                const canti = Number(item.canti || 0);
+                const cantiTexto = String(item.canti ?? '').trim();
+                const canti = Number(cantiTexto);
                 const preun = Number(item.preun ?? 0);
-                if (Number(item.produ || 0) <= 0 || !Number.isFinite(canti) || canti <= 0 || !Number.isFinite(preun) || preun < 0) return {ok:false,mensaje:`Revise el producto ${i + 1}.`};
+                if (Number(item.produ || 0) <= 0 || !/^\d+$/.test(cantiTexto) || !Number.isSafeInteger(canti) || canti <= 0 || !Number.isFinite(preun) || preun < 0) return {ok:false,mensaje:`Revise la cantidad o el precio del producto ${i + 1}. La cantidad debe ser un entero mayor que cero.`};
                 if (String(item.codig || '').length > 80 || String(item.descr || '').length > 255) return {ok:false,mensaje:`El código o la descripción del producto ${i + 1} son demasiado largos.`};
             }
             return {ok:true};

@@ -31,8 +31,8 @@ final class CotizServ
             $codig = trim((string)($row['codig'] ?? ''));
             $descr = trim((string)($row['descr'] ?? ''));
 
-            if ($produ <= 0 || !is_finite($canti) || $canti <= 0 || !is_finite($preun) || $preun < 0) {
-                throw new InvalidArgumentException('Producto, cantidad o precio no válidos.');
+            if ($produ <= 0 || !is_finite($canti) || $canti <= 0 || floor($canti) !== $canti || !is_finite($preun) || $preun < 0) {
+                throw new InvalidArgumentException('Producto, cantidad entera o precio no válidos.');
             }
 
             if (mb_strlen($codig) > 80 || mb_strlen($descr) > 255) {
