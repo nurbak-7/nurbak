@@ -140,9 +140,10 @@ final class CotizRepo
             foreach ($detal as &$row) {
                 $prod = $produs[(int)$row['produ']] ?? [];
                 $row['produ'] = (int)$row['produ'];
-                $row['canti'] = (float)$row['canti'];
-                $row['preun'] = (float)$row['preun'];
-                $row['total'] = (float)$row['total'];
+                $row['canti'] = (int)$row['canti'];
+                // DECIMAL vuelve como texto para preservar los 10 decimales de P.UNIT.
+                $row['preun'] = (string)$row['preun'];
+                $row['total'] = (string)$row['total'];
                 $row['codig'] = $row['codig'] !== null ? (string)$row['codig'] : (string)($prod['codig'] ?? '');
                 $row['descr'] = $row['descr'] !== null ? (string)$row['descr'] : (string)($prod['descr'] ?? '');
                 $row['vario'] = mb_strtoupper(trim((string)($prod['descr'] ?? ''))) === 'VARIOS';
@@ -292,6 +293,29 @@ final class CotizRepo
         ];
     }
 
+    /** Devuelve los datos maestros y el tipo del artículo desde el catálogo. */
+    public function datosProducto(int $produ): array
+    {
+        if ($produ <= 0) {
+            throw new InvalidArgumentException('Producto no válido.');
+        }
+
+        $st = $this->cataDb->prepare(
+            'SELECT id,codig,descr FROM produ WHERE id=:id LIMIT 1'
+        );
+        $st->execute(['id'=>$produ]);
+        $row = $st->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            throw new InvalidArgumentException('El producto ya no existe en el catálogo.');
+        }
+
+        return [
+            'codig'=>(string)($row['codig'] ?? ''),
+            'descr'=>(string)($row['descr'] ?? ''),
+            'vario'=>mb_strtoupper(trim((string)($row['descr'] ?? ''))) === 'VARIOS',
+        ];
+    }
+
     public function buscarProductos(string $buscar = '', int $limite = 20): array
     {
         $limite = max(1, min($limite, 50));
@@ -382,9 +406,9 @@ final class CotizRepo
         string $vigia,
         string $obser,
         array $detal,
-        float $subto,
-        float $igv,
-        float $total
+        string $subto,
+        string $igv,
+        string $total
     ): array {
         $this->validarCliente($clien);
         $this->validarVendedor($vende);

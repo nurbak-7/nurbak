@@ -270,8 +270,10 @@ const cerrarModal = det => {
                     produ:Number(item.produ || 0),
                     codig:item.codig || '',
                     descr:item.descr || '',
+                    vario:Boolean(item.vario),
                     canti:Number(item.canti || 0),
-                    preun:Number(item.preun || 0)
+                    preun:String(item.preun ?? '0'),
+                    total:String(item.total ?? '0.00')
                 }));
 
                 ctx.q('[data-cotiz-fecha]').value = ctx.state.fecha;

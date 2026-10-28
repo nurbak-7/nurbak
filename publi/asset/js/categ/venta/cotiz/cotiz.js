@@ -58,8 +58,9 @@
             for (const [i,item] of state.detalles.entries()) {
                 const cantiTexto = String(item.canti ?? '').trim();
                 const canti = Number(cantiTexto);
-                const preun = Number(item.preun ?? 0);
-                if (Number(item.produ || 0) <= 0 || !/^\d+$/.test(cantiTexto) || !Number.isSafeInteger(canti) || canti <= 0 || !Number.isFinite(preun) || preun < 0) return {ok:false,mensaje:`Revise la cantidad o el precio del producto ${i + 1}. La cantidad debe ser un entero mayor que cero.`};
+                const preunTexto = String(item.preun ?? '0').trim();
+                const preun = Number(preunTexto);
+                if (Number(item.produ || 0) <= 0 || !/^\d+$/.test(cantiTexto) || !Number.isSafeInteger(canti) || canti <= 0 || !/^\d+(?:\.\d{1,10})?$/.test(preunTexto) || !Number.isFinite(preun) || preun < 0) return {ok:false,mensaje:`Revise la cantidad o el precio del producto ${i + 1}. La cantidad debe ser un entero mayor que cero.`};
                 if (String(item.codig || '').length > 80 || String(item.descr || '').length > 255) return {ok:false,mensaje:`El código o la descripción del producto ${i + 1} son demasiado largos.`};
             }
             return {ok:true};

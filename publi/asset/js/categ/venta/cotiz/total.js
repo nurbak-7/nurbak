@@ -3,25 +3,38 @@
    Módulo: Ventas / Cotización / Totales
 
    RESPONSABILIDAD:
-   Calcular subtotal, IGV 18 % y total usando el mismo criterio
-   económico de Operaciones.
+   Sumar los importes finales de línea en centavos enteros y
+   calcular subtotal e IGV de la cotización.
 ============================================================ */
 (() => {
     const iniciar = ctx => {
         const subto = ctx.q('[data-cotiz-subto]');
         const igv = ctx.q('[data-cotiz-igv]');
         const total = ctx.q('[data-cotiz-total]');
-        const calcular = () => {
-            const importe = ctx.state.detalles.reduce((suma,item) => suma + Number(item.canti || 0) * Number(item.preun || 0), 0);
-            const totalRed = Math.round(importe * 100) / 100;
-            const base = Math.round((totalRed / 1.18) * 100) / 100;
-            const impuesto = Math.round((totalRed - base) * 100) / 100;
-            ctx.state.subto = base; ctx.state.igv = impuesto; ctx.state.total = totalRed;
-            if (subto) subto.textContent = base.toFixed(2);
-            if (igv) igv.textContent = impuesto.toFixed(2);
-            if (total) total.textContent = totalRed.toFixed(2);
-            return {subto:base,igv:impuesto,total:totalRed};
+
+        const centavos = valor => {
+            const texto = String(valor ?? '0').trim();
+            const m = texto.match(/^(\d+)(?:\.(\d{0,2}))?$/);
+            if (!m) return 0n;
+            return BigInt(m[1]) * 100n + BigInt((m[2] || '').padEnd(2, '0') || '0');
         };
+        const formato = valor => `${valor / 100n}.${String(valor % 100n).padStart(2, '0')}`;
+
+        const calcular = () => {
+            const importe = ctx.state.detalles.reduce((suma, item) => suma + centavos(item.total), 0n);
+            // Cotización presenta importes con IGV incluido: base = total / 1.18.
+            const base = (importe * 100n + 59n) / 118n;
+            const impuesto = importe - base;
+
+            ctx.state.subto = formato(base);
+            ctx.state.igv = formato(impuesto);
+            ctx.state.total = formato(importe);
+            if (subto) subto.textContent = ctx.state.subto;
+            if (igv) igv.textContent = ctx.state.igv;
+            if (total) total.textContent = ctx.state.total;
+            return {subto:ctx.state.subto, igv:ctx.state.igv, total:ctx.state.total};
+        };
+
         ctx.api.calcularTotales = calcular;
         calcular();
     };
