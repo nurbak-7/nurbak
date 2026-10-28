@@ -74,15 +74,11 @@
                 const descr = item.vario
                     ? `<input type="text" maxlength="255" value="${ctx.esc(item.descr || '')}" data-cotiz-descr="${i}" aria-label="Descripción" autocomplete="off">`
                     : ctx.esc(item.descr || '');
-                const canti = item.vario
-                    ? `<input type="text" inputmode="numeric" pattern="[1-9][0-9]*" value="${ctx.esc(item.canti)}" data-cotiz-canti="${i}" aria-label="Cantidad" autocomplete="off">`
-                    : ctx.esc(item.canti);
-                const preun = item.vario
-                    ? `<input type="text" inputmode="decimal" value="${precioDosDecimales(item.preun)}" data-cotiz-preun="${i}" aria-label="Precio unitario" autocomplete="off">`
-                    : ctx.esc(precioDosDecimales(item.preun));
-                const total = item.vario
-                    ? `<input type="text" inputmode="decimal" value="${item.total}" data-cotiz-total-fila="${i}" aria-label="Total" autocomplete="off">`
-                    : ctx.esc(item.total);
+                // QTY, P.UNIT y TOTAL son editables en todos los productos.
+                // Código y Descripción siguen siendo editables solo en Varios.
+                const canti = `<input type="text" inputmode="numeric" pattern="[1-9][0-9]*" value="${ctx.esc(item.canti)}" data-cotiz-canti="${i}" aria-label="Cantidad" autocomplete="off">`;
+                const preun = `<input type="text" inputmode="decimal" value="${precioDosDecimales(item.preun)}" data-cotiz-preun="${i}" aria-label="Precio unitario" autocomplete="off">`;
+                const total = `<input type="text" inputmode="decimal" value="${item.total}" data-cotiz-total-fila="${i}" aria-label="Total" autocomplete="off">`;
                 return `
                     <tr>
                         <td>${i + 1}</td>
