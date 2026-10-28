@@ -1,3 +1,4 @@
+
 /* ============================================================
    Ruta: datos/categ/venta/cotiz.sql
    Módulo: Ventas / Cotización
@@ -9,7 +10,7 @@
    REGLAS:
    - Cotización no reserva stock.
    - Cotización no modifica stock.
-   - Cotización no genera salss.
+   - Cotización no genera saldos.
    - Guardar registra la cotización.
    - Cancelar cambia únicamente su estado.
    - Serie C001 se administra mediante venta.numer.
@@ -63,6 +64,8 @@ CREATE TABLE IF NOT EXISTS dtall (
     id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     cotiz  INT UNSIGNED NOT NULL,
     produ  INT UNSIGNED NOT NULL,
+    codig  VARCHAR(80) NULL,
+    descr  VARCHAR(255) NULL,
     canti  DECIMAL(14,3) NOT NULL,
     preun  DECIMAL(14,2) NOT NULL DEFAULT 0.00,
     total  DECIMAL(14,2) NOT NULL DEFAULT 0.00,
