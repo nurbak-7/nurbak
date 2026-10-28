@@ -43,7 +43,7 @@
    color:#475569;
    font-size:7px;
    font-weight:700;
-   line-height:0.2;
+   line-height:0.7;
    white-space:nowrap;
  }
  .dash-mini.cotiz-mini .cotiz-total-item strong {
@@ -57,7 +57,7 @@
    color:#111827;
    font-size:10px;
    font-weight:800;
-   line-height:0.2;
+   line-height:0.7;
    text-align:left;
    overflow:hidden;
    text-overflow:ellipsis;
