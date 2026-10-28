@@ -21,34 +21,54 @@ final class CotizServ
 
     private function normalizar(array $detal): array
     {
-        $agr = [];
+        $salida = [];
+        $indices = [];
 
         foreach ($detal as $row) {
             $produ = (int)($row['produ'] ?? 0);
             $canti = (float)($row['canti'] ?? 0);
             $preun = (float)($row['preun'] ?? 0);
+            $codig = trim((string)($row['codig'] ?? ''));
+            $descr = trim((string)($row['descr'] ?? ''));
 
-            if ($produ <= 0 || $canti <= 0 || $preun < 0) {
+            if ($produ <= 0 || !is_finite($canti) || $canti <= 0 || !is_finite($preun) || $preun < 0) {
                 throw new InvalidArgumentException('Producto, cantidad o precio no válidos.');
             }
 
-            if (!isset($agr[$produ])) {
-                $agr[$produ] = [
-                    'produ'=>$produ,
-                    'canti'=>0.0,
-                    'preun'=>$preun
-                ];
+            if (mb_strlen($codig) > 80 || mb_strlen($descr) > 255) {
+                throw new InvalidArgumentException('El código o la descripción exceden la longitud permitida.');
             }
 
-            $agr[$produ]['canti'] += $canti;
-            $agr[$produ]['preun'] = $preun;
+            $vario = filter_var($row['vario'] ?? false, FILTER_VALIDATE_BOOLEAN);
+            $preun = round($preun, 2);
+            $clave = json_encode([$produ, $codig, $descr, $preun], JSON_UNESCAPED_UNICODE);
+
+            // Varios siempre crea una línea independiente. Para los demás
+            // productos se conserva la agrupación anterior cuando coinciden
+            // producto, código, descripción y precio.
+            if (!$vario && isset($indices[$clave])) {
+                $salida[$indices[$clave]]['canti'] += $canti;
+                continue;
+            }
+
+            $salida[] = [
+                'produ' => $produ,
+                'codig' => $codig,
+                'descr' => $descr,
+                'vario' => $vario,
+                'canti' => $canti,
+                'preun' => $preun,
+            ];
+            if (!$vario) {
+                $indices[$clave] = array_key_last($salida);
+            }
         }
 
-        if ($agr === []) {
+        if ($salida === []) {
             throw new InvalidArgumentException('La cotización debe contener productos.');
         }
 
-        return array_values($agr);
+        return $salida;
     }
 
     private function calcular(array $detal): array

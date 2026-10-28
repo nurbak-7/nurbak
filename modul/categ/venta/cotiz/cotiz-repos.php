@@ -104,7 +104,7 @@ final class CotizRepo
         }
 
         $dt = $this->db->prepare(
-            'SELECT cotiz,produ,canti,preun,total
+            'SELECT cotiz,produ,codig,descr,canti,preun,total
              FROM dtall
              WHERE cotiz=:cotiz
              ORDER BY id ASC'
@@ -143,8 +143,9 @@ final class CotizRepo
                 $row['canti'] = (float)$row['canti'];
                 $row['preun'] = (float)$row['preun'];
                 $row['total'] = (float)$row['total'];
-                $row['codig'] = $prod['codig'] ?? '';
-                $row['descr'] = $prod['descr'] ?? '';
+                $row['codig'] = $row['codig'] !== null ? (string)$row['codig'] : (string)($prod['codig'] ?? '');
+                $row['descr'] = $row['descr'] !== null ? (string)$row['descr'] : (string)($prod['descr'] ?? '');
+                $row['vario'] = mb_strtoupper(trim((string)($prod['descr'] ?? ''))) === 'VARIOS';
             }
             unset($row);
         }
@@ -476,14 +477,16 @@ final class CotizRepo
             $this->db->prepare('DELETE FROM dtall WHERE cotiz=:cotiz')->execute(['cotiz'=>$id]);
 
             $ins = $this->db->prepare(
-                'INSERT INTO dtall (cotiz,produ,canti,preun,total)
-                 VALUES (:cotiz,:produ,:canti,:preun,:total)'
+                'INSERT INTO dtall (cotiz,produ,codig,descr,canti,preun,total)
+                 VALUES (:cotiz,:produ,:codig,:descr,:canti,:preun,:total)'
             );
 
             foreach ($detal as $row) {
                 $ins->execute([
                     'cotiz'=>$id,
                     'produ'=>$row['produ'],
+                    'codig'=>$row['codig'],
+                    'descr'=>$row['descr'],
                     'canti'=>$row['canti'],
                     'preun'=>$row['preun'],
                     'total'=>$row['total']

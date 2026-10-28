@@ -65,7 +65,13 @@
                 const r = rows[indice];
                 if (!r) return;
 
-                const existe = ctx.state.detalles.find(item => Number(item.produ) === Number(r.id));
+                const vario = String(r.descr || '').trim().toUpperCase() === 'VARIOS';
+                const existe = vario ? null : ctx.state.detalles.find(item =>
+                    Number(item.produ) === Number(r.id) &&
+                    String(item.codig || '') === String(r.codig || '') &&
+                    String(item.descr || '') === String(r.descr || '') &&
+                    Number(item.preun || 0) === Number(r.preci || 0)
+                );
                 if (existe) {
                     existe.canti = Number(existe.canti || 0) + 1;
                 } else {
@@ -73,6 +79,7 @@
                         produ:Number(r.id),
                         codig:r.codig || '',
                         descr:r.descr || '',
+                        vario,
                         canti:1,
                         preun:Number(r.preci || 0)
                     });

@@ -10,43 +10,69 @@
         const body = ctx.q('[data-cotiz-detalles]');
         if (!body) return;
 
+        const numero = valor => Number.isFinite(Number(valor)) ? Number(valor) : 0;
+        const importe = item => Math.round((numero(item.canti) * numero(item.preun) + Number.EPSILON) * 100) / 100;
         const dibujar = () => {
-            body.innerHTML = ctx.state.detalles.map((item,i) => {
-                const total = Number(item.canti || 0) * Number(item.preun || 0);
+            body.innerHTML = ctx.state.detalles.map((item, i) => {
+                item.total = importe(item);
+                const codig = item.vario
+                    ? `<input type="text" maxlength="80" value="${ctx.esc(item.codig || '')}" data-cotiz-codig="${i}" aria-label="Código">`
+                    : ctx.esc(item.codig || '—');
+                const descr = item.vario
+                    ? `<input type="text" maxlength="255" value="${ctx.esc(item.descr || '')}" data-cotiz-descr="${i}" aria-label="Descripción">`
+                    : ctx.esc(item.descr || '');
                 return `
                     <tr>
-                        <td>${i+1}</td>
-                        <td>${ctx.esc(item.codig || '—')}</td>
-                        <td>${ctx.esc(item.descr || '')}</td>
-                        <td><input type="number" min="0.001" step="0.001" value="${Number(item.canti || 0)}" data-cotiz-canti="${i}"></td>
-                        <td><input type="number" min="0" step="0.01" value="${Number(item.preun || 0).toFixed(2)}" data-cotiz-preun="${i}"></td>
-                        <td><input type="number" min="0" step="0.01" value="${total.toFixed(2)}" data-cotiz-total-fila="${i}"></td>
-                        <td><button type="button" data-cotiz-quitar="${i}">×</button></td>
+                        <td>${i + 1}</td>
+                        <td>${codig}</td>
+                        <td>${descr}</td>
+                        <td><input type="number" min="0.001" step="0.001" value="${numero(item.canti)}" data-cotiz-canti="${i}" aria-label="Cantidad"></td>
+                        <td><input type="number" min="0" step="0.01" value="${numero(item.preun).toFixed(2)}" data-cotiz-preun="${i}" aria-label="Precio unitario"></td>
+                        <td><input type="number" min="0" step="0.01" value="${numero(item.total).toFixed(2)}" data-cotiz-total-fila="${i}" aria-label="Total"></td>
+                        <td><button type="button" data-cotiz-quitar="${i}" aria-label="Eliminar línea">×</button></td>
                     </tr>`;
             }).join('');
             ctx.api.calcularTotales?.();
         };
 
         body.addEventListener('input', evento => {
-            const total = evento.target.closest('[data-cotiz-total-fila]');
-            if (total) {
-                const i = Number(total.dataset.cotizTotalFila);
-                const item = ctx.state.detalles[i];
-                if (!item) return;
-                const val = Math.max(0, Number(total.value || 0));
-                if (Number(item.canti) > 0) item.preun = val / Number(item.canti);
-                ctx.api.calcularTotales?.();
+            const target = evento.target;
+            const codig = target.closest('[data-cotiz-codig]');
+            const descr = target.closest('[data-cotiz-descr]');
+            if (codig) {
+                const item = ctx.state.detalles[Number(codig.dataset.cotizCodig)];
+                if (item) item.codig = codig.value;
+                return;
+            }
+            if (descr) {
+                const item = ctx.state.detalles[Number(descr.dataset.cotizDescr)];
+                if (item) item.descr = descr.value;
                 return;
             }
 
-            const pre = evento.target.closest('[data-cotiz-preun]');
-            if (pre) {
-                const i = Number(pre.dataset.cotizPreun);
-                const item = ctx.state.detalles[i];
-                if (!item) return;
-                item.preun = Math.max(0, Number(pre.value || 0));
-                ctx.api.calcularTotales?.();
+            const can = target.closest('[data-cotiz-canti]');
+            const pre = target.closest('[data-cotiz-preun]');
+            const total = target.closest('[data-cotiz-total-fila]');
+            if (!can && !pre && !total) return;
+            const i = Number((can || pre || total).dataset[can ? 'cotizCanti' : pre ? 'cotizPreun' : 'cotizTotalFila']);
+            const item = ctx.state.detalles[i];
+            if (!item) return;
+            const val = Number((can || pre || total).value);
+            if (!Number.isFinite(val) || val < 0 || (can && val <= 0)) return;
+
+            if (can) item.canti = val;
+            else if (pre) item.preun = Math.round((val + Number.EPSILON) * 100) / 100;
+            else {
+                const qty = numero(item.canti);
+                if (qty <= 0) return;
+                item.preun = Math.round((val / qty + Number.EPSILON) * 100) / 100;
             }
+            item.total = importe(item);
+            const totalInput = body.querySelector(`[data-cotiz-total-fila="${i}"]`);
+            const preInput = body.querySelector(`[data-cotiz-preun="${i}"]`);
+            if (totalInput) totalInput.value = item.total.toFixed(2);
+            if (preInput) preInput.value = numero(item.preun).toFixed(2);
+            ctx.api.calcularTotales?.();
         });
 
         body.addEventListener('change', evento => {
@@ -54,34 +80,13 @@
             if (can) {
                 const i = Number(can.dataset.cotizCanti);
                 const item = ctx.state.detalles[i];
-                if (!item) return;
-                const val = Number(can.value || 0);
-                if (!Number.isFinite(val) || val <= 0) {
+                const val = Number(can.value);
+                if (!item || !Number.isFinite(val) || val <= 0) {
                     dibujar();
                     return;
                 }
                 item.canti = val;
-                dibujar();
-                return;
-            }
-
-            const pre = evento.target.closest('[data-cotiz-preun]');
-            if (pre) {
-                const i = Number(pre.dataset.cotizPreun);
-                const item = ctx.state.detalles[i];
-                if (!item) return;
-                item.preun = Math.max(0, Number(pre.value || 0));
-                dibujar();
-                return;
-            }
-
-            const total = evento.target.closest('[data-cotiz-total-fila]');
-            if (total) {
-                const i = Number(total.dataset.cotizTotalFila);
-                const item = ctx.state.detalles[i];
-                if (!item) return;
-                const val = Math.max(0, Number(total.value || 0));
-                if (Number(item.canti) > 0) item.preun = val / Number(item.canti);
+                item.total = importe(item);
                 dibujar();
             }
         });
@@ -89,7 +94,7 @@
         body.addEventListener('click', evento => {
             const btn = evento.target.closest('[data-cotiz-quitar]');
             if (!btn) return;
-            ctx.state.detalles.splice(Number(btn.dataset.cotizQuitar),1);
+            ctx.state.detalles.splice(Number(btn.dataset.cotizQuitar), 1);
             dibujar();
         });
 
