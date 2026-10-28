@@ -7,11 +7,11 @@
    box-sizing:border-box;
    width:100%;
    min-width:0;
-   padding:3px 5px;
+   padding:1px 3px;
    margin-top:10px;
    background:#eef3f9;
    border:1px solid #dbe5ef;
-   border-radius:8px;
+   border-radius:3px;
  }
  .dash-mini.cotiz-mini .cotiz-total-item {
    display:flex;
