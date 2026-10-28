@@ -47,6 +47,10 @@
        P.UNIT, TOTAL y X.
        ======================================================== */
     .dash-mini.cotiz-mini table.cotiz-detalle thead th {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: #10001d;
         box-sizing: border-box;
         height: 15px;
         min-height: 0;
@@ -126,16 +130,6 @@
         padding: 0 1px;
         font-size: 6px;
         line-height: 1;
-        font-variant-numeric: tabular-nums;
-    }
-
-    .dash-mini.cotiz-mini table.cotiz-detalle tbody td:nth-child(4) input {
-        text-align: center;
-    }
-
-    .dash-mini.cotiz-mini table.cotiz-detalle tbody td:nth-child(5) input,
-    .dash-mini.cotiz-mini table.cotiz-detalle tbody td:nth-child(6) input {
-        text-align: right;
     }
 
     /* ========================================================
