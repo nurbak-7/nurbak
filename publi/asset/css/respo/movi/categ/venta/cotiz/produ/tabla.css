@@ -1,0 +1,131 @@
+/* ============================================================
+   Ruta: publi/asset/css/respo/movi/categ/venta/cotiz/produ/tabla.css
+   Función: Diseño C compacto de la tabla de búsqueda de productos.
+   Alcance: Solo móvil; no modifica datos ni comportamiento.
+============================================================ */
+
+@media (max-width:700px){
+    .dash-mini.cotiz-mini .cotiz-mini-prod{
+        box-sizing:border-box;
+        width:100%;
+        min-width:0;
+        max-width:100%;
+        font-family:Arial,sans-serif;
+    }
+
+    /* Buscador compacto: sin iconos ni cambios de estructura. */
+    .dash-mini.cotiz-mini .cotiz-mini-busca{
+        display:block;
+        box-sizing:border-box;
+        width:100%;
+        min-width:0;
+        margin:0 0 4px;
+    }
+    .dash-mini.cotiz-mini .cotiz-mini-busca label{
+        display:block;
+        margin:0 0 3px;
+        font-size:9px;
+        line-height:1.1;
+        font-weight:700;
+    }
+    .dash-mini.cotiz-mini .cotiz-mini-busca input{
+        display:block;
+        box-sizing:border-box;
+        width:100%;
+        min-width:0;
+        max-width:100%;
+        height:28px;
+        margin:0;
+        padding:3px 7px;
+        border:1px solid #d6a12a;
+        border-radius:5px;
+        font-size:10px;
+        line-height:1.1;
+    }
+
+    .dash-mini.cotiz-mini .cotiz-mini-info{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        min-height:16px;
+        margin:0 0 4px;
+        font-size:9px;
+        line-height:1.1;
+        color:#64748b;
+    }
+
+    /* Tabla completa en el ancho móvil, sin desplazamiento horizontal.
+       El algoritmo automático distribuye el ancho según los contenidos. */
+    .dash-mini.cotiz-mini .cotiz-mini-tabla-wrap{
+        box-sizing:border-box;
+        width:100%;
+        min-width:0;
+        max-width:100%;
+        max-height:360px;
+        margin:0;
+        padding:0;
+        overflow-x:hidden;
+        overflow-y:auto;
+        border:0;
+    }
+    .dash-mini.cotiz-mini table.cotiz-mini-tabla{
+        box-sizing:border-box;
+        width:100%;
+        min-width:0;
+        max-width:100%;
+        margin:0;
+        table-layout:auto;
+        border-collapse:separate;
+        border-spacing:2px 2px;
+        font-size:6px;
+        line-height:1.05;
+    }
+    .dash-mini.cotiz-mini table.cotiz-mini-tabla th,
+    .dash-mini.cotiz-mini table.cotiz-mini-tabla td{
+        box-sizing:border-box;
+        min-width:0;
+        padding:3px 2px;
+        border:1px solid #d7dce2;
+        border-radius:4px;
+        text-align:center;
+        vertical-align:middle;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:clip;
+    }
+    .dash-mini.cotiz-mini table.cotiz-mini-tabla th{
+        position:sticky;
+        top:0;
+        z-index:1;
+        height:22px;
+        background:#e5e7eb;
+        color:#111827;
+        font-size:6px;
+        font-weight:700;
+        line-height:1;
+    }
+    .dash-mini.cotiz-mini table.cotiz-mini-tabla td{
+        height:20px;
+        background:#f5f6f8;
+        color:#273449;
+        font-size:6px;
+        line-height:1.05;
+    }
+    .dash-mini.cotiz-mini table.cotiz-mini-tabla tbody tr{
+        cursor:pointer;
+    }
+    .dash-mini.cotiz-mini table.cotiz-mini-tabla tbody tr.is-seleccionada td{
+        background:#e5e7eb;
+    }
+
+    .dash-mini.cotiz-mini .cotiz-mini-ayuda{
+        box-sizing:border-box;
+        width:100%;
+        margin:0;
+        padding:5px 0 0;
+        font-size:9px;
+        line-height:1.2;
+        white-space:normal;
+        color:#64748b;
+    }
+}
