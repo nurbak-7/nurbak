@@ -17,7 +17,7 @@
 
     <div class="cotiz-fila">
         <label>PLACA:</label>
-        <input type="text" data-cotiz-placa placeholder="SSS-SSS" maxlength="7" autocomplete="off">
+        <input type="text" data-cotiz-placa placeholder="ABC-123" maxlength="7" autocomplete="off">
     </div>
 
     <input type="hidden" data-cotiz-vende value="0">

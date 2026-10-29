@@ -3,6 +3,19 @@
    Altura y espacios compactos dentro de la columna central.
 ============================================================ */
 @media (max-width: 700px) {
+    /* Acento verde del bloque Cliente; conserva el orden y los campos existentes. */
+    .dash-mini.cotiz-mini .cotiz-encabezado .cotiz-cliente {
+        background: #ecfdf5;
+        border: 1px solid #34d399;
+        border-radius: 8px;
+    }
+
+    .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila input {
+        border-color: #86d8b4;
+        border-radius: 5px;
+        background: #fff;
+    }
+
     .dash-mini.cotiz-mini .cotiz-cliente .cotiz-fila-doble {
         display: grid;
         grid-template-columns: minmax(0, 1fr);
@@ -24,8 +37,8 @@
         width: 100%;
         min-width: 0;
         max-width: 100%;
-        height: 31px;
-        padding: 3px 5px;
+        height: 27px;
+        padding: 2px 4px;
         font-size: 10px;
     }
 
