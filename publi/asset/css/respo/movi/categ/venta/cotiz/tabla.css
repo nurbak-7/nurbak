@@ -16,7 +16,7 @@
         min-width: 0;
         max-width: 100%;
         min-height: 0;
-        max-height: 105px;
+        max-height: 195px; /* Cabecera + hasta 10 filas de 18px. */
         overflow-x: auto;
         overflow-y: auto;
         margin: 0;

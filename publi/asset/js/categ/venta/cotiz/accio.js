@@ -65,7 +65,7 @@ setTimeout(() => ctx.api.cerrarVentana?.(),700);
             if (!ctx.state.detalles.length && ctx.state.cotizId<=0) { cancelarReal(); return; }
             const t=toast();
             if (!t) { cancelarReal().catch(error=>toast()?.resu?.(error.message,'err')); return; }
-            t.conf?.('canc',cancelarReal,()=>{});
+            t.conf?.('canc',()=>{},cancelarReal);
         };
 
         guardarBtn?.addEventListener('click',e=>{e.preventDefault();solicitarGuardar();});

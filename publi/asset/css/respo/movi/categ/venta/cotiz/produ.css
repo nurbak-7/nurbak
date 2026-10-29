@@ -19,3 +19,18 @@
         line-height:1.2;
     }
 }
+
+/* Cabecera de Cotización: botón de agregar compacto en móvil. */
+@media (max-width:700px){
+    .dash-mini.cotiz-mini .cotiz-productos{
+        padding:6px 0 0;
+    }
+    .dash-mini.cotiz-mini .cotiz-productos > button{
+        box-sizing:border-box;
+        margin:0 0 8px;
+        padding:7px 11px;
+        border-radius:5px;
+        font-size:11px;
+        line-height:1.2;
+    }
+}

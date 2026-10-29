@@ -14,7 +14,7 @@
 
 /* ============================================================
    FORMULARIO MINI | COORDINADOR RESPONSIVE MÓVIL
-   Compactación de espacios sin alterar la distribución B.
+   Diseño moderno, con los tres bloques existentes y sin alterar la estructura.
 ============================================================ */
 @media (max-width: 700px) {
     .dash-mini.cotiz-mini {
@@ -40,18 +40,23 @@
 
     .dash-mini.cotiz-mini .cotiz-encabezado {
         display: grid;
-        grid-template-columns: minmax(122px, 1.15fr) minmax(0, 1.4fr) minmax(70px, .75fr);
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.2fr) minmax(0, .9fr);
         align-items: stretch;
-        gap: 3px;
+        gap: 4px;
         width: 100%;
         min-width: 0;
-        padding: 3px;
+        padding: 0;
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
     }
 
     .dash-mini.cotiz-mini .cotiz-encabezado > .cotiz-bloque {
         box-sizing: border-box;
         min-width: 0;
-        padding: 4px 3px;
+        padding: 4px;
+        border-radius: 8px;
     }
 
     .dash-mini.cotiz-mini .cotiz-encabezado .cotiz-bloque > h3,
@@ -81,9 +86,10 @@
         width: 100%;
         min-width: 0;
         max-width: 100%;
-        height: 30px;
+        height: 27px;
         margin: 0;
-        padding: 2px 3px;
+        padding: 2px 4px;
+        border-radius: 5px;
         font-size: 10px;
     }
 
