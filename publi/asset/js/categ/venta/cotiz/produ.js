@@ -20,7 +20,8 @@
             const mini = await window.NURBAK_MINI.abrir({
                 titulo:'Agregar producto',
                 rutaVista:'vista/categ/venta/cotiz/produc-mini.php',
-                modulo:'cotiz-productos'
+                modulo:'cotiz-productos',
+                clase:'cotiz-productos-mini'
             });
 
             if (!mini) throw new Error('No se pudo abrir el buscador.');
