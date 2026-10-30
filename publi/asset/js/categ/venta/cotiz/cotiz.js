@@ -34,7 +34,7 @@
             placa: ctx.api.placa?.() || String(placa?.value || '').trim().toUpperCase(),
             fecha: String(q('[data-cotiz-fecha]')?.value || ''),
             vigia: String(q('[data-cotiz-vigia]')?.value || ''),
-            obser: '',
+            obser: String(q('[data-cotiz-obser]')?.value || '').trim(),
             detalles: JSON.stringify(state.detalles)
         });
 

@@ -283,6 +283,7 @@ const cerrarModal = det => {
                 ctx.q('[data-cotiz-docum]').value = cot.docum || '';
                 ctx.q('[data-cotiz-razon]').value = cot.razon || '';
                 ctx.q('[data-cotiz-direc]').value = cot.direc || '';
+                ctx.q('[data-cotiz-obser]').value = cot.obser || '';
                 ctx.q('[data-cotiz-placa]').value = cot.placa || '';
                 ctx.q('[data-cotiz-vende-cod]').value = cot.vende_cod || '';
                 ctx.q('[data-cotiz-vende-cod]').dataset.codig = cot.vende_cod || '';

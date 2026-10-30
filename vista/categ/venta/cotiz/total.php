@@ -21,3 +21,16 @@
         <strong data-cotiz-total>0.00</strong>
     </div>
 </div>
+
+<div class="cotiz-observacion">
+    <span>OBSERV:</span>
+    <input
+        type="text"
+        name="obser"
+        data-cotiz-obser
+        maxlength="255"
+        autocomplete="off"
+        aria-label="Observación de la cotización"
+        placeholder="Motor / modelo / año..."
+    >
+</div>
