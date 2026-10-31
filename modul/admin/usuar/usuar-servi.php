@@ -55,7 +55,7 @@ final class UsuaServ
             ];
         }
 
-        $externo = OperClienteExterno::consultar($dni);
+        $externo = OperaClienteExterno::consultar($dni);
 
         if (!($externo['ok'] ?? false) || !($externo['encontrado'] ?? false)) {
             throw new InvalidArgumentException(
@@ -63,7 +63,7 @@ final class UsuaServ
             );
         }
 
-        $cliente = $externo['cliente'] ?? [];
+        $cliente = $externo['clien'] ?? [];
         $nombres = trim((string) ($cliente['nombres'] ?? ''));
         $apellidos = trim((string) ($cliente['apellidos'] ?? ''));
 
