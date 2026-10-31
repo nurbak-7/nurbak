@@ -13,7 +13,7 @@
         <label>RUC/DNI:</label>
         <input type="text" data-cotiz-docum autocomplete="off" placeholder="Ingrese RUC o DNI">
         <label>RAZÓN SOCIAL:</label>
-        <input type="text" data-cotiz-razon autocomplete="off">
+        <input type="text" data-cotiz-razon autocomplete="off" value="VARIOS">
     </div>
 
     <div class="cotiz-fila">

@@ -58,6 +58,14 @@
             ultima = '';
             ctx.state.clienId = 0;
             const doc = docum.value.replace(/\D/g,'');
+            if (!doc) {
+                const razon = ctx.q('[data-cotiz-razon]');
+                const direc = ctx.q('[data-cotiz-direc]');
+                if (razon) razon.value = 'VARIOS';
+                if (direc) direc.value = '';
+                ctx.api.sincronizarCliente?.();
+                return;
+            }
             if (!completo(doc)) return;
             timer = setTimeout(() => void buscar(), 550);
         });

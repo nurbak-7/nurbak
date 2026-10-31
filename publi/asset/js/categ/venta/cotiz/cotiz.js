@@ -40,7 +40,13 @@
 
         ctx.api.validar = () => {
             const d = String(docum?.value || '').replace(/\D/g,'');
-            if (![8,11].includes(d.length)) return {ok:false,mensaje:'Debe indicar un RUC/DNI válido.'};
+            if (d !== '' && ![8,11].includes(d.length)) return {ok:false,mensaje:'Debe indicar un RUC/DNI válido.'};
+            if (d === '') {
+                if (razon) razon.value = 'VARIOS';
+                if (direc) direc.value = '';
+                state.clienId = 0;
+                ctx.api.sincronizarCliente();
+            }
             if (String(razon?.value || '').trim() === '') return {ok:false,mensaje:'No se pudo identificar al cliente.'};
             if (state.vendeId <= 0) return {ok:false,mensaje:'Debe indicar el vendedor.'};
             const pla = ctx.api.validarPlaca?.() || {ok:true,valor:String(placa?.value || '').trim().toUpperCase()};

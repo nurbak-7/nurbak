@@ -140,7 +140,9 @@ try {
             $docum = preg_replace('/\D+/', '', (string)($_REQUEST['docum'] ?? ''));
             $clienId = (int)($_REQUEST['clien'] ?? 0);
 
-            if ($clienId <= 0) {
+            if ($docum === '') {
+                $clienId = $repo->vario();
+            } elseif ($clienId <= 0) {
                 $clienId = $clie->resolverOperacion([
                     'id' => 0,
                     'tipod' => strlen($docum) === 11 ? 'RUC' : 'DNI',

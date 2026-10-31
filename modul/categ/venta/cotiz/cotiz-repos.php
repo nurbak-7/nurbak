@@ -250,6 +250,94 @@ final class CotizRepo
         ];
     }
 
+    public function vario(): int
+    {
+        $st = $this->db->prepare(
+            "SELECT id,razon,estad
+             FROM clien
+             WHERE docum=''
+             LIMIT 1"
+        );
+        $st->execute();
+        $fila = $st->fetch(PDO::FETCH_ASSOC);
+
+        if ($fila) {
+            if (mb_strtoupper(trim((string)$fila['razon'])) !== 'VARIOS') {
+                throw new InvalidArgumentException(
+                    'El documento vacío ya está reservado para otro cliente.'
+                );
+            }
+            if ((int)$fila['estad'] !== 1) {
+                throw new InvalidArgumentException('El cliente VARIOS está inactivo.');
+            }
+            return (int)$fila['id'];
+        }
+
+        $st = $this->db->prepare(
+            "SELECT id,estad
+             FROM clien
+             WHERE docum IS NULL AND UPPER(TRIM(razon))='VARIOS'
+             ORDER BY id ASC
+             LIMIT 1"
+        );
+        $st->execute();
+        $fila = $st->fetch(PDO::FETCH_ASSOC);
+
+        if ($fila) {
+            if ((int)$fila['estad'] !== 1) {
+                throw new InvalidArgumentException('El cliente VARIOS está inactivo.');
+            }
+
+            try {
+                $up = $this->db->prepare(
+                    'UPDATE clien SET docum=:docum WHERE id=:id AND docum IS NULL'
+                );
+                $up->execute(['docum'=>'','id'=>(int)$fila['id']]);
+            } catch (PDOException $e) {
+                if ((int)($e->errorInfo[1] ?? 0) !== 1062) {
+                    throw $e;
+                }
+            }
+
+            $st = $this->db->prepare(
+                "SELECT id,razon,estad FROM clien WHERE docum='' LIMIT 1"
+            );
+            $st->execute();
+            $fila = $st->fetch(PDO::FETCH_ASSOC);
+
+            if (!$fila || mb_strtoupper(trim((string)$fila['razon'])) !== 'VARIOS'
+                || (int)$fila['estad'] !== 1) {
+                throw new InvalidArgumentException('No se pudo resolver el cliente VARIOS.');
+            }
+            return (int)$fila['id'];
+        }
+
+        try {
+            $ins = $this->db->prepare(
+                "INSERT INTO clien (tipod,docum,razon)
+                 VALUES ('VARIOS','','VARIOS')"
+            );
+            $ins->execute();
+            return (int)$this->db->lastInsertId();
+        } catch (PDOException $e) {
+            if ((int)($e->errorInfo[1] ?? 0) !== 1062) {
+                throw $e;
+            }
+
+            $st = $this->db->prepare(
+                "SELECT id,razon,estad FROM clien WHERE docum='' LIMIT 1"
+            );
+            $st->execute();
+            $fila = $st->fetch(PDO::FETCH_ASSOC);
+
+            if (!$fila || mb_strtoupper(trim((string)$fila['razon'])) !== 'VARIOS'
+                || (int)$fila['estad'] !== 1) {
+                throw new InvalidArgumentException('No se pudo resolver el cliente VARIOS.');
+            }
+            return (int)$fila['id'];
+        }
+    }
+
     public function buscarCliente(string $docum): ?array
     {
         $st = $this->db->prepare(
