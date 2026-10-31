@@ -8,20 +8,39 @@
    Crear las tablas exclusivas de Cotización.
 
    REGLAS:
-   - Cotización no reserva stock.
-   - Cotización no modifica stock.
+   - cotiz.id se genera mediante secot.
+   - secot controla exclusivamente los ID de Cotización.
+   - La serie C001 se administra mediante venta.numer.
+   - Cotización no reserva ni modifica stock.
    - Cotización no genera saldos.
    - Guardar registra la cotización.
    - Cancelar cambia únicamente su estado.
-   - Serie C001 se administra mediante venta.numer.
 
    NOMBRES INTERNOS:
    - cotiz = cabecera.
    - dtall = detalle.
+   - secot = secuencia interna.
+============================================================ */
+
+
+/* ============================================================
+   SECUENCIA INTERNA
+============================================================ */
+
+CREATE TABLE IF NOT EXISTS secot (
+    id     TINYINT UNSIGNED NOT NULL PRIMARY KEY,
+    valor  INT UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+
+/* ============================================================
+   CABECERA
 ============================================================ */
 
 CREATE TABLE IF NOT EXISTS cotiz (
-    id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id     INT UNSIGNED NOT NULL PRIMARY KEY,
     clien  INT UNSIGNED NOT NULL,
     vende  INT UNSIGNED NOT NULL,
     placa  VARCHAR(7) NULL,
@@ -59,6 +78,10 @@ CREATE TABLE IF NOT EXISTS cotiz (
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
 
+
+/* ============================================================
+   DETALLE
+============================================================ */
 
 CREATE TABLE IF NOT EXISTS dtall (
     id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
