@@ -23,7 +23,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>N°</th>
+                    <th>ID</th>
+                    <th>Documento</th>
                     <th>Cliente</th>
                     <th>Estado</th>
                     <th>Total</th>

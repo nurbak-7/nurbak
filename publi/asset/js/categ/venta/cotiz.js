@@ -283,7 +283,6 @@ const cerrarModal = det => {
                 ctx.q('[data-cotiz-docum]').value = cot.docum || '';
                 ctx.q('[data-cotiz-razon]').value = cot.razon || '';
                 ctx.q('[data-cotiz-direc]').value = cot.direc || '';
-                ctx.q('[data-cotiz-obser]').value = cot.obser || '';
                 ctx.q('[data-cotiz-placa]').value = cot.placa || '';
                 ctx.q('[data-cotiz-vende-cod]').value = cot.vende_cod || '';
                 ctx.q('[data-cotiz-vende-cod]').dataset.codig = cot.vende_cod || '';
@@ -392,6 +391,7 @@ ctx.cerrar('error');
                 const filas = datos.cotizaciones || [];
                 cuerp.innerHTML = filas.map(fila => `
                     <tr>
+                        <td>${esc(fila.id)}</td>
                         <td class="cotiz-lista-num">${esc(fila.serie)}-${esc(String(fila.numco))}</td>
                         <td class="cotiz-lista-cliente">
                             <strong>${esc(fila.razon || '—')}</strong>
