@@ -58,43 +58,64 @@ function pie(
         $yCuen = max($y + 7.0, $pdf->GetY() + 1.5);
 
         if ($fil !== []) {
+            /* Bloque compacto alineado a la izquierda.
+               Las columnas toman el ancho de su contenido más un margen corto.
+               Todos los textos permanecen centrados dentro de su columna. */
             $x = 10.0;
-            $cols = [48.0, 71.0, 71.0];
-            $hh = 5.0;
-            $hr = 5.0;
-            $pdf->SetDrawColor(0, 0, 0);
-            $pdf->SetLineWidth(0.2);
-
-            $px = $x;
-            $pdf->SetFont('Courier', 'B', 7.5);
-            foreach ($cols as $i => $cw) {
-                $pdf->SetFillColor(0, 0, 0);
-                $pdf->Rect($px, $yCuen, $cw, $hh, 'DF');
-                $pdf->SetTextColor(255, 255, 255);
-                $pdf->SetXY($px + 0.5, $yCuen);
-                $pdf->Cell($cw - 1, $hh, texto((string)($tit[$i] ?? '')), 0, 0, 'C');
-                $px += $cw;
-            }
-
-            $pdf->SetTextColor(0, 0, 0);
-            $yy = $yCuen + $hh;
+            $valsFil = [];
             foreach ($fil as $fila) {
-                $vals = [
+                $valsFil[] = [
                     (string)($fila['banc'] ?? ''),
                     (string)($fila['cta'] ?? ''),
                     (string)($fila['cci'] ?? ''),
                 ];
+            }
+
+            $pdf->SetFont('Courier', 'B', 7.5);
+            $cols = [];
+            for ($i = 0; $i < 3; $i++) {
+                $max = $pdf->GetStringWidth(texto((string)($tit[$i] ?? '')));
+                foreach ($valsFil as $vals) {
+                    $pdf->SetFont('Courier', $i === 0 ? 'B' : '', 7.5);
+                    $max = max($max, $pdf->GetStringWidth(texto($vals[$i])));
+                }
+                $cols[$i] = $max + 3.0;
+            }
+
+            $hh = 4.2;
+            $hr = 4.0;
+            $ancho = array_sum($cols);
+
+            /* Encabezados blancos con texto azul oscuro. */
+            $pdf->SetFont('Courier', 'B', 7.5);
+            $pdf->SetTextColor(0, 48, 105);
+            $px = $x;
+            foreach ($cols as $i => $cw) {
+                $pdf->SetXY($px, $yCuen);
+                $pdf->Cell($cw, $hh, texto((string)($tit[$i] ?? '')), 0, 0, 'C');
+                $px += $cw;
+            }
+
+            /* Separadores horizontales discretos; sin cajas ni marco exterior. */
+            $pdf->SetDrawColor(190, 198, 208);
+            $pdf->SetLineWidth(0.15);
+            $yy = $yCuen + $hh;
+            $pdf->Line($x, $yy, $x + $ancho, $yy);
+
+            foreach ($valsFil as $vals) {
                 $px = $x;
                 foreach ($cols as $i => $cw) {
-                    $pdf->Rect($px, $yy, $cw, $hr);
                     $pdf->SetFont('Courier', $i === 0 ? 'B' : '', 7.5);
-                    $pdf->SetXY($px + 0.5, $yy);
-                    $pdf->Cell($cw - 1, $hr, corta($pdf, $vals[$i], $cw - 2), 0, 0, 'C');
+                    $pdf->SetTextColor(20, 35, 55);
+                    $pdf->SetXY($px, $yy);
+                    $pdf->Cell($cw, $hr, texto($vals[$i]), 0, 0, 'C');
                     $px += $cw;
                 }
                 $yy += $hr;
+                $pdf->Line($x, $yy, $x + $ancho, $yy);
             }
-            $yMarc = $yy + 4.0;
+
+            $yMarc = $yy + 3.0;
         } else {
             $yMarc = $yCuen;
         }
