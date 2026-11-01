@@ -56,7 +56,7 @@ function clien(
     /* COLUMNA DERECHA */
     $der = $fisc
         ? [
-            'PLACA / MOTOR' => (string)($doc['placa'] ?? ''),
+            'PLACA' => (string)($doc['placa'] ?? ''),
             'FORMA DE PAGO' => (string)($doc['formp'] ?? ''),
             'MEDIO DE PAGO' => (string)($doc['medio'] ?? ''),
             'VENDEDOR'      => (string)($doc['vende_nom'] ?? ''),
@@ -64,7 +64,7 @@ function clien(
         : [
             'VIGENCIA'      => $fDat((string)($doc['vigia'] ?? '')),
             'VENDEDOR'      => (string)($doc['vende_nom'] ?? ''),
-            'PLACA / MOTOR' => (string)($doc['placa'] ?? ''),
+            'PLACA' => (string)($doc['placa'] ?? ''),
         ];
 
     /* MARCO DEL BLOQUE */
