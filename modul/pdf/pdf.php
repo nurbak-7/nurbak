@@ -130,20 +130,12 @@ if (!is_array($data) || !isset($data['doc'], $data['detal'])) {
 }
 
 /* ============================================================
-   NIVEL 3 — ENTREGA AL DISEÑO DEL DOCUMENTO
+   NIVEL 3 — ENTREGA AL GENERADOR COMÚN
    ------------------------------------------------------------
-   Cotización tiene presentación propia dentro de su área.
-   Factura, Boleta y los demás documentos conservan el diseño
-   común sin cambios.
+   Todos los documentos utilizan el mismo coordinador PDF.
+   Las diferencias visuales se resuelven mediante la configuración
+   y los componentes comunes, según el tipo de documento.
 ============================================================ */
-if ($modu === 'venta' && $docu === 'cotiz') {
-    require_once __DIR__ . '/comun/conf.php';
-    require_once __DIR__ . '/venta/cotiz/emite.php';
-
-    emiteCotiz($data['doc'], $data['detal'], cfg());
-    exit;
-}
-
 require_once __DIR__ . '/comun/conf.php';
 require_once __DIR__ . '/comun/base.php';
 

@@ -38,6 +38,51 @@ function cfg(): array
             'direc'  => 'AV. IQUITOS 248 INT. 5 LIMA - LIMA - LA VICTORIA',
             'ruc'    => '20610958029',
             'logo'   => __DIR__ . '/logo.jpg',
+
+            /* CUENTAS BANCARIAS — USO EXCLUSIVO DE COTIZACIÓN */
+            'cuen' => [
+                'titu' => [
+                    'FORMAS DE PAGO',
+                    'CUENTA CORRIENTE',
+                    'CUENTA CCI',
+                ],
+                'fila' => [
+                    [
+                        'banc' => 'BBVA',
+                        'cta'  => '0011-0115-0200723142',
+                        'cci'  => '011-115-000200723142-32',
+                    ],
+                    [
+                        'banc' => 'INTERBANK',
+                        'cta'  => '200-300705429-5',
+                        'cci'  => '003-200-003007054295-33',
+                    ],
+                ],
+            ],
+
+            /* MARCAS — 8 COLUMNAS × 2 FILAS, SOLO COTIZACIÓN */
+            'marc' => [
+                [
+                    ['nomb' => 'HONDA',      'colo' => [0, 0, 0]],
+                    ['nomb' => 'HYUNDAI',    'colo' => [0, 48, 105]],
+                    ['nomb' => 'MAZDA',      'colo' => [0, 166, 214]],
+                    ['nomb' => 'MITSUBISHI', 'colo' => [128, 42, 132]],
+                    ['nomb' => 'NISSAN',     'colo' => [0, 153, 76]],
+                    ['nomb' => 'SUZUKI',     'colo' => [210, 35, 42]],
+                    ['nomb' => 'SUBARU',     'colo' => [0, 105, 190]],
+                    ['nomb' => 'TOYOTA',     'colo' => [0, 0, 0]],
+                ],
+                [
+                    ['nomb' => 'CHANGAN',   'colo' => [0, 0, 0]],
+                    ['nomb' => 'CHERY',     'colo' => [0, 0, 0]],
+                    ['nomb' => 'DFSK',      'colo' => [0, 0, 0]],
+                    ['nomb' => 'DONGFENG',  'colo' => [0, 0, 0]],
+                    ['nomb' => 'FAW',       'colo' => [0, 0, 0]],
+                    ['nomb' => 'GRET WALL', 'colo' => [0, 0, 0]],
+                    ['nomb' => 'GEELY',     'colo' => [0, 0, 0]],
+                    ['nomb' => 'CHEVROLET', 'colo' => [0, 166, 214]],
+                ],
+            ],
         ],
     ];
 }

@@ -221,6 +221,12 @@ function emite(
     global $pag, $blo, $esp;
 
     $fisc = esFiscal($doc, $conf);
+    $tipoDoc = trim((string)($doc['tipo'] ?? ''));
+    $cotiz = in_array($tipoDoc, ['COTIZACIÓN', 'COTIZACION'], true);
+
+    /* Cotización necesita reservar su cierre informativo adicional.
+       El cálculo de bloques y la paginación existentes no se alteran. */
+    $blo['pie']['alt'] = $cotiz ? 53 : 15;
 
     $pdf = new FPDF(
         $conf['orie'],
@@ -376,7 +382,9 @@ function emite(
 
     pie(
         $pdf,
-        $doc
+        $doc,
+        $conf,
+        $blo['pie']
     );
 
     $nom = preg_replace(

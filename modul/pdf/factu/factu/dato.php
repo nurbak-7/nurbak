@@ -34,7 +34,7 @@ function datos(int $id): array
     $logi = LOGINDB::abrir();
 
     $st = $fact->prepare(
-        'SELECT id,opera,docum,razon,direc,serie,numer,fecha,formp,subto,igv,total,estad
+        'SELECT id,opera,docum,razon,direc,serie,numer,fecha,formp,subto,igv,total,estad,obser
          FROM factu WHERE id=:id LIMIT 1'
     );
     $st->execute(['id' => $id]);
@@ -91,6 +91,7 @@ function datos(int $id): array
         'serie' => (string)($cab['serie'] ?? ''),
         'nume' => (int)($cab['numer'] ?? 0),
         'estado' => (string)($cab['estad'] ?? ''),
+        'obser' => (string)($cab['obser'] ?? ''),
         'fecha' => (string)($cab['fecha'] ?? ''),
         'docum' => (string)($cab['docum'] ?? ''),
         'razon' => (string)($cab['razon'] ?? ''),
