@@ -29,7 +29,6 @@ function qtotl(FPDF $pdf, array $doc, float $y, float $ancho): float
 {
     /* NIVEL 5.3.1 — CAJA INFERIOR DE TOTALES */
     $x = 10;
-    $xd = 125;
     $h = 30;
     $pdf->SetDrawColor(120, 120, 120);
 
@@ -48,17 +47,26 @@ function qtotl(FPDF $pdf, array $doc, float $y, float $ancho): float
 
     /* NIVEL 5.3.2 — VALORES */
     $campos = [
-        'SUBTOTAL S/ :' => $doc['subto'] ?? 0,
-        'IGV 18% :' => $doc['igv'] ?? 0,
-        'TOTAL S/ :' => $doc['total'] ?? 0,
+        'SUBTOTAL S/' => $doc['subto'] ?? 0,
+        'IGV 18%'     => $doc['igv'] ?? 0,
+        'TOTAL S/'    => $doc['total'] ?? 0,
     ];
+
+    /* Etiqueta, dos puntos y valor en columnas compactas.
+       Los tres importes comienzan en la misma coordenada. */
+    $anchoEtq = 22.5;
+    $anchoDos = 2.5;
+    $anchoVal = 24.0;
+    $anchoBlo = $anchoEtq + $anchoDos + $anchoVal;
+    $xd = $x + $ancho - 15.0 - $anchoBlo;
 
     $pdf->SetFont('Courier', 'B', 8.5);
     $yy = $y + 4;
     foreach ($campos as $lab => $val) {
         $pdf->SetXY($xd, $yy);
-        $pdf->Cell(45, 6, texto($lab), 0, 0, 'L');
-        $pdf->Cell(15, 6, fnum($val), 0, 1, 'R');
+        $pdf->Cell($anchoEtq, 6, texto($lab), 0, 0, 'L');
+        $pdf->Cell($anchoDos, 6, ':', 0, 0, 'C');
+        $pdf->Cell($anchoVal, 6, fnum($val), 0, 1, 'L');
         $yy += 6;
     }
 
