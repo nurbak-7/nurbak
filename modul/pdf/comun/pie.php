@@ -16,20 +16,25 @@ function pie(
     array $conf = [],
     array $blo = []
 ): void {
-    $tipo = trim((string)($doc['tipo'] ?? ''));
+    $tipo = strtoupper(trim((string)($doc['tipo'] ?? '')));
     $cotiz = in_array($tipo, ['COTIZACIÓN', 'COTIZACION'], true);
+    $fisc = in_array($tipo, $conf['fisc'] ?? [], true);
     $y = (float)($blo['y'] ?? 272.0);
 
     /* OBSERVACIÓN — LOS TRES DOCUMENTOS */
     $obs = trim((string)($doc['obser'] ?? ''));
     $pdf->SetTextColor(0, 0, 0);
     $pdf->SetFont('Courier', 'B', 7.2);
-    $pdf->SetXY(10, $y + 0.5);
+    $yObs = $fisc ? $y + 9.0 : $y + 0.5;
+    $pdf->SetXY(10, $yObs);
     $pdf->Cell(27, 3.8, texto('OBSERVACIÓN:'), 0, 0, 'L');
 
     $pdf->SetFont('Courier', '', 7.0);
-    $pdf->SetXY(38, $y + 0.5);
-    if ($obs !== '') {
+    $pdf->SetXY(38, $yObs);
+    if ($fisc) {
+        /* El cierre fiscal deja una sola línea debajo del marco QR/totales. */
+        $pdf->Cell(162, 3.4, corta($pdf, $obs, 162), 0, 1, 'L');
+    } elseif ($obs !== '') {
         $pdf->MultiCell(162, 3.4, texto($obs), 0, 'L');
     } else {
         $pdf->Cell(162, 3.4, '', 0, 1, 'L');
