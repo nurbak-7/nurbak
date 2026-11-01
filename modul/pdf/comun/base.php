@@ -224,9 +224,10 @@ function emite(
     $tipoDoc = trim((string)($doc['tipo'] ?? ''));
     $cotiz = in_array($tipoDoc, ['COTIZACIÓN', 'COTIZACION'], true);
 
-    /* Cotización necesita reservar su cierre informativo adicional.
-       El cálculo de bloques y la paginación existentes no se alteran. */
+    /* Cotización reserva el alto real del mismo cuadro discontinuo de totales.
+       El algoritmo de bloques y la paginación existentes no se modifican. */
     $blo['pie']['alt'] = $cotiz ? 53 : 15;
+    $blo['tota']['alt'] = $cotiz ? 30 : 15;
 
     $pdf = new FPDF(
         $conf['orie'],
@@ -311,11 +312,17 @@ function emite(
         $blo['deta']['y']
     );
 
+    /* La observación fiscal va después del detalle y antes del cierre QR/totales.
+       Su espacio se reserva solo cuando tiene contenido; el límite ajustado se
+       entrega a la misma tabla y esta conserva su mecanismo de saltos actual. */
+    $obsFiscal = $fisc && trim((string)($doc['obser'] ?? '')) !== '';
+    $limDeta = $obsFiscal ? $lim - 15.0 : $lim;
+
     $y = tabla(
         $pdf,
         $detal,
         $ini,
-        $lim
+        $limDeta
     );
 
     /* Si el detalle agotó el contenedor reservado, la tabla o el
@@ -384,7 +391,8 @@ function emite(
         $pdf,
         $doc,
         $conf,
-        $blo['pie']
+        $blo['pie'],
+        $y
     );
 
     $nom = preg_replace(
