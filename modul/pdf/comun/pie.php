@@ -14,8 +14,7 @@ function pie(
     FPDF $pdf,
     array $doc,
     array $conf = [],
-    array $blo = [],
-    float $yDetalle = 0.0
+    array $blo = []
 ): void {
     $tipo = strtoupper(trim((string)($doc['tipo'] ?? '')));
     $cotiz = in_array($tipo, ['COTIZACIÓN', 'COTIZACION'], true);
@@ -26,22 +25,25 @@ function pie(
     $obs = trim((string)($doc['obser'] ?? ''));
     if ($obs !== '') {
         $pdf->SetTextColor(0, 0, 0);
-        $pdf->SetFont('Courier', 'B', 7.2);
 
-        /* Factura y Boleta: debajo del detalle, antes del bloque fiscal.
-           Cotización conserva su ubicación debajo de los totales. */
-        $yObs = $fisc && $yDetalle > 0
-            ? $yDetalle
-            : $y + 0.5;
-
-        $pdf->SetXY(10, $yObs);
-        $pdf->Cell(27, 3.8, texto('OBSERVACIÓN:'), 0, 0, 'L');
-
-        $pdf->SetFont('Courier', '', 7.0);
-        $pdf->SetXY(38, $yObs);
         if ($fisc) {
-            $pdf->Cell(162, 3.4, corta($pdf, $obs, 162), 0, 1, 'L');
+            /* Factura y Boleta: línea compacta debajo del QR,
+               dentro del borde inferior ya existente. El QR conserva
+               su tamaño y posición originales. */
+            $yObs = $y + 4.0;
+            $pdf->SetFont('Courier', 'B', 5.0);
+            $pdf->Text(11, $yObs, texto('OBSERVACIÓN:'));
+
+            $pdf->SetFont('Courier', '', 5.0);
+            $pdf->Text(38, $yObs, corta($pdf, $obs, 160));
         } else {
+            /* Cotización conserva su ubicación debajo de los totales. */
+            $pdf->SetFont('Courier', 'B', 7.2);
+            $pdf->SetXY(10, $y + 0.5);
+            $pdf->Cell(27, 3.8, texto('OBSERVACIÓN:'), 0, 0, 'L');
+
+            $pdf->SetFont('Courier', '', 7.0);
+            $pdf->SetXY(38, $y + 0.5);
             $pdf->MultiCell(162, 3.4, texto($obs), 0, 'L');
         }
     }
