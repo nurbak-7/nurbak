@@ -52,23 +52,42 @@ function qtotl(FPDF $pdf, array $doc, float $y, float $ancho): float
         'TOTAL S/'    => $doc['total'] ?? 0,
     ];
 
-    /* Columnas fijas: etiqueta y dos puntos; importes alineados a la derecha.
-       fnum() siempre entrega dos decimales, por lo que al compartir el mismo
-       borde derecho también quedan alineados verticalmente los puntos decimales.
-       El borde derecho coincide con el final de la columna TOTAL de productos. */
-    $anchoEtq = 25.0;
-    $anchoDos = 2.5;
-    $anchoVal = 27.0;
-    $anchoBlo = $anchoEtq + $anchoDos + $anchoVal;
-    $xd = $x + $ancho - $anchoBlo;
+    /* Alineación con la columna TOTAL de la tabla de productos.
+       Los importes comparten un mismo borde derecho para alinear sus puntos
+       decimales, con una pequeña entrada respecto al borde de la columna. */
+    $colsDet = [10.0, 28.0, 89.0, 16.0, 22.0, 25.0];
+    $xTotal = 10.0 + array_sum(array_slice($colsDet, 0, 5));
+    $centroTotal = $xTotal + ($colsDet[5] / 2);
 
     $pdf->SetFont('Courier', 'B', 8.5);
+    $anchoEtq = $pdf->GetStringWidth('SUBTOTAL S/') + 1.0;
+    $anchoDos = 2.0;
+    $fmt = [];
+    foreach ($campos as $lab => $val) {
+        $fmt[$lab] = fnum($val);
+    }
+    $anchoVal = max(array_map(
+        static fn(string $v): float => $pdf->GetStringWidth($v),
+        array_values($fmt)
+    )) + 1.5;
+
+    /* Mantiene el centro visual de un importe habitual sobre la columna
+       TOTAL, pero acerca el campo numérico al separador ':' sin perder
+       la alineación decimal entre las tres cantidades. */
+    $anchoTexto = $pdf->GetStringWidth('000.00');
+    $finVal = $centroTotal + ($anchoTexto / 2);
+    $iniVal = $finVal - $anchoVal;
+    $iniDos = $iniVal - $anchoDos;
+    $iniEtq = $iniDos - $anchoEtq;
+
     $yy = $y + 4;
     foreach ($campos as $lab => $val) {
-        $pdf->SetXY($xd, $yy);
+        $pdf->SetXY($iniEtq, $yy);
         $pdf->Cell($anchoEtq, 6, texto($lab), 0, 0, 'L');
+        $pdf->SetXY($iniDos, $yy);
         $pdf->Cell($anchoDos, 6, ':', 0, 0, 'C');
-        $pdf->Cell($anchoVal, 6, fnum($val), 0, 1, 'R');
+        $pdf->SetXY($iniVal, $yy);
+        $pdf->Cell($anchoVal, 6, $fmt[$lab], 0, 1, 'R');
         $yy += 6;
     }
 

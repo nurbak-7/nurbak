@@ -80,18 +80,23 @@ function tabla(FPDF $pdf, array $detal, float $y, float $lim = 258): float
         }
 
         $descr = corta($pdf, (string)($row['descr'] ?? ''), 85);
+        $cant = (float)($row['canti'] ?? 0);
+        $cantTxt = abs($cant - round($cant)) < 0.0000001
+            ? (string)(int)round($cant)
+            : rtrim(rtrim(number_format($cant, 3, '.', ''), '0'), '.');
+
         $vals = [
             (string)($i + 1),
             (string)($row['codig'] ?? ''),
             $descr,
-            fnum($row['canti'] ?? 0),
+            $cantTxt,
             fnum($row['preun'] ?? 0),
             fnum($row['total'] ?? 0),
         ];
 
         $pdf->SetXY($x, $y);
         foreach ($cols as $j => $w) {
-            $ali = in_array($j, [0, 3], true) ? 'C' : ($j >= 4 ? 'R' : 'L');
+            $ali = in_array($j, [0, 1, 3, 4, 5], true) ? 'C' : 'L';
             $pdf->Cell($w, $h, texto($vals[$j]), 0, $j === count($cols) - 1 ? 1 : 0, $ali);
         }
         $y += $h;
