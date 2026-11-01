@@ -14,7 +14,8 @@ function pie(
     FPDF $pdf,
     array $doc,
     array $conf = [],
-    array $blo = []
+    array $blo = [],
+    float $yDetalle = 0.0
 ): void {
     $tipo = strtoupper(trim((string)($doc['tipo'] ?? '')));
     $cotiz = in_array($tipo, ['COTIZACIÓN', 'COTIZACION'], true);
@@ -23,21 +24,26 @@ function pie(
 
     /* OBSERVACIÓN — LOS TRES DOCUMENTOS */
     $obs = trim((string)($doc['obser'] ?? ''));
-    $pdf->SetTextColor(0, 0, 0);
-    $pdf->SetFont('Courier', 'B', 7.2);
-    $yObs = $fisc ? $y + 9.0 : $y + 0.5;
-    $pdf->SetXY(10, $yObs);
-    $pdf->Cell(27, 3.8, texto('OBSERVACIÓN:'), 0, 0, 'L');
+    if ($obs !== '') {
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('Courier', 'B', 7.2);
 
-    $pdf->SetFont('Courier', '', 7.0);
-    $pdf->SetXY(38, $yObs);
-    if ($fisc) {
-        /* El cierre fiscal deja una sola línea debajo del marco QR/totales. */
-        $pdf->Cell(162, 3.4, corta($pdf, $obs, 162), 0, 1, 'L');
-    } elseif ($obs !== '') {
-        $pdf->MultiCell(162, 3.4, texto($obs), 0, 'L');
-    } else {
-        $pdf->Cell(162, 3.4, '', 0, 1, 'L');
+        /* Factura y Boleta: debajo del detalle, antes del bloque fiscal.
+           Cotización conserva su ubicación debajo de los totales. */
+        $yObs = $fisc && $yDetalle > 0
+            ? $yDetalle
+            : $y + 0.5;
+
+        $pdf->SetXY(10, $yObs);
+        $pdf->Cell(27, 3.8, texto('OBSERVACIÓN:'), 0, 0, 'L');
+
+        $pdf->SetFont('Courier', '', 7.0);
+        $pdf->SetXY(38, $yObs);
+        if ($fisc) {
+            $pdf->Cell(162, 3.4, corta($pdf, $obs, 162), 0, 1, 'L');
+        } else {
+            $pdf->MultiCell(162, 3.4, texto($obs), 0, 'L');
+        }
     }
 
     /* CUENTAS BANCARIAS — SOLO COTIZACIÓN */

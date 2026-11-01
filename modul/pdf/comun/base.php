@@ -311,11 +311,17 @@ function emite(
         $blo['deta']['y']
     );
 
+    /* La observación fiscal va después del detalle y antes del cierre QR/totales.
+       Su espacio se reserva solo cuando tiene contenido; el límite ajustado se
+       entrega a la misma tabla y esta conserva su mecanismo de saltos actual. */
+    $obsFiscal = $fisc && trim((string)($doc['obser'] ?? '')) !== '';
+    $limDeta = $obsFiscal ? $lim - 15.0 : $lim;
+
     $y = tabla(
         $pdf,
         $detal,
         $ini,
-        $lim
+        $limDeta
     );
 
     /* Si el detalle agotó el contenedor reservado, la tabla o el
@@ -384,7 +390,8 @@ function emite(
         $pdf,
         $doc,
         $conf,
-        $blo['pie']
+        $blo['pie'],
+        $y
     );
 
     $nom = preg_replace(
