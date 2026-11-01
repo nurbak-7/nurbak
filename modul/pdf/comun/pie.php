@@ -27,15 +27,16 @@ function pie(
         $pdf->SetTextColor(0, 0, 0);
 
         if ($fisc) {
-            /* Factura y Boleta: línea compacta debajo del QR,
-               dentro del borde inferior ya existente. El QR conserva
-               su tamaño y posición originales. */
-            $yObs = $y + 4.0;
-            $pdf->SetFont('Courier', 'B', 5.0);
-            $pdf->Text(11, $yObs, texto('OBSERVACIÓN:'));
+            /* Factura y Boleta: observación centrada debajo del QR.
+               Usa la misma tipografía y tamaño que la línea SON.
+               Se mantiene dentro del ancho disponible bajo el QR. */
+            $pdf->SetFont('Courier', 'I', 7.5);
+            $lineaObs = 'OBSERVACIÓN: ' . $obs;
+            $anchoObs = 48.0;
+            $lineaObs = corta($pdf, $lineaObs, $anchoObs);
 
-            $pdf->SetFont('Courier', '', 5.0);
-            $pdf->Text(38, $yObs, corta($pdf, $obs, 160));
+            $pdf->SetXY(10.0, $y + 2.0);
+            $pdf->Cell($anchoObs, 3.0, $lineaObs, 0, 0, 'C');
         } else {
             /* Cotización conserva su ubicación debajo de los totales. */
             $pdf->SetFont('Courier', 'B', 7.2);
