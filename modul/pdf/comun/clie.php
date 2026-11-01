@@ -27,9 +27,27 @@ function clien(
 
     $fisc = esFiscal($doc, $conf);
 
+    /* FORMATO VISUAL DE FECHA: DÍA-MES-AÑO.
+       Si el origen incluye hora, se conserva sin modificarla. */
+    $fDat = static function (string $valor): string {
+        $valor = trim($valor);
+
+        if (preg_match('/^(\d{4})-(\d{2})-(\d{2})(.*)$/', $valor, $m)) {
+            $anio = (int)$m[1];
+            $mes  = (int)$m[2];
+            $dia  = (int)$m[3];
+
+            if (checkdate($mes, $dia, $anio)) {
+                return sprintf('%02d-%02d-%04d', $dia, $mes, $anio) . $m[4];
+            }
+        }
+
+        return $valor;
+    };
+
     /* COLUMNA IZQUIERDA */
     $izq = [
-        'FECHA'     => (string)($doc['fecha'] ?? ''),
+        'FECHA'     => $fDat((string)($doc['fecha'] ?? '')),
         'RUC / DNI' => (string)($doc['docum'] ?? ''),
         'CLIENTE'   => (string)($doc['razon'] ?? ''),
         'DIRECCIÓN' => (string)($doc['direc'] ?? ''),
@@ -44,7 +62,7 @@ function clien(
             'VENDEDOR'      => (string)($doc['vende_nom'] ?? ''),
         ]
         : [
-            'VIGENCIA'      => (string)($doc['vigia'] ?? ''),
+            'VIGENCIA'      => $fDat((string)($doc['vigia'] ?? '')),
             'VENDEDOR'      => (string)($doc['vende_nom'] ?? ''),
             'PLACA / MOTOR' => (string)($doc['placa'] ?? ''),
         ];
