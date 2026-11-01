@@ -1000,6 +1000,17 @@ final class CotizRepo
 
                 ]);
 
+                /*
+                 * Asegura el registro de secot si falta.
+                 * Si ya existen cotizaciones, parte del mayor ID guardado.
+                 * INSERT IGNORE conserva el valor de una secuencia existente.
+                 */
+                $ini = $this->db->prepare(
+                    'INSERT IGNORE INTO secot (id,valor)
+                     SELECT 1,COALESCE(MAX(id),0) FROM cotiz'
+                );
+                $ini->execute();
+
                 $sec = $this->db->prepare(
                     'SELECT valor FROM secot WHERE id=1 FOR UPDATE'
                 );
@@ -1007,10 +1018,15 @@ final class CotizRepo
                 $valor = $sec->fetchColumn();
 
                 if ($valor === false) {
-                    throw new RuntimeException('La secuencia secot no está inicializada.');
+                    throw new RuntimeException('No fue posible inicializar el registro de secot.');
                 }
 
-                $id = (int)$valor + 1;
+                /* Evita IDs repetidos si el contador quedó por debajo de cotiz.id. */
+                $max = $this->db->query(
+                    'SELECT COALESCE(MAX(id),0) FROM cotiz'
+                );
+                $ultimo = (int)$max->fetchColumn();
+                $id = max((int)$valor, $ultimo) + 1;
 
                 $act = $this->db->prepare(
                     'UPDATE secot SET valor=:valor WHERE id=1'

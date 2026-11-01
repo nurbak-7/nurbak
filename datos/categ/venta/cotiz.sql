@@ -34,6 +34,10 @@ CREATE TABLE IF NOT EXISTS secot (
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
 
+/* Garantiza el registro inicial sin reiniciar una secuencia existente. */
+INSERT IGNORE INTO secot (id, valor)
+VALUES (1, 0);
+
 
 /* ============================================================
    CABECERA
