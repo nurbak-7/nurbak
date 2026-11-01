@@ -21,7 +21,8 @@
 
    NIVEL 3 — DISEÑO
    ------------------------------------------------------------
-   Entrega esos datos al coordinador común:
+   Cotización utiliza su presentación propia. Los demás
+   documentos conservan el coordinador común:
        modul/pdf/comun/base.php
 
    IMPORTANTE:
@@ -129,11 +130,20 @@ if (!is_array($data) || !isset($data['doc'], $data['detal'])) {
 }
 
 /* ============================================================
-   NIVEL 3 — ENTREGA AL DISEÑO COMÚN
+   NIVEL 3 — ENTREGA AL DISEÑO DEL DOCUMENTO
    ------------------------------------------------------------
-   Desde aquí termina la responsabilidad de la categoría.
-   El diseño, la estructura y FPDF pertenecen a comun/.
+   Cotización tiene presentación propia dentro de su área.
+   Factura, Boleta y los demás documentos conservan el diseño
+   común sin cambios.
 ============================================================ */
+if ($modu === 'venta' && $docu === 'cotiz') {
+    require_once __DIR__ . '/comun/conf.php';
+    require_once __DIR__ . '/venta/cotiz/emite.php';
+
+    emiteCotiz($data['doc'], $data['detal'], cfg());
+    exit;
+}
+
 require_once __DIR__ . '/comun/conf.php';
 require_once __DIR__ . '/comun/base.php';
 
