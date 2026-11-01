@@ -33,7 +33,7 @@
         type="text"
         data-opera-obser
         maxlength="255"
-        placeholder="Motor / modelo / año..."
+        placeholder="Ingrese una observación..."
         autocomplete="off"
     >
 </div>
