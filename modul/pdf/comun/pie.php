@@ -58,10 +58,8 @@ function pie(
         $yCuen = max($y + 7.0, $pdf->GetY() + 1.5);
 
         if ($fil !== []) {
-            /* Bloque compacto alineado a la izquierda.
-               Las columnas toman el ancho de su contenido más un margen corto.
-               Todos los textos permanecen centrados dentro de su columna. */
-            $x = 10.0;
+            /* Tabla compacta: alineada a la izquierda y ajustada al contenido. */
+            $x = 12.0;
             $valsFil = [];
             foreach ($fil as $fila) {
                 $valsFil[] = [
@@ -71,22 +69,25 @@ function pie(
                 ];
             }
 
-            $pdf->SetFont('Courier', 'B', 7.5);
+            /* Ancho de cada columna según el texto más largo. */
             $cols = [];
             for ($i = 0; $i < 3; $i++) {
+                $pdf->SetFont('Courier', 'B', 7.5);
                 $max = $pdf->GetStringWidth(texto((string)($tit[$i] ?? '')));
                 foreach ($valsFil as $vals) {
                     $pdf->SetFont('Courier', $i === 0 ? 'B' : '', 7.5);
                     $max = max($max, $pdf->GetStringWidth(texto($vals[$i])));
                 }
-                $cols[$i] = $max + 3.0;
+                $cols[$i] = $max + 4.0;
             }
 
-            $hh = 4.2;
-            $hr = 4.0;
+            $hh = 4.4;
+            $hr = 4.1;
             $ancho = array_sum($cols);
+            $alto = $hh + (count($valsFil) * $hr);
+            $yFin = $yCuen + $alto;
 
-            /* Encabezados blancos con texto azul oscuro. */
+            /* Textos: encabezado azul oscuro y contenido centrado. */
             $pdf->SetFont('Courier', 'B', 7.5);
             $pdf->SetTextColor(0, 48, 105);
             $px = $x;
@@ -96,12 +97,7 @@ function pie(
                 $px += $cw;
             }
 
-            /* Separadores horizontales discretos; sin cajas ni marco exterior. */
-            $pdf->SetDrawColor(190, 198, 208);
-            $pdf->SetLineWidth(0.15);
             $yy = $yCuen + $hh;
-            $pdf->Line($x, $yy, $x + $ancho, $yy);
-
             foreach ($valsFil as $vals) {
                 $px = $x;
                 foreach ($cols as $i => $cw) {
@@ -112,10 +108,50 @@ function pie(
                     $px += $cw;
                 }
                 $yy += $hr;
-                $pdf->Line($x, $yy, $x + $ancho, $yy);
             }
 
-            $yMarc = $yy + 3.0;
+            /* Separadores discontinuos para delimitar las celdas. */
+            $pdf->SetDrawColor(105, 120, 140);
+            $pdf->SetLineWidth(0.16);
+            $trazo = static function (float $x1, float $y1, float $x2, float $y2) use ($pdf): void {
+                $dx = $x2 - $x1;
+                $dy = $y2 - $y1;
+                $len = hypot($dx, $dy);
+                $dash = 1.0;
+                $gap = 0.8;
+                if ($len <= 0) {
+                    return;
+                }
+                for ($pos = 0.0; $pos < $len; $pos += $dash + $gap) {
+                    $fin = min($len, $pos + $dash);
+                    $xa = $x1 + ($dx * $pos / $len);
+                    $ya = $y1 + ($dy * $pos / $len);
+                    $xb = $x1 + ($dx * $fin / $len);
+                    $yb = $y1 + ($dy * $fin / $len);
+                    $pdf->Line($xa, $ya, $xb, $yb);
+                }
+            };
+
+            /* Horizontales: borde superior, divisiones de filas y cierre inferior. */
+            for ($fila = 0; $fila <= count($valsFil) + 1; $fila++) {
+                $lineY = $yCuen + ($fila === 0 ? 0.0 : ($fila === 1 ? $hh : $hh + (($fila - 1) * $hr)));
+                $trazo($x, $lineY, $x + $ancho, $lineY);
+            }
+
+            /* Verticales internos discontinuos. */
+            $px = $x;
+            for ($i = 0; $i < count($cols) - 1; $i++) {
+                $px += $cols[$i];
+                $trazo($px, $yCuen, $px, $yFin);
+            }
+
+            /* Barras laterales sólidas, iguales a las del bloque de marcas. */
+            $pdf->SetDrawColor(0, 0, 0);
+            $pdf->SetLineWidth(0.65);
+            $pdf->Line($x, $yCuen, $x, $yFin);
+            $pdf->Line($x + $ancho, $yCuen, $x + $ancho, $yFin);
+
+            $yMarc = $yFin + 3.0;
         } else {
             $yMarc = $yCuen;
         }
