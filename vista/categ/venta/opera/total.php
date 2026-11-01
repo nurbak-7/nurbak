@@ -26,3 +26,14 @@
     </div>
 
 </div>
+
+<div class="opera-observacion">
+    <label>OBSERVACIÓN:</label>
+    <input
+        type="text"
+        data-opera-obser
+        maxlength="255"
+        placeholder="Motor / modelo / año..."
+        autocomplete="off"
+    >
+</div>
