@@ -76,7 +76,22 @@ function datos(int $id): array
             $su = $logi->prepare('SELECT nombr,apell FROM usuar WHERE id=:id LIMIT 1');
             $su->execute(['id' => (int)$ope['vende']]);
             $usr = $su->fetch(PDO::FETCH_ASSOC) ?: [];
-            $cab['vende_nom'] = trim((string)($usr['nombr'] ?? '') . ' ' . (string)($usr['apell'] ?? ''));
+
+            $nom = preg_split(
+                '/\s+/u',
+                trim((string)($usr['nombr'] ?? '')),
+                -1,
+                PREG_SPLIT_NO_EMPTY
+            ) ?: [];
+
+            $ape = preg_split(
+                '/\s+/u',
+                trim((string)($usr['apell'] ?? '')),
+                -1,
+                PREG_SPLIT_NO_EMPTY
+            ) ?: [];
+
+            $cab['vende_nom'] = trim(($nom[0] ?? '') . ' ' . ($ape[0] ?? ''));
         }
     }
 
