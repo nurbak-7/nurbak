@@ -36,14 +36,13 @@ function encab(
     $pdf->SetDrawColor(0, 0, 0);
     $pdf->SetLineWidth(0.25);
 
-    /* LOGO — fiscal, cotización y nota de venta */
+    /* LOGO */
     $logo = trim((string)($cfg['logo'] ?? ''));
     $tipo = trim((string)($doc['tipo'] ?? ''));
     $cotiz = in_array($tipo, ['COTIZACIÓN', 'COTIZACION'], true);
-    $nota = strtoupper($tipo) === 'NOTA DE VENTA';
 
     if (
-        (esFiscal($doc, $conf) || $cotiz || $nota) &&
+        (esFiscal($doc, $conf) || $cotiz) &&
         $logo !== '' &&
         is_file($logo)
     ) {
@@ -116,12 +115,18 @@ function encab(
         $alt - ($pad * 2)
     );
 
-    $pdf->Rect(
-        $xDoc + $pad,
-        $y + $pad,
-        $docAnc - ($pad * 2),
-        $docAlt
-    );
+    $marX = $xDoc + $pad;
+    $marY = $y + $pad;
+    $marW = $docAnc - ($pad * 2);
+    $marH = $docAlt;
+    $cor  = min(5.0, $marW / 2, $marH / 2);
+
+    $pdf->Line($marX, $marY, $marX + $cor, $marY);
+    $pdf->Line($marX, $marY, $marX, $marY + $marH);
+    $pdf->Line($marX, $marY + $marH, $marX + $cor, $marY + $marH);
+    $pdf->Line($marX + $marW - $cor, $marY, $marX + $marW, $marY);
+    $pdf->Line($marX + $marW, $marY, $marX + $marW, $marY + $marH);
+    $pdf->Line($marX + $marW - $cor, $marY + $marH, $marX + $marW, $marY + $marH);
 
     $tip = (string)($doc['tipo'] ?? 'DOCUMENTO');
     $ser = (string)($doc['serie'] ?? '');

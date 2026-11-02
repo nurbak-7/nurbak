@@ -26,8 +26,6 @@ function clien(
     $col = $anc / 2;
 
     $fisc = esFiscal($doc, $conf);
-    $tipoDoc = strtoupper(trim((string)($doc['tipo'] ?? '')));
-    $nota = $tipoDoc === 'NOTA DE VENTA';
 
     /* FORMATO VISUAL DE FECHA: DÍA-MES-AÑO.
        Si el origen incluye hora, se conserva sin modificarla. */
@@ -56,30 +54,30 @@ function clien(
     ];
 
     /* COLUMNA DERECHA */
-    if ($fisc) {
-        $der = [
-            'PLACA'         => (string)($doc['placa'] ?? ''),
+    $der = $fisc
+        ? [
+            'PLACA' => (string)($doc['placa'] ?? ''),
             'FORMA DE PAGO' => (string)($doc['formp'] ?? ''),
             'MEDIO DE PAGO' => (string)($doc['medio'] ?? ''),
             'VENDEDOR'      => (string)($doc['vende_nom'] ?? ''),
+        ]
+        : [
+            'VIGENCIA'      => $fDat((string)($doc['vigia'] ?? '')),
+            'VENDEDOR'      => (string)($doc['vende_nom'] ?? ''),
+            'PLACA' => (string)($doc['placa'] ?? ''),
         ];
-    } elseif ($nota) {
-        $der = [
-            'VENDEDOR' => (string)($doc['vende_nom'] ?? ''),
-            'PLACA'    => (string)($doc['placa'] ?? ''),
-        ];
-    } else {
-        $der = [
-            'VIGENCIA' => $fDat((string)($doc['vigia'] ?? '')),
-            'VENDEDOR' => (string)($doc['vende_nom'] ?? ''),
-            'PLACA'    => (string)($doc['placa'] ?? ''),
-        ];
-    }
 
-    /* MARCO DEL BLOQUE */
+    /* MARCO ABIERTO DEL BLOQUE */
     $pdf->SetLineWidth(0.25);
     $pdf->SetDrawColor(120, 120, 120);
-    $pdf->Rect($x, $y, $anc, $alt);
+    $cor = min(5.0, $anc / 2, $alt / 2);
+
+    $pdf->Line($x, $y, $x + $cor, $y);
+    $pdf->Line($x, $y, $x, $y + $alt);
+    $pdf->Line($x, $y + $alt, $x + $cor, $y + $alt);
+    $pdf->Line($x + $anc - $cor, $y, $x + $anc, $y);
+    $pdf->Line($x + $anc, $y, $x + $anc, $y + $alt);
+    $pdf->Line($x + $anc - $cor, $y + $alt, $x + $anc, $y + $alt);
 
     /* ALTURA RESPONSIVE DE FILA */
     $filas = max(

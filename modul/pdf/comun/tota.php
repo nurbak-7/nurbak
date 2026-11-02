@@ -31,19 +31,18 @@ function qtotl(FPDF $pdf, array $doc, float $y, float $ancho): float
     $x = 10;
     $h = 30;
     $pdf->SetDrawColor(120, 120, 120);
+    $pdf->SetLineWidth(0.25);
 
-    $lin = static function (FPDF $pdf, float $a, float $b, float $yy): void {
-        for ($x = $a; $x < $b; $x += 4) {
-            $pdf->Line($x, $yy, min($x + 2, $b), $yy);
-        }
-    };
+    $cor = min(5.0, $ancho / 2, $h / 2);
+    $der = $x + $ancho;
+    $fin = $y + $h;
 
-    $lin($pdf, $x, $x + $ancho, $y + $h);
-    for ($p = $y; $p < $y + $h; $p += 4) {
-        $pdf->Line($x, $p, $x, min($p + 2, $y + $h));
-        $pdf->Line($x + $ancho, $p, $x + $ancho, min($p + 2, $y + $h));
-    }
-    $lin($pdf, $x, $x + $ancho, $y);
+    $pdf->Line($x, $y, $x + $cor, $y);
+    $pdf->Line($x, $y, $x, $fin);
+    $pdf->Line($x, $fin, $x + $cor, $fin);
+    $pdf->Line($der - $cor, $y, $der, $y);
+    $pdf->Line($der, $y, $der, $fin);
+    $pdf->Line($der - $cor, $fin, $der, $fin);
 
     /* NIVEL 5.3.2 — VALORES */
     $campos = [
