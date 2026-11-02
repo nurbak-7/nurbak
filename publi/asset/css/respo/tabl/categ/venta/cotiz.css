@@ -18,11 +18,18 @@
     .dash-mini.cotiz-mini .cotiz-encabezado{grid-template-columns:1fr}
 }
 
-/* LISTA PRINCIPAL | tablet: conservar proporciones y evitar columnas comprimidas. */
-@media(max-width:1200px){
-    .cotiz-lista-tabla{width:100%;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;}
-    .cotiz-lista-tabla table{width:100%;min-width:760px;table-layout:auto;}
-    .cotiz-lista-tabla th,.cotiz-lista-tabla td{padding:8px 7px;}
-    .cotiz-lista-acc{white-space:nowrap;}
-    .cotiz-lista-acc button{padding:6px 9px;}
+/* ============================================================
+   MODAL PRINCIPAL — LISTA DE COTIZACIONES EN TABLET
+   No interviene en .dash-mini ni en el formulario.
+============================================================ */
+@media (min-width:701px) and (max-width:1200px){
+    .dash-modal .cotiz-lista-barra{gap:10px;margin-bottom:10px;}
+    .dash-modal .cotiz-lista-barra input{padding:8px 9px;font-size:15px;}
+    .dash-modal .cotiz-lista-barra button{padding:8px 12px;font-size:14px;}
+    .dash-modal .cotiz-lista-tabla{width:100%;overflow-x:auto;overflow-y:hidden;}
+    .dash-modal .cotiz-lista-tabla table{width:100%;min-width:860px;font-size:13px;}
+    .dash-modal .cotiz-lista-tabla th,
+    .dash-modal .cotiz-lista-tabla td{padding:8px 7px;}
+    .dash-modal .cotiz-lista-fechas{font-size:.88em;}
+    .dash-modal .cotiz-lista-acc button{min-width:53px;padding:6px 7px;font-size:12px;}
 }

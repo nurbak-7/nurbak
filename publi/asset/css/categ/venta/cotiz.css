@@ -43,71 +43,152 @@
 
 
 /* ============================================================
-   NIVEL 1 — LISTA PRINCIPAL
-   Consulta, búsqueda y acceso a Nueva/Editar Cotización.
+   MODAL PRINCIPAL — LISTA DE COTIZACIONES
+   Solo afecta .cotiz-lista dentro de .dash-modal.
+   La MINI y el formulario de cotización quedan fuera.
 ============================================================ */
-.cotiz-lista{
+.dash-modal .cotiz-lista{
     width:100%;
+    min-width:0;
     box-sizing:border-box;
     font-family:Arial,sans-serif;
 }
-.cotiz-lista-barra{
+.dash-modal .cotiz-lista-barra{
     display:flex;
     align-items:center;
     gap:12px;
-    margin-bottom:12px;
+    margin:0 0 12px;
 }
-.cotiz-lista-barra input{
-    flex:1; min-width:0; padding:9px 10px;
-    border:0; border-bottom:3px solid #d000a8;
-    outline:0; font-size:16px; background:transparent;
+.dash-modal .cotiz-lista-barra input{
+    flex:1 1 auto;
+    min-width:0;
+    box-sizing:border-box;
+    padding:9px 10px;
+    border:0;
+    border-bottom:3px solid #d000a8;
+    outline:0;
+    font-size:16px;
+    background:transparent;
 }
-.cotiz-lista-barra input:hover,
-.cotiz-lista-barra input:focus{border-bottom-color:#60a5fa;}
-.cotiz-lista-barra button{
-    flex-shrink:0; padding:9px 14px; border:1px solid #3984b5;
-    border-radius:10px; color:#34769c; background:#fff; cursor:pointer;
+.dash-modal .cotiz-lista-barra input:hover,
+.dash-modal .cotiz-lista-barra input:focus{
+    border-bottom-color:#60a5fa;
 }
-.cotiz-lista-tabla{width:100%;min-width:0;overflow-x:auto;}
-.cotiz-lista-tabla table{
-    width:100%;min-width:780px;table-layout:auto;
-    border-collapse:collapse;font-size:14px;
-}
-.cotiz-lista-tabla th,.cotiz-lista-tabla td{
-    box-sizing:border-box;border:1px solid #cbd5e1;
-    padding:9px 8px;text-align:left;vertical-align:middle;
-    white-space:normal;overflow-wrap:normal;
-}
-.cotiz-lista-tabla th{
-    background:#e6eef9;color:#374151;font-weight:700;white-space:nowrap;
-}
-/* Seis columnas reales: ID mínimo, Cliente flexible y acciones completas. */
-.cotiz-lista-tabla th:nth-child(1),.cotiz-lista-tabla td:nth-child(1){width:7%;min-width:58px;white-space:nowrap;}
-.cotiz-lista-tabla th:nth-child(2),.cotiz-lista-tabla td:nth-child(2){width:16%;min-width:125px;white-space:nowrap;}
-.cotiz-lista-tabla th:nth-child(3),.cotiz-lista-tabla td:nth-child(3){width:35%;min-width:230px;}
-.cotiz-lista-tabla th:nth-child(4),.cotiz-lista-tabla td:nth-child(4){width:13%;min-width:105px;text-align:center;}
-.cotiz-lista-tabla th:nth-child(5),.cotiz-lista-tabla td:nth-child(5){width:10%;min-width:90px;text-align:right;white-space:nowrap;}
-.cotiz-lista-tabla th:nth-child(6),.cotiz-lista-tabla td:nth-child(6){width:19%;min-width:170px;text-align:center;}
-.cotiz-lista-tabla button{
-    box-sizing:border-box;padding:7px 12px;border:1px solid #3984b5;
-    border-radius:10px;background:#fff;color:#34769c;cursor:pointer;
+.dash-modal .cotiz-lista-barra button{
+    flex:0 0 auto;
+    box-sizing:border-box;
+    padding:9px 14px;
+    border:1px solid #3984b5;
+    border-radius:10px;
+    color:#34769c;
+    background:#fff;
+    cursor:pointer;
     white-space:nowrap;
 }
-.cotiz-lista-tabla button[data-cotiz-list-ver]{border-color:#b77936;color:#94612b;}
-.cotiz-lista-acc{white-space:nowrap;text-align:center;}
-.cotiz-lista-acc button+button{margin-left:5px;}
-.cotiz-lista-cliente{min-width:0;}
-.cotiz-lista-cliente strong{display:block;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.cotiz-lista-fechas{display:block;margin-top:5px;color:#64748b;font-size:.95em;white-space:nowrap;}
-.cotiz-lista-estado{text-align:center;font-weight:600;}
-.cotiz-lista-etiqueta{
-    display:inline-block;padding:5px 12px;border-radius:20px;
-    background:#d1fae5;color:#075b35;font-weight:700;white-space:nowrap;
+.dash-modal .cotiz-lista-tabla{
+    width:100%;
+    min-width:0;
+    max-width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
 }
-.cotiz-lista-total{text-align:right;white-space:nowrap;}
-.cotiz-lista-mensaje{margin:10px 0;text-align:center;}
+.dash-modal .cotiz-lista-tabla table{
+    display:table;
+    width:100%;
+    min-width:980px;
+    max-width:none;
+    height:auto;
+    table-layout:fixed;
+    border-collapse:collapse;
+    border-spacing:0;
+    margin:0;
+    font-size:14px;
+    line-height:1.2;
+}
+.dash-modal .cotiz-lista-tabla thead{display:table-header-group;height:auto;}
+.dash-modal .cotiz-lista-tabla tbody{display:table-row-group;height:auto;}
+.dash-modal .cotiz-lista-tabla tr{display:table-row;height:auto;}
+.dash-modal .cotiz-lista-tabla th,
+.dash-modal .cotiz-lista-tabla td{
+    display:table-cell;
+    height:auto;
+    min-height:0;
+    box-sizing:border-box;
+    border:1px solid #cbd5e1;
+    padding:8px 9px;
+    vertical-align:middle;
+    line-height:1.2;
+}
+.dash-modal .cotiz-lista-tabla th{
+    background:#e6eef9;
+    color:#374151;
+    font-weight:700;
+    white-space:nowrap;
+}
+/* Seis columnas reales: ID, Documento, Cliente, Estado, Total y Acción. */
+.dash-modal .cotiz-lista-tabla th:nth-child(1),
+.dash-modal .cotiz-lista-tabla td:nth-child(1){width:6%;min-width:48px;text-align:left;white-space:nowrap;}
+.dash-modal .cotiz-lista-tabla th:nth-child(2),
+.dash-modal .cotiz-lista-tabla td:nth-child(2){width:17%;text-align:left;white-space:nowrap;}
+.dash-modal .cotiz-lista-tabla th:nth-child(3),
+.dash-modal .cotiz-lista-tabla td:nth-child(3){width:34%;text-align:left;min-width:0;}
+.dash-modal .cotiz-lista-tabla th:nth-child(4),
+.dash-modal .cotiz-lista-tabla td:nth-child(4){width:14%;text-align:center;white-space:nowrap;}
+.dash-modal .cotiz-lista-tabla th:nth-child(5),
+.dash-modal .cotiz-lista-tabla td:nth-child(5){width:11%;text-align:right;white-space:nowrap;}
+.dash-modal .cotiz-lista-tabla th:nth-child(6),
+.dash-modal .cotiz-lista-tabla td:nth-child(6){width:18%;text-align:center;white-space:nowrap;}
+.dash-modal .cotiz-lista-num{white-space:nowrap;}
+.dash-modal .cotiz-lista-cliente{min-width:0;text-align:left;}
+.dash-modal .cotiz-lista-cliente strong{
+    display:block;
+    max-width:100%;
+    overflow:hidden;
+    font-weight:700;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.dash-modal .cotiz-lista-fechas{
+    display:block;
+    margin-top:3px;
+    color:#64748b;
+    font-size:.9em;
+    line-height:1.2;
+    white-space:nowrap;
+}
+.dash-modal .cotiz-lista-estado{text-align:center;white-space:nowrap;font-weight:600;}
+.dash-modal .cotiz-lista-etiqueta{
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:20px;
+    background:#d1fae5;
+    color:#075b35;
+    font-weight:700;
+    white-space:nowrap;
+}
+.dash-modal .cotiz-lista-total{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;}
+.dash-modal .cotiz-lista-acc{text-align:center;white-space:nowrap;}
+.dash-modal .cotiz-lista-acc button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:56px;
+    margin:2px;
+    padding:6px 8px;
+    box-sizing:border-box;
+    border:1px solid #3984b5;
+    border-radius:10px;
+    background:#fff;
+    color:#34769c;
+    font-size:13px;
+    line-height:1.15;
+    white-space:nowrap;
+    cursor:pointer;
+}
+.dash-modal .cotiz-lista-acc button[data-cotiz-list-ver]{border-color:#b77936;color:#94612b;}
+.dash-modal .cotiz-lista-mensaje{margin:10px 0;text-align:center;}
 
 /* ============================================================
    NIVEL FINAL — ADAPTAR COTIZACIÓN A PANTALLAS ESTRECHAS
 ============================================================ */
-
