@@ -26,6 +26,8 @@ function clien(
     $col = $anc / 2;
 
     $fisc = esFiscal($doc, $conf);
+    $tipo = trim((string)($doc['tipo'] ?? ''));
+    $nota = in_array($tipo, ['NOTA DE VENTA', 'NOTA VENTA'], true);
 
     /* FORMATO VISUAL DE FECHA: DÍA-MES-AÑO.
        Si el origen incluye hora, se conserva sin modificarla. */
@@ -61,11 +63,17 @@ function clien(
             'MEDIO DE PAGO' => (string)($doc['medio'] ?? ''),
             'VENDEDOR'      => (string)($doc['vende_nom'] ?? ''),
         ]
-        : [
-            'VIGENCIA'      => $fDat((string)($doc['vigia'] ?? '')),
-            'VENDEDOR'      => (string)($doc['vende_nom'] ?? ''),
-            'PLACA' => (string)($doc['placa'] ?? ''),
-        ];
+        : ($nota
+            ? [
+                'VENDEDOR' => (string)($doc['vende_nom'] ?? ''),
+                'PLACA'    => (string)($doc['placa'] ?? ''),
+            ]
+            : [
+                'VIGENCIA' => $fDat((string)($doc['vigia'] ?? '')),
+                'VENDEDOR' => (string)($doc['vende_nom'] ?? ''),
+                'PLACA'    => (string)($doc['placa'] ?? ''),
+            ]
+        );
 
     /* MARCO ABIERTO DEL BLOQUE */
     $pdf->SetLineWidth(0.25);

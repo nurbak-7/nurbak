@@ -40,9 +40,10 @@ function encab(
     $logo = trim((string)($cfg['logo'] ?? ''));
     $tipo = trim((string)($doc['tipo'] ?? ''));
     $cotiz = in_array($tipo, ['COTIZACIÓN', 'COTIZACION'], true);
+    $nota  = in_array($tipo, ['NOTA DE VENTA', 'NOTA VENTA'], true);
 
     if (
-        (esFiscal($doc, $conf) || $cotiz) &&
+        (esFiscal($doc, $conf) || $cotiz || $nota) &&
         $logo !== '' &&
         is_file($logo)
     ) {
