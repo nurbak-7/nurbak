@@ -5,7 +5,7 @@
 
    NIVEL 6 — PIE
    ------------------------------------------------------------
-   Observación: Factura, Boleta y Cotización.
+   Observación: Factura, Boleta, Cotización y Nota de Venta.
    Cuentas y marcas: uso exclusivo de Cotización.
 ============================================================ */
 declare(strict_types=1);
@@ -19,6 +19,7 @@ function pie(
     $tipo = strtoupper(trim((string)($doc['tipo'] ?? '')));
     $cotiz = in_array($tipo, ['COTIZACIÓN', 'COTIZACION'], true);
     $fisc = in_array($tipo, $conf['fisc'] ?? [], true);
+    $nota = $tipo === 'NOTA DE VENTA';
     $y = (float)($blo['y'] ?? 272.0);
 
     /* OBSERVACIÓN — LOS TRES DOCUMENTOS */
@@ -26,8 +27,8 @@ function pie(
     if ($obs !== '') {
         $pdf->SetTextColor(0, 0, 0);
 
-        if ($fisc) {
-            /* Factura y Boleta: observación centrada debajo del QR.
+        if ($fisc || $nota) {
+            /* Factura, Boleta y Nota de Venta: observación centrada debajo del QR.
                Usa la misma tipografía y tamaño que la línea SON.
                Se mantiene dentro del ancho disponible bajo el QR. */
             $pdf->SetFont('Courier', 'I', 7.5);

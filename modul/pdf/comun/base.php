@@ -163,7 +163,7 @@ function fnum(mixed $valor): string
 /* ============================================================
    COORDINACIÓN DE BLOQUES
 ============================================================ */
-function armaBlo(array &$blo, array $pag, array $esp, bool $fisc): void
+function armaBlo(array &$blo, array $pag, array $esp, bool $conCierre): void
 {
     $blo['cabe']['y'] = $pag['y'];
 
@@ -176,7 +176,7 @@ function armaBlo(array &$blo, array $pag, array $esp, bool $fisc): void
         $pag['limy'] -
         $blo['pie']['alt'];
 
-    if ($fisc) {
+    if ($conCierre) {
         $blo['tota']['y'] =
             $blo['pie']['y'] -
             $esp['tota_pie'] -
@@ -221,11 +221,14 @@ function emite(
     global $pag, $blo, $esp;
 
     $fisc = esFiscal($doc, $conf);
-    $tipoDoc = trim((string)($doc['tipo'] ?? ''));
+    $tipoDoc = strtoupper(trim((string)($doc['tipo'] ?? '')));
     $cotiz = in_array($tipoDoc, ['COTIZACIÓN', 'COTIZACION'], true);
+    $nota = $tipoDoc === 'NOTA DE VENTA';
+    $cierreQr = $fisc || $nota;
 
-    /* Cotización reserva el alto real del mismo cuadro discontinuo de totales.
-       El algoritmo de bloques y la paginación existentes no se modifican. */
+    /* Cotización conserva su cierre comercial propio. Nota de Venta reutiliza
+       el cierre QR/letras/totales existente sin clasificarse como fiscal.
+       El algoritmo de bloques y la paginación se mantienen. */
     $blo['pie']['alt'] = $cotiz ? 53 : 15;
     $blo['tota']['alt'] = $cotiz ? 30 : 15;
 
@@ -253,7 +256,7 @@ function emite(
     /* PÁGINA */
     $pdf->AddPage();
 
-    armaBlo($blo, $pag, $esp, $fisc);
+    armaBlo($blo, $pag, $esp, $cierreQr);
 
     /* CABECERA */
     $pCab = [
@@ -312,11 +315,11 @@ function emite(
         $blo['deta']['y']
     );
 
-    /* La observación fiscal va después del detalle y antes del cierre QR/totales.
-       Su espacio se reserva solo cuando tiene contenido; el límite ajustado se
-       entrega a la misma tabla y esta conserva su mecanismo de saltos actual. */
-    $obsFiscal = $fisc && trim((string)($doc['obser'] ?? '')) !== '';
-    $limDeta = $obsFiscal ? $lim - 15.0 : $lim;
+    /* La observación de documentos con cierre QR va después del detalle.
+       Su espacio se reserva solo cuando tiene contenido; la misma tabla
+       conserva su mecanismo de saltos de página. */
+    $obsCierre = $cierreQr && trim((string)($doc['obser'] ?? '')) !== '';
+    $limDeta = $obsCierre ? $lim - 15.0 : $lim;
 
     $y = tabla(
         $pdf,
@@ -332,7 +335,7 @@ function emite(
         $pdf->AddPage();
         $pdf->SetXY($pag['x'], $pag['y']);
 
-        armaBlo($blo, $pag, $esp, $fisc);
+        armaBlo($blo, $pag, $esp, $cierreQr);
 
         $pCab['y'] = $blo['cabe']['y'];
         $pCli['y'] = $blo['clie']['y'];
@@ -351,7 +354,7 @@ function emite(
     }
 
     /* CIERRE */
-    if ($fisc) {
+    if ($cierreQr) {
         letr(
             $pdf,
             $doc,
