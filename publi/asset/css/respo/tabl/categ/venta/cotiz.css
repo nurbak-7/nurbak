@@ -17,3 +17,12 @@
     .dash-mini.cotiz-mini .cotiz-panel{min-width:0}
     .dash-mini.cotiz-mini .cotiz-encabezado{grid-template-columns:1fr}
 }
+
+/* LISTA PRINCIPAL | tablet: conservar proporciones y evitar columnas comprimidas. */
+@media(max-width:1200px){
+    .cotiz-lista-tabla{width:100%;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;}
+    .cotiz-lista-tabla table{width:100%;min-width:760px;table-layout:auto;}
+    .cotiz-lista-tabla th,.cotiz-lista-tabla td{padding:8px 7px;}
+    .cotiz-lista-acc{white-space:nowrap;}
+    .cotiz-lista-acc button{padding:6px 9px;}
+}
