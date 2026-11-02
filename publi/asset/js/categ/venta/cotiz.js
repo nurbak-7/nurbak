@@ -278,6 +278,8 @@ const cerrarModal = det => {
 
                 ctx.q('[data-cotiz-fecha]').value = ctx.state.fecha;
                 ctx.q('[data-cotiz-vigia]').value = ctx.state.vigia;
+                const obser = ctx.q('[data-cotiz-obser]');
+                if (obser) obser.value = cot.obser || '';
                 ctx.q('[data-cotiz-serie]').value = ctx.state.serie;
                 ctx.q('[data-cotiz-numero]').value = ctx.api.formatoNumero?.(ctx.state.numero) || String(ctx.state.numero).padStart(4,'0');
                 ctx.q('[data-cotiz-docum]').value = cot.docum || '';
