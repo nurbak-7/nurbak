@@ -33,7 +33,7 @@ function cfg(): array
 
         /* NIVEL 1.3 — EMPRESA TEMPORAL */
         'empresa' => [
-            'nombre' => 'F-R MORY E.I.R.L.',
+            'nombre' => 'F R MORY E.I.R.L.',
             'activi' => 'VENTA DE REPUESTOS Y ACCESORIOS EN GENERAL',
             'direc'  => 'AV. IQUITOS 248 INT. 5 LIMA - LIMA - LA VICTORIA',
             'ruc'    => '20610958029',
@@ -48,14 +48,14 @@ function cfg(): array
                 ],
                 'fila' => [
                     [
-                        'banc' => 'BBVA',
-                        'cta'  => '0011-0115-0200723142',
-                        'cci'  => '011-115-000200723142-32',
+                        'banc' => 'BCP',
+                        'cta'  => '191-7108240-0-03',
+                        'cci'  => '002-19100710824000358',
                     ],
                     [
-                        'banc' => 'INTERBANK',
-                        'cta'  => '200-300705429-5',
-                        'cci'  => '003-200-003007054295-33',
+                        'banc' => 'YAPE',
+                        'cta'  => '902-536-971',
+                        'cci'  => 'FRANK Y. CONTRERAS A.',
                     ],
                 ],
             ],
