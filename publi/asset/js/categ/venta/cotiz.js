@@ -171,7 +171,7 @@ const cerrarModal = det => {
                 return;
             }
 
-            ctx.api.cancelar?.();
+            ctx.api.cerrarVentana?.();
         };
 
         const quitarCierreModal = window.NURBAK_SINC?.on('modal:cerrando', cerrarModal) || (() => {});
