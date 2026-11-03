@@ -185,7 +185,13 @@ final class ImpoRepo
                     continue;
                 }
 
-                $existente = (int) ($prodMap[$pk] ?? 0);
+                $coincidencia = $prodMap[$pk] ?? ['id' => 0, 'conflicto' => false];
+                if (!empty($coincidencia['conflicto'])) {
+                    $errores[$idx] = 'Hay varios artículos candidatos para esta aplicación y código; no se actualizó ni insertó esta fila.';
+                    continue;
+                }
+
+                $existente = (int) ($coincidencia['id'] ?? 0);
                 if ($existente > 0) {
                     if ($modo === 'NUEVO') {
                         $errores[$idx] = 'El producto para esta aplicación ya existe.';
@@ -524,10 +530,6 @@ final class ImpoRepo
             $vk,
             $this->claveTextoLote($f['descr'] ?? null),
             $this->claveTextoLote($f['codig'] ?? null),
-            $this->claveTextoLote($f['origi'] ?? null),
-            $this->claveTextoLote($f['medid'] ?? null),
-            $this->claveTextoLote($f['super'] ?? null),
-            $this->claveTextoLote($f['equiv'] ?? null),
         ]);
     }
 
@@ -612,40 +614,87 @@ final class ImpoRepo
 
             foreach ($grupo as $d) {
                 $f = $d['f'];
-                $partes[] = "SELECT {$i} AS pos,:v{$i} AS vehic,:d{$i} AS descr,"
-                    . ":c{$i} AS codig,:o{$i} AS origi,:m{$i} AS medid,"
-                    . ":s{$i} AS super,:e{$i} AS equiv";
+                $partes[] = "SELECT {$i} AS pos,:v{$i} AS vehic,:d{$i} AS descr,:c{$i} AS codig";
                 $params[":v{$i}"] = (int) $d['vehic'];
                 $params[":d{$i}"] = $f['descr'];
                 $params[":c{$i}"] = $f['codig'];
-                $params[":o{$i}"] = $f['origi'];
-                $params[":m{$i}"] = $f['medid'];
-                $params[":s{$i}"] = $f['super'];
-                $params[":e{$i}"] = $f['equiv'];
                 $i++;
             }
 
             /*
-             * La identidad del artículo se busca con el índice compuesto
-             * de PRODU y luego se exige su relación concreta en EQUIV.
-             * Una sola consulta resuelve las identidades de todo el grupo.
+             * La aplicación vehicular y la descripción localizan los candidatos.
+             * El código distingue productos:
+             * - Código exacto: reutiliza ese producto.
+             * - Código existente vacío: puede completarse si hay un solo candidato.
+             * - Código diferente ya informado: no se reutiliza; corresponde insertar.
+             * ORIGI, MEDID, SUPER y EQUIV son datos actualizables, no filtros de identidad.
              */
-            $sql = 'SELECT d.pos, MIN(CASE WHEN c.produ IS NOT NULL THEN p.id ELSE NULL END) AS id '
-                . 'FROM (' . implode(' UNION ALL ', $partes) . ') d '
-                . 'LEFT JOIN produ p ON p.descr <=> d.descr '
-                . 'AND p.codig <=> d.codig AND p.origi <=> d.origi '
-                . 'AND p.medid <=> d.medid AND p.super <=> d.super '
-                . 'AND p.equiv <=> d.equiv '
-                . 'LEFT JOIN equiv c ON c.produ=p.id AND c.vehic=d.vehic '
-                . 'GROUP BY d.pos';
+            $sql = 'SELECT d.pos,'
+                . ' COUNT(DISTINCT p.id) AS candidatos,'
+                . ' COUNT(DISTINCT CASE WHEN NULLIF(TRIM(COALESCE(p.codig,\'\')),\'\') IS NULL THEN p.id END) AS vacios,'
+                . ' MIN(CASE WHEN NULLIF(TRIM(COALESCE(p.codig,\'\')),\'\') IS NULL THEN p.id END) AS id_vacio,'
+                . ' COUNT(DISTINCT CASE WHEN NULLIF(TRIM(COALESCE(d.codig,\'\')),\'\') IS NOT NULL'
+                . ' AND UPPER(TRIM(COALESCE(p.codig,\'\'))) = UPPER(TRIM(COALESCE(d.codig,\'\'))) THEN p.id END) AS exactos,'
+                . ' MIN(CASE WHEN NULLIF(TRIM(COALESCE(d.codig,\'\')),\'\') IS NOT NULL'
+                . ' AND UPPER(TRIM(COALESCE(p.codig,\'\'))) = UPPER(TRIM(COALESCE(d.codig,\'\'))) THEN p.id END) AS id_exacto'
+                . ' FROM (' . implode(' UNION ALL ', $partes) . ') d'
+                . ' LEFT JOIN produ p ON p.descr <=> d.descr'
+                . ' LEFT JOIN equiv c ON c.produ=p.id AND c.vehic=d.vehic'
+                . ' WHERE p.id IS NULL OR c.produ IS NOT NULL'
+                . ' GROUP BY d.pos';
 
             $st = $this->db->prepare($sql);
             $st->execute($params);
 
             foreach ($st->fetchAll(PDO::FETCH_ASSOC) as $r) {
                 $clave = $claves[(int) $r['pos']] ?? null;
-                if ($clave !== null && $r['id'] !== null) {
-                    $map[$clave] = (int) $r['id'];
+                if ($clave === null) {
+                    continue;
+                }
+
+                $candidatos = (int) $r['candidatos'];
+                $vacios = (int) $r['vacios'];
+                $exactos = (int) $r['exactos'];
+                $id = 0;
+                $conflicto = false;
+                $tieneCodigo = trim((string) ($grupo[$clave]['f']['codig'] ?? '')) !== '';
+
+                if ($tieneCodigo && $exactos === 1) {
+                    $id = (int) $r['id_exacto'];
+                } elseif ($tieneCodigo && $exactos > 1) {
+                    $conflicto = true;
+                } elseif ($vacios === 1) {
+                    $id = (int) $r['id_vacio'];
+                } elseif ($vacios > 1) {
+                    $conflicto = true;
+                } elseif (!$tieneCodigo && $candidatos > 0) {
+                    /* Sin código no se puede elegir entre productos que ya tienen códigos. */
+                    $conflicto = true;
+                }
+
+                $map[$clave] = [
+                    'id' => $id,
+                    'conflicto' => $conflicto,
+                ];
+            }
+        }
+
+        /*
+         * Un mismo registro sin código no puede ser reclamado por dos códigos
+         * distintos dentro del mismo Excel. En ese caso ambas filas son ambiguas.
+         */
+        $asignaciones = [];
+        foreach ($map as $clave => $coincidencia) {
+            $id = (int) ($coincidencia['id'] ?? 0);
+            if ($id > 0) {
+                $asignaciones[$id][] = $clave;
+            }
+        }
+
+        foreach ($asignaciones as $clavesId) {
+            if (count($clavesId) > 1) {
+                foreach ($clavesId as $clave) {
+                    $map[$clave] = ['id' => 0, 'conflicto' => true];
                 }
             }
         }
@@ -793,7 +842,7 @@ final class ImpoRepo
             }
 
             $sql = 'UPDATE produ p INNER JOIN (' . implode(' UNION ALL ', $partes) . ') v ON v.id=p.id '
-                . 'SET p.descr=v.descr,p.codig=v.codig,p.origi=v.origi,p.medid=v.medid, '
+                . "SET p.descr=v.descr,p.codig=CASE WHEN NULLIF(TRIM(COALESCE(v.codig,'')),'') IS NULL THEN p.codig ELSE v.codig END,p.origi=v.origi,p.medid=v.medid, "
                 . 'p.super=v.super,p.equiv=v.equiv,p.pcomp=v.pcomp,p.pvent=v.pvent, '
                 . 'p.fecha=COALESCE(v.fecha,NOW())';
             $st = $this->db->prepare($sql);
